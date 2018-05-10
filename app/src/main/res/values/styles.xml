@@ -1,0 +1,22 @@
+<resources>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="editTextColor">@color/colorBlack_Content</item>
+        <item name="android:textColor">@color/colorBlack_Content</item>
+        <item name="android:textColorHint">@color/colorBlack_Explain</item>
+        <item name="android:windowBackground">@color/colorBlack_Backgroung</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!--透明状态栏主题-->
+    <style name="transparent_StateBar" parent="AppTheme.Base" />
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--标题栏高度-->
+    <dimen name="ActionBar_Height">43dp</dimen>
+
+
+
+    <!--         字体大小            -->
+    <!--超大标题-->
+    <dimen name="TextSize_SuperTitle">20sp</dimen>
+    <!--标题-->
+    <dimen name="TextSize_Title">18sp</dimen>
+    <!--副标题-->
+    <dimen name="TextSize_Subtitle">17sp</dimen>
+    <!--正文-->
+    <dimen name="TextSize_Content">15sp</dimen>
+    <!--说明-->
+    <dimen name="TextSize_Explain">14sp</dimen>
+    <!--提示-->
+    <dimen name="TextSize_Hint">12sp</dimen>
+
+
+    <!--统一 边距-->
+    <dimen name="Unified_Margin_Middle">4dp</dimen> <!--相同模块中两个控件之间的间距-->
+    <dimen name="Unified_Margin_Basic">8dp</dimen> <!--两个模块之间的间距-->
+    <dimen name="Unified_Margin_LeftAndRight">15dp</dimen> <!--模块与边缘的距离-->
+    <dimen name="Unified_Margin_LeftAndRight_X2">30dp</dimen>
+
+
+    <!--统一圆角角度-->
+    <dimen name="Unified_Angle_Mellow">5dp</dimen>
+    <dimen name="Unified_Angle_Rectangle">2dp</dimen>
+</resources>

@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 27
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    compileOnly 'com.android.support:appcompat-v7:27.1.1'
+    compileOnly 'com.android.support:recyclerview-v7:27.1.1'
+
+}

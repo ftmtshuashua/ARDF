@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Demo activity-->
+        <activity android:name=".demo.ADemo_BaseRecyclerViewAdapter" />
     </application>
 
 </manifest>

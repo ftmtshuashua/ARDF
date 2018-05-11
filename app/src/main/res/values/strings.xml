@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ARDF</string>
+    <string name="activity_recyclerview_info">Click the bottom button to change the data.</string>
+
 </resources>

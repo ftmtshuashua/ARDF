@@ -1,32 +1,28 @@
 package com.lfp.androidrapiddevelopmentframework;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.demo.ADemo_BaseRecyclerViewAdapter;
+import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
-import com.lfp.ardf.model.NotProguard;
+import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-//import android.support.v7.widget.LinearLayoutManager;
-//import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by LiFuPing on 2018/5/9.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-
-    ListAdapter mAdapter;
+    SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,53 +30,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter = new ListAdapter());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(VHolder.class, R.layout.activity_main_listitem));
 
+        /*配置demo*/
+        List<DemoEntrance> arrays = new ArrayList<>();
+        arrays.add(new ADemo_BaseRecyclerViewAdapter.Demo("RecyclerViewAdapter", getAppFk()));
 
-        List<Model> arrays = new ArrayList<>();
-        arrays.add(new Model("Ttile 1"));
-        arrays.add(new Model("Ttile 3"));
-        arrays.add(new Model("Ttile 2"));
-        arrays.add(new Model("Ttile 4"));
-        arrays.add(new Model("Ttile 5"));
-        arrays.add(new Model("Ttile 6"));
-
-        mAdapter.setDataAndUpdata(arrays);
+        mAdapter.setAndUpdata(arrays);
     }
 
-
-    private static final class ListAdapter extends BaseRecyclerViewAdapter<Model> {
-        @NonNull
-        @Override
-        public BaseViewHolder<Model> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new VHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_textview, parent, false));
-        }
-
-    }
-
-    private static final class VHolder extends BaseRecyclerViewAdapter.BaseViewHolder<Model> {
+    private static final class VHolder extends BaseRecyclerViewAdapter.BaseViewHolder<DemoEntrance> implements View.OnClickListener {
         TextView mTV_Info;
 
         public VHolder(View itemView) {
             super(itemView);
             mTV_Info = itemView.findViewById(R.id.view_Info);
+            mTV_Info.setOnClickListener(this);
         }
 
         @Override
-        public void onUpdateUI(Model data) {
-            mTV_Info.setText(data.Title);
+        public void onUpdateUI(DemoEntrance data) {
+            mTV_Info.setText(data.getInfo());
+        }
+
+        @Override
+        public void onClick(View v) {
+            getSaveData().enter();
         }
     }
-
-    static final class Model implements NotProguard {
-        String Title;
-
-        public Model(String title) {
-            Title = title;
-        }
-    }
-
 
 }

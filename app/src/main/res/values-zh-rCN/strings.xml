@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">迅捷开发框架</string>
+
+    <string name="activity_recyclerview_info">点击底部按钮,改变数据.</string>
 </resources>

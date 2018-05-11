@@ -14,3 +14,16 @@
 .idea/misc.xml
 .idea/runConfigurations.xml
 .idea/vcs.xml
+ardf/build/generated/source/buildConfig/debug/com/lfp/ardf/BuildConfig.java
+ardf/build/generated/source/r/debug/com/lfp/ardf/R.java
+ardf/build/intermediates/attr/R.txt
+ardf/build/intermediates/incremental/compileDebugAidl/dependency.store
+ardf/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+ardf/build/intermediates/incremental/packageDebugResources/merger.xml
+ardf/build/intermediates/manifests/aapt/debug/AndroidManifest.xml
+ardf/build/intermediates/manifests/aapt/debug/output.json
+ardf/build/intermediates/manifests/full/debug/AndroidManifest.xml
+ardf/build/intermediates/manifests/full/debug/output.json
+ardf/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+ardf/build/intermediates/symbols/debug/R.txt
+ardf/build/outputs/logs/manifest-merger-debug-report.txt

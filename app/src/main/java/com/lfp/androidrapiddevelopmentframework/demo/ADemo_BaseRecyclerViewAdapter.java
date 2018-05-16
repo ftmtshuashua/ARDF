@@ -35,13 +35,32 @@ public class ADemo_BaseRecyclerViewAdapter extends BaseActivity implements View.
         appfk.startActivity(intent);
     }
 
-    /*构建数据*/
-    List<Model> buildData(String tag, int count) {
-        List<Model> arrays = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            arrays.add(new Model(MessageFormat.format("{0} _ {1}", tag, i)));
-        }
-        return arrays;
+    ListAdapter mAdapter;
+    TextView mTV_Info;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ToastUtil.show(R.string.activity_recyclerview_info);
+
+        setContentView(R.layout.activity_recycleradapter);
+        findViewById(R.id.view_Set3).setOnClickListener(this);
+        findViewById(R.id.view_Set5).setOnClickListener(this);
+        findViewById(R.id.view_Add3).setOnClickListener(this);
+        findViewById(R.id.view_Add5).setOnClickListener(this);
+        findViewById(R.id.view_Insert1).setOnClickListener(this);
+        findViewById(R.id.view_Insert2).setOnClickListener(this);
+        findViewById(R.id.view_Move).setOnClickListener(this);
+
+        mTV_Info = findViewById(R.id.view_Info);
+
+        RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
+        mRecyclerView.setAdapter(mAdapter = new ListAdapter());
+        mAdapter.setOnAdapterDataChange(mOnDataChange);
+//        mAdapter.setFlag(ListAdapter.FLAG_DISABLE_ITEM_ANIMATOR); /*禁用Item动画*/
     }
 
     @Override
@@ -69,34 +88,6 @@ public class ADemo_BaseRecyclerViewAdapter extends BaseActivity implements View.
                 mAdapter.moveAndUpdata(1, 3);
                 break;
         }
-    }
-
-    ListAdapter mAdapter;
-    TextView mTV_Info;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ToastUtil.show(R.string.activity_recyclerview_info);
-
-        setContentView(R.layout.activity_recycleradapter);
-        findViewById(R.id.view_Set3).setOnClickListener(this);
-        findViewById(R.id.view_Set5).setOnClickListener(this);
-        findViewById(R.id.view_Add3).setOnClickListener(this);
-        findViewById(R.id.view_Add5).setOnClickListener(this);
-        findViewById(R.id.view_Insert1).setOnClickListener(this);
-        findViewById(R.id.view_Insert2).setOnClickListener(this);
-        findViewById(R.id.view_Move).setOnClickListener(this);
-
-        mTV_Info = findViewById(R.id.view_Info);
-
-        RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
-        mRecyclerView.setAdapter(mAdapter = new ListAdapter());
-        mAdapter.setOnAdapterDataChange(mOnDataChange);
-//        mAdapter.setFlag(ListAdapter.FLAG_DISABLE_ITEM_ANIMATOR);
     }
 
     BaseRecyclerViewAdapter.OnAdapterDataChange mOnDataChange = new BaseRecyclerViewAdapter.OnAdapterDataChange<Model>() {
@@ -165,5 +156,15 @@ public class ADemo_BaseRecyclerViewAdapter extends BaseActivity implements View.
             ADemo_BaseRecyclerViewAdapter.start(appfk);
         }
     }
+
+    /*构建数据*/
+    List<Model> buildData(String tag, int count) {
+        List<Model> arrays = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            arrays.add(new Model(MessageFormat.format("{0} _ {1}", tag, i)));
+        }
+        return arrays;
+    }
+
 
 }

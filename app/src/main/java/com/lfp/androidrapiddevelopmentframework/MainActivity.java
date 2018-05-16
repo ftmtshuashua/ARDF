@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.demo.ADemo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,9 @@ public class MainActivity extends BaseActivity {
         arrays.add(new ADemo_BaseRecyclerViewAdapter.Demo("RecyclerViewAdapter", getAppFk()));
 
         mAdapter.setAndUpdata(arrays);
+
     }
+
 
     private static final class VHolder extends BaseRecyclerViewAdapter.BaseViewHolder<DemoEntrance> implements View.OnClickListener {
         TextView mTV_Info;
@@ -61,4 +66,20 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+
+    public static final void main(String... arg) {
+       String json = "{\"MsgId\":\"306\",\"Code\":101,\"Message\":\"查询数据成功\",\"Value\":[],\"Sign\":\"0d1070cf5920135d31607a3f06014e81\"}";
+
+
+        Mode model = new Gson().fromJson(json, Mode.class);
+        System.err.println(new Gson().toJson(model));
+    }
+
+    public static final class Mode {
+        String MsgId;
+        String Code;
+        String Message;
+        boolean test;
+
+    }
 }

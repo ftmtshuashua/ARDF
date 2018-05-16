@@ -6,116 +6,104 @@ import android.os.Bundle;
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
 import com.lfp.ardf.framework.I.ILifeCycleObserved;
 
-import java.util.LinkedList;
+import java.util.Vector;
 
 /**
  * 生命周期观察工具
  * Created by LiFuPing on 2017/9/8.
  */
 public class LifeCycleObservedUtil implements ILifeCycleObserved, ILifeCycleObserve {
-    LinkedList<ILifeCycleObserve> mObserves = new LinkedList<>();
+    private Vector<ILifeCycleObserve> obs;
+
+    public LifeCycleObservedUtil() {
+        obs = new Vector<>();
+    }
 
     @Override
-    public void registeredObserve(ILifeCycleObserve l) {
-        synchronized (this) {
-            mObserves.add(l);
+    public synchronized void registeredObserve(ILifeCycleObserve o) {
+        if (o == null)
+            throw new NullPointerException();
+        if (!obs.contains(o)) {
+            obs.addElement(o);
         }
     }
 
     @Override
-    public void unRegisteredObserve(ILifeCycleObserve l) {
-        synchronized (this) {
-            mObserves.remove(l);
-        }
+    public synchronized void unRegisteredObserve(ILifeCycleObserve o) {
+        obs.removeElement(o);
+    }
+
+
+    /**
+     * 返回这个可观察到的物体的观察者的数量。
+     *
+     * @return 这个物体的观察者的数量。
+     */
+    public synchronized int countObservers() {
+        return obs.size();
+    }
+
+
+    synchronized ILifeCycleObserve[] loop() {
+        Object[] arrLocal = obs.toArray();
+        return (ILifeCycleObserve[]) arrLocal;
     }
 
     @Override
-    public void onDestroy() {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onDestroy();
-            }
-            mObserves.clear(); //移除所有监听
-        }
+    public synchronized void onDestroy() {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onDestroy();
+        obs.removeAllElements();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onSaveInstanceState(outState);
-            }
-        }
+    public synchronized void onSaveInstanceState(Bundle outState) {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onSaveInstanceState(outState);
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onRestoreInstanceState(savedInstanceState);
-            }
-        }
+    public synchronized void onRestoreInstanceState(Bundle savedInstanceState) {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
-    public void onStart() {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onStart();
-            }
-        }
+    public synchronized void onStart() {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onStart();
     }
 
     @Override
-    public void onResume() {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onResume();
-            }
-        }
+    public synchronized void onResume() {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onResume();
     }
 
     @Override
-    public void onPause() {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onPause();
-            }
-        }
+    public synchronized void onPause() {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onPause();
     }
 
     @Override
-    public void onStop() {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onStop();
-            }
-        }
+    public synchronized void onStop() {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onStop();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mObserves.isEmpty()) return;
-        synchronized (this) {
-            for (int i = mObserves.size() - 1; i >= 0; i--) {
-                ILifeCycleObserve obs = mObserves.get(i);
-                obs.onActivityResult(requestCode, resultCode, data);
-            }
-        }
+    public synchronized void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ILifeCycleObserve[] arrLocal = loop();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onActivityResult(requestCode, resultCode, data);
     }
 
 }

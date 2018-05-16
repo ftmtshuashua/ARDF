@@ -5,6 +5,8 @@ import android.content.Context;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.ToastUtil;
 
+import org.json.JSONObject;
+
 /**
  * 帮助框架做一些必要的初始化工作
  * Created by LiFuPing on 2018/5/9.

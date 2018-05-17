@@ -45,8 +45,7 @@ public class LifeCycleObservedUtil implements ILifeCycleObserved, ILifeCycleObse
 
 
     synchronized ILifeCycleObserve[] loop() {
-        Object[] arrLocal = obs.toArray();
-        return (ILifeCycleObserve[]) arrLocal;
+        return obs.toArray(new ILifeCycleObserve[obs.size()]);
     }
 
     @Override

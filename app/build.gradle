@@ -18,6 +18,9 @@ android {
                 cppFlags ""
             }
         }
+
+        manifestPlaceholders = [MTA_CHANNEL: "智者",
+                                MTA_APPKEY : "AUFW43Z4G4VN"]
     }
     buildTypes {
         release {
@@ -52,4 +55,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
     implementation 'com.artemzin.rxjava:proguard-rules:1.1.1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
+
+    /*腾讯统计相关*/
+    implementation 'com.tencent.mid:mid:3.73-release'
+    implementation 'com.qq.mta:mta:3.3.1-release'
+//    implementation 'com.qq.visual:visual:3.3.1-release' 高级功能：可视化埋点
 }

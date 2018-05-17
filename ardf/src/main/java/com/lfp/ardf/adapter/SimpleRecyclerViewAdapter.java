@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 利用反射创建Adapter，少写几行代码
+ * 自动创建Adapter，少写几行代码
  * Created by LiFuPing on 2018/5/11.
  */
 public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {

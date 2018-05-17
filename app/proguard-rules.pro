@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+
+
+
+#腾讯统计
+-keep class com.tencent.stat.*{*;}
+-keep class com.tencent.mid.*{*;}

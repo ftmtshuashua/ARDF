@@ -29,7 +29,6 @@ public interface I1AppContextTransmit {
      */
     FragmentManager getSmartFragmentManager();
 
-
     /**
      * 获得上下文
      */

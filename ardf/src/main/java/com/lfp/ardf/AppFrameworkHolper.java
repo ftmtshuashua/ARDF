@@ -5,7 +5,7 @@ import android.content.Context;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.ToastUtil;
 
-import org.json.JSONObject;
+import java.text.MessageFormat;
 
 /**
  * 帮助框架做一些必要的初始化工作
@@ -20,7 +20,7 @@ public class AppFrameworkHolper {
         LogUtil.i("----------- AppFramework init() -----------");
         ToastUtil.init(c.getApplicationContext());
 
-
+        LogUtil.i(MessageFormat.format("配置缓存目录:{0}", ""));
     }
 
 }

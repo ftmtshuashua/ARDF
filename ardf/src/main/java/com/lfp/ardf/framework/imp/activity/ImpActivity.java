@@ -6,9 +6,10 @@ import android.content.Context;
 import com.lfp.ardf.framework.I.IAppFramework;
 
 /**
+ * 框架接入
  * Created by LiFuPing on 2018/5/10.
  */
-public class ImpActivity extends Imp2LifeCycleObservedActivity implements IAppFramework {
+public class ImpActivity extends Imp3NetRequestActivity implements IAppFramework {
 
     public Activity getActivity() {
         return this;

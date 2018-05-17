@@ -5,7 +5,7 @@ package com.lfp.ardf.framework.I;
  * Created by LiFuPing on 2017/11/16.
  */
 
-public interface IAppFramework extends I1AppContextTransmit ,ILifeCycleObserved{
+public interface IAppFramework extends I1AppContextTransmit, ILifeCycleObserved, INetRequest {
 
     /**
      * 获得框架接口

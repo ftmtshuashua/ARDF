@@ -8,23 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.demo.ADemo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
+import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.module.net.OkHttpResponse;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
-import org.json.JSONObject;
-
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Demo列表
  * Created by LiFuPing on 2018/5/9.
  */
 public class MainActivity extends BaseActivity {
-
     SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
     @Override
@@ -43,8 +45,13 @@ public class MainActivity extends BaseActivity {
 
         mAdapter.setAndUpdata(arrays);
 
+        try {
+            LogUtil.e(MessageFormat.format("测试设备：{0}", StatConfig.getMid(getActivity())));
+            StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
+        } catch (Exception e) {
+            LogUtil.e(e);
+        }
     }
-
 
     private static final class VHolder extends BaseRecyclerViewAdapter.BaseViewHolder<DemoEntrance> implements View.OnClickListener {
         TextView mTV_Info;
@@ -67,19 +74,15 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    public static final void main(String... arg) {
-       String json = "{\"MsgId\":\"306\",\"Code\":101,\"Message\":\"查询数据成功\",\"Value\":[],\"Sign\":\"0d1070cf5920135d31607a3f06014e81\"}";
+    @Override
+    protected void onResume() {
+        super.onResume();
+        request(new OkHttpResponse() {
 
-
-        Mode model = new Gson().fromJson(json, Mode.class);
-        System.err.println(new Gson().toJson(model));
+                }
+                , getApiserver().getWeatherForecast()
+                , getApiserver().getWeatherForecast());
     }
 
-    public static final class Mode {
-        String MsgId;
-        String Code;
-        String Message;
-        boolean test;
 
-    }
 }

@@ -9,27 +9,22 @@ public interface IChainResponseObserver<R extends IChainRequest> {
     /**
      * 请求链开始运作
      */
-    void onStart();
+    void onChainStart();
 
     /**
-     * 获得请求源
-     */
-    R getRequest();
-
-    /**
-     * 出现错误的时候调用
+     * 出现错误的时候调用 与 onComplete() 方法互斥
      */
     void onError(Throwable e);
 
     /**
-     * 当请求链结束时调用
+     * 当所有请求全部成功的时候调用 与 onError() 方法互斥
      */
-    void onChainComplete();
+    void onComplete();
 
     /**
      * 在这里处理一些耗时的操作
      */
-    void onDataProcessing(int id, IChainRequest request);
+    void onNotifyDataProcess(int id, R request);
 
     /**
      * 请求完成时调用
@@ -37,7 +32,12 @@ public interface IChainResponseObserver<R extends IChainRequest> {
      * @param id
      * @param request
      */
-    void onResponse(int id, IChainRequest request);
+    void onNotifyResponse(int id, R request);
+
+    /**
+     * 无论是onComplete()还是onError()之后都会回调此方法，在这里做一些必要的回收操作
+     */
+    void onChainEnd();
 
     /**
      * 启动这个选项将大大增加请求消耗的事件，建议不必要时不要开启
@@ -45,4 +45,5 @@ public interface IChainResponseObserver<R extends IChainRequest> {
      * @return 是否禁用并发请求
      */
     boolean isDisableConcurrentRequest();
+
 }

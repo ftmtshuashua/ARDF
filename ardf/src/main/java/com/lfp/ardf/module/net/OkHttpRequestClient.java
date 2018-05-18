@@ -1,10 +1,8 @@
 package com.lfp.ardf.module.net;
 
-import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.module.net.i.IRequestClient;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -37,18 +35,19 @@ public class OkHttpRequestClient implements IRequestClient {
         return mInstacel;
     }
 
+    Call call;
+
     @Override
     public Object perform(OkHttpRequest request) throws IOException {
-        Call mcall = mHttpClient.newCall(request.buildRequest());
-        Response response = mcall.execute();
-
-        LogUtil.e(MessageFormat.format("请求结果:{0}", response.code()));
+        call = mHttpClient.newCall(request.buildRequest());
+        Response response = call.execute();
+        request.setResponse(response);
         return null;
     }
 
     @Override
     public void cancel() {
-
+        if (call != null && call.isExecuted()) call.cancel();
     }
 
 

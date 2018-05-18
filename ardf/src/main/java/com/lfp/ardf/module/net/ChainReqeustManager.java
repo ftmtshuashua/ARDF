@@ -6,6 +6,7 @@ import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
 import com.lfp.ardf.module.net.i.IChainRequest;
 import com.lfp.ardf.module.net.i.IChainRequestHelper;
 import com.lfp.ardf.module.net.i.IChainResponseObserver;
+import com.lfp.ardf.util.CpuUtile;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -31,6 +32,17 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     /*是否启用日志*/
     boolean isDebug = true;
 
+    /*允许同时发起的请求数*/
+    static int maxConcurrency;
+
+    static {
+        try {
+            maxConcurrency = (int) (CpuUtile.getNumCores() / 0.3f);
+        } catch (Exception e) {
+            e.printStackTrace();
+            maxConcurrency = 20;
+        }
+    }
 
     public ChainReqeustManager() {
         this(new OkHttpRequestHelper());
@@ -119,7 +131,7 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
 
         if (observer.isDisableConcurrentRequest()) {
             initiate(observer, array.get(0));
-        } else initiate(observer, array.get(0));
+        } else synInitiate(observer, array);
 
     }
 
@@ -131,7 +143,7 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
         }
     };
 
-    /*准备工作，对数据做一些必要的数据处理*/
+    /*准备工作，对数据做一些必要的数据处理,在这里链这个请求链*/
     void prepare(List<R> array) {
         int size = array.size();
         for (int i = 1; i < size; i++) {
@@ -147,14 +159,14 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     }
 
     /*发起请求*/
-    <R extends IChainRequest> void initiate(final C observer, final R request) {
+//    <R extends IChainRequest>
+    void initiate(final C observer, final R request) {
         LogUtil.e("------------ initiate  a  request ------------");
         if (request == null) {
-            observer.onChainComplete();
+            observer.onChainEnd();
             return;
         }
-        if (!request.hasPre()) observer.onStart();
-
+        if (!request.hasPre()) observer.onChainStart();
 
         Observable.create(new ObservableOnSubscribe<R>() {
             @Override
@@ -171,7 +183,7 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
                     @Override
                     public ObservableSource<R> apply(final R r) throws Exception {
                         LogUtil.e("在这里 - 处理请求耗时操作!");
-                        observer.onDataProcessing(request.getId(), request);
+                        observer.onNotifyDataProcess(r.getId(), r);
 
                         return Observable.create(new ObservableOnSubscribe<R>() {
                             @Override
@@ -193,15 +205,15 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
                     @Override
                     public void onNext(R t) {
                         LogUtil.e("Observer -----> onNext");
-                        observer.onResponse(request.getId(), request);
-                        initiate(observer, request.getNext());
+                        observer.onNotifyResponse(request.getId(), request);
+//                        initiate(observer, request.getNext());
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         LogUtil.e("Observer -----> onError");
                         observer.onError(e);
-                        observer.onChainComplete();
+                        observer.onChainEnd();
                     }
 
                     @Override
@@ -212,9 +224,64 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     }
 
 
-    /*并发请求*/
-    void synInitiate(final C observer, final R request) {
+    /*极限性能模式(理论上整个请求耗时=最慢请求耗时) - 所有请求同步进行,请求回复顺序会错乱*/
+    void synInitiate(final C observer, final List<R> request) {
+        List<Observable<R>> observable_array = new ArrayList<>();
+        for (final R r : request) {
+            observable_array.add(Observable.create(new ObservableOnSubscribe<R>() {
+                        @Override
+                        public void subscribe(ObservableEmitter<R> emitter) throws Exception {
+                            if (isDebug) {
+                                LogUtil.e(MessageFormat.format("Request[{0}]  -  准备请求!", r.getId()));
+                                LogUtil.w(MessageFormat.format("↓↓ Request ↓↓\n{0}", r.toString()));
+                            }
+                            mRequestHelper.perform(r);
+                            r.completed();
+                            observer.onNotifyDataProcess(r.getId(), r);
 
+                            emitter.onNext(r);
+                            emitter.onComplete();
+                        }
+                    })
+                            .subscribeOn(Schedulers.io())
+            );
+        }
+
+        Observable.mergeDelayError(observable_array, maxConcurrency)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<R>() {
+                    Disposable mDisposable;
+                    R r;
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        observer.onChainStart();
+                        mDisposable = d;
+                    }
+
+
+                    @Override
+                    public void onNext(R r) {
+                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onNext()!", r.getId()));
+                        this.r = r;
+                        observer.onNotifyResponse(r.getId(), r);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onError({1})!", null, e.getMessage()));
+                        observer.onError(e);
+                        observer.onChainEnd();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onComplete()!", r.getId()));
+                        observer.onComplete();
+                        observer.onChainEnd();
+                    }
+                });
     }
+
 
 }

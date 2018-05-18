@@ -1,16 +1,14 @@
 package com.lfp.ardf.module.net;
 
-import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.module.net.i.IChainRequest;
 import com.lfp.ardf.module.net.i.IChainResponseObserver;
+import com.lfp.ardf.module.net.util.ReqeustExceptionUtil;
+import com.lfp.ardf.util.SdkUtile;
 
 /**
  * OkHttp 请求回复
  * Created by LiFuPing on 2018/5/17.
  */
 public abstract class OkHttpResponse implements IChainResponseObserver<OkHttpRequest> {
-
-
     /**
      * 禁用并发请求<br/>
      * 启动这个选项将大大增加请求消耗的事件，建议不必要时不要开启
@@ -39,36 +37,56 @@ public abstract class OkHttpResponse implements IChainResponseObserver<OkHttpReq
 
 
     @Override
-    public OkHttpRequest getRequest() {
-        return null;
-    }
-
-    @Override
-    public void onStart() {
-        LogUtil.e("OkHttpResponse -----> onStart");
-
+    public void onChainStart() {
     }
 
     @Override
     public void onError(Throwable e) {
-        LogUtil.e("OkHttpResponse -----> onError:"+e.getMessage());
+
+//                        3 exceptions occurred.
+//                        e.printStackTrace();
+        if (SdkUtile.has(SdkUtile.KITKAT)) {
+//            Throwable[] array = e.getSuppressed();
+            ReqeustExceptionUtil.getInstance().handle(e);
+        } else {
+            ReqeustExceptionUtil.getInstance().handle(e);
+        }
+
+
     }
 
     @Override
-    public void onChainComplete() {
-        LogUtil.e("OkHttpResponse -----> onChainComplete");
-
+    public void onComplete() {
     }
 
     @Override
-    public void onDataProcessing(int id, IChainRequest request) {
-        LogUtil.e("OkHttpResponse -----> onDataProcessing");
-        //getRequest().isIgnoreResponse()
+    public void onNotifyDataProcess(int id, OkHttpRequest request) {
+        if (request.isIgnoreResponse()) return;
+        onDataProcess(id, request);
+    }
+
+    /**
+     * 耗时数据处理建议放到此方法下执行
+     */
+    public void onDataProcess(int id, OkHttpRequest request) {
     }
 
     @Override
-    public void onResponse(int id, IChainRequest request) {
-        LogUtil.e("OkHttpResponse -----> onNext");
-
+    public void onNotifyResponse(int id, OkHttpRequest request) {
+        if (request.isIgnoreResponse()) return;
+        onResponse(id, request);
     }
+
+    /**
+     * 请求结果
+     */
+    public void onResponse(int id, OkHttpRequest request) {
+    }
+
+
+    @Override
+    public void onChainEnd() {
+    }
+
+
 }

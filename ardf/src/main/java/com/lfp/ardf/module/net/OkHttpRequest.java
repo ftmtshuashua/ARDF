@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 适用于OkHttp的请求
@@ -31,6 +32,11 @@ public class OkHttpRequest extends ImpChainReqeust {
      * OkHttp请求
      */
     Request mRequest;
+
+    /**
+     * 请求回复数据
+     */
+    Response response;
 
     int mFlag;
 
@@ -79,6 +85,20 @@ public class OkHttpRequest extends ImpChainReqeust {
         Request.Builder bulder = new Request.Builder();
         bulder.url(new UrlFormat(api).toEncodeUrl());
         return mRequest = bulder.build();
+    }
+
+    /**
+     * @return 返回请求回复结果
+     */
+    public Response getResponse() {
+        return response;
+    }
+
+    /**
+     * @param response 设置请求回复结果
+     */
+    public void setResponse(Response response) {
+        this.response = response;
     }
 
     @Override

@@ -21,13 +21,13 @@ public class OkHttpRequestHelper implements IChainRequestHelper<OkHttpRequest> {
     }
 
     @Override
-    public Object perform(OkHttpRequest request) throws IOException {
+    public Object perform(OkHttpRequest request) throws Exception {
         return mRequetClient.perform(request);
     }
 
     @Override
-    public void cancel() {
-        mRequetClient.cancel();
+    public void cancel(OkHttpRequest request) {
+        mRequetClient.cancel(request);
     }
 
 }

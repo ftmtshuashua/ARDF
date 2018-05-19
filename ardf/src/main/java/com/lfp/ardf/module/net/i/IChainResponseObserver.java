@@ -5,6 +5,23 @@ package com.lfp.ardf.module.net.i;
  * Created by LiFuPing on 2018/5/15.
  */
 public interface IChainResponseObserver<R extends IChainRequest> {
+    /**
+     * 请求模式 (PERFORMANCE,CHAIN)
+     */
+    enum ReqeustModel {
+        /**
+         * 性能模式<br/>
+         * 该模式下的所有请求并发执行,理论上整个请求耗时=最慢请求耗时.<br/>
+         * 请求回复顺序会错乱(*使用此请求方式会使链式请求功能模式失效)
+         */
+        PERFORMANCE,
+
+        /**
+         * 链式请求模式<br/>
+         * 该模式下的请求会按照传入顺序依次执行,在这种模式下后一个请求必须等待前一个请求执行完成之后才开始执行
+         */
+        CHAIN
+    }
 
     /**
      * 请求链开始运作
@@ -40,10 +57,15 @@ public interface IChainResponseObserver<R extends IChainRequest> {
     void onChainEnd();
 
     /**
-     * 启动这个选项将大大增加请求消耗的事件，建议不必要时不要开启
+     * 终止请求链之后,后面的请求会被舍弃,并且结束这个请求链！
      *
-     * @return 是否禁用并发请求
+     * @return 返回这个请求的运行状态
      */
-    boolean isDisableConcurrentRequest();
+    boolean isShutdown();
+
+    /**
+     * @return 返回当前请求的请求模式
+     */
+    ReqeustModel getReqeustModel();
 
 }

@@ -1,6 +1,7 @@
 package com.lfp.ardf.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 
@@ -24,6 +25,7 @@ public class ToastUtil {
 
     public static final void show(String text) {
         if (mInstance == null) return;
+        if (TextUtils.isEmpty(text)) return;
         mInstance.toast.setText(text);
         mInstance.toast.show();
     }

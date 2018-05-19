@@ -1,8 +1,8 @@
 package com.lfp.ardf.module.net;
 
+import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.module.net.i.IRequestClient;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -38,29 +38,26 @@ public class OkHttpRequestClient implements IRequestClient {
     Call call;
 
     @Override
-    public Object perform(OkHttpRequest request) throws IOException {
+    public Object perform(OkHttpRequest request) throws Exception {
+        try {
+            Thread.sleep(300);
+        } catch (Exception e) {
+            LogUtil.e(e.getMessage());
+        }
+        LogUtil.e("执行请求..");
         call = mHttpClient.newCall(request.buildRequest());
         Response response = call.execute();
         request.setResponse(response);
+        LogUtil.e("执行请求结束..");
         return null;
     }
 
     @Override
-    public void cancel() {
-        if (call != null && call.isExecuted()) call.cancel();
+    public void cancel(OkHttpRequest request) {
+        LogUtil.e("准备强制取消网络请求..");
+        if (call != null && call.isExecuted()) {
+            LogUtil.e("成功强制取消网络请求..");
+            call.cancel();
+        }
     }
-
-
-//        getInstace().newCall(null).cancel();/*取消请求*/
-        /*
-        如果还未和服务器建立连接:
-        回调：void onFailure(Call call, IOException e);
-        自己主动取消的错误的 java.net.SocketException: Socket closed
-        超时的错误是 java.net.SocketTimeoutException
-        网络出错的错误是java.net.ConnectException: Failed to connect to xxxxx
-
-        在onResponse的时候刚好cancel网络请求:
-        会在onResponse()方法中抛出java.net.SocketException: Socket closed
-
-         */
 }

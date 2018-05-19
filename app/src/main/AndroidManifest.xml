@@ -36,7 +36,8 @@
             </intent-filter>
         </activity>
         <!--Demo activity-->
-        <activity android:name=".demo.ADemo_BaseRecyclerViewAdapter" />
+        <activity android:name=".demo.Demo_BaseRecyclerViewAdapter" />
+        <activity android:name=".demo.Demo_NetRequest" />
     </application>
 
 </manifest>

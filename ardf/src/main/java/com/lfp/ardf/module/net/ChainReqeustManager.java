@@ -1,11 +1,13 @@
 package com.lfp.ardf.module.net;
 
 import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.framework.I.ILifeCycleObserved;
 import com.lfp.ardf.framework.I.INetRequest;
 import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
 import com.lfp.ardf.module.net.i.IChainRequest;
 import com.lfp.ardf.module.net.i.IChainRequestHelper;
 import com.lfp.ardf.module.net.i.IChainResponseObserver;
+import com.lfp.ardf.module.net.i.IChainResponseObserver.ReqeustModel;
 import com.lfp.ardf.util.CpuUtile;
 
 import java.text.MessageFormat;
@@ -19,6 +21,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -28,6 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by LiFuPing on 2018/5/15.
  */
 public class ChainReqeustManager<R extends IChainRequest, C extends IChainResponseObserver<R>> {
+    CompositeDisposable mCompositeSubscription;
     IChainRequestHelper mRequestHelper;
     /*是否启用日志*/
     boolean isDebug = true;
@@ -46,6 +50,7 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
 
     public ChainReqeustManager() {
         this(new OkHttpRequestHelper());
+        mCompositeSubscription = new CompositeDisposable();
     }
 
     public ChainReqeustManager(IChainRequestHelper helper) {
@@ -53,9 +58,11 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     }
 
     /**
-     * 绑定框架
+     * 绑定框架 ,以便在必要的时候对请求做处理，例如在Activity关闭的时候中断请求
+     *
+     * @param appfk 框架
      */
-    public void setAppFramework(INetRequest appfk) {
+    public void setAppFramework(ILifeCycleObserved appfk) {
         appfk.registeredObserve(mContentObserve);
     }
 
@@ -86,6 +93,25 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     public void setDebug(boolean debug) {
         isDebug = debug;
     }
+
+    /**
+     * 取消所有请求
+     */
+    public void cancelRequest() {
+        mRequestHelper.cancel(null);
+    }
+
+    /**
+     * 在Activity关闭的时候应该结束所有请求
+     */
+    SimpleLifeCycleObserve mContentObserve = new SimpleLifeCycleObserve() {
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            cancelRequest();
+            mCompositeSubscription.clear();
+        }
+    };
 
     /**
      * 发起请求
@@ -127,24 +153,17 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
             else request.setId(i);
         }
 
-        prepare(array);
-
-        if (observer.isDisableConcurrentRequest()) {
+        if (ReqeustModel.CHAIN == observer.getReqeustModel()) {
+            prepareChain(array);
             initiate(observer, array.get(0));
-        } else synInitiate(observer, array);
-
+        } else if (ReqeustModel.PERFORMANCE == observer.getReqeustModel()) {
+            synInitiate(observer, array);
+        }
     }
 
-    SimpleLifeCycleObserve mContentObserve = new SimpleLifeCycleObserve() {
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-
-        }
-    };
 
     /*准备工作，对数据做一些必要的数据处理,在这里链这个请求链*/
-    void prepare(List<R> array) {
+    void prepareChain(List<R> array) {
         int size = array.size();
         for (int i = 1; i < size; i++) {
             R request = array.get(i);
@@ -224,23 +243,26 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
     }
 
 
-    /*极限性能模式(理论上整个请求耗时=最慢请求耗时) - 所有请求同步进行,请求回复顺序会错乱*/
+    /*性能模式(理论上整个请求耗时=最慢请求耗时) - 所有请求同步进行,请求回复顺序会错乱(*使用此请求方式会使链式请求模式失效)*/
     void synInitiate(final C observer, final List<R> request) {
         List<Observable<R>> observable_array = new ArrayList<>();
         for (final R r : request) {
             observable_array.add(Observable.create(new ObservableOnSubscribe<R>() {
                         @Override
-                        public void subscribe(ObservableEmitter<R> emitter) throws Exception {
-                            if (isDebug) {
-                                LogUtil.e(MessageFormat.format("Request[{0}]  -  准备请求!", r.getId()));
-                                LogUtil.w(MessageFormat.format("↓↓ Request ↓↓\n{0}", r.toString()));
-                            }
-                            mRequestHelper.perform(r);
-                            r.completed();
-                            observer.onNotifyDataProcess(r.getId(), r);
+                        public void subscribe(ObservableEmitter<R> emitter) {
+                            try {
+                                if (isDebug) r.showReqeustLog();
+                                mRequestHelper.perform(r);
+                                r.completed();
+                                if (isDebug) r.showResponseLog();
 
-                            emitter.onNext(r);
-                            emitter.onComplete();
+                                observer.onNotifyDataProcess(r.getId(), r);
+                                emitter.onNext(r);
+                                emitter.onComplete();
+                            } catch (Exception e) {
+                                if (!emitter.isDisposed()) emitter.onError(e);
+                                else if (isDebug) e.printStackTrace();
+                            }
                         }
                     })
                             .subscribeOn(Schedulers.io())
@@ -251,10 +273,10 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<R>() {
                     Disposable mDisposable;
-                    R r;
 
                     @Override
                     public void onSubscribe(Disposable d) {
+                        mCompositeSubscription.add(d);
                         observer.onChainStart();
                         mDisposable = d;
                     }
@@ -262,25 +284,24 @@ public class ChainReqeustManager<R extends IChainRequest, C extends IChainRespon
 
                     @Override
                     public void onNext(R r) {
-                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onNext()!", r.getId()));
-                        this.r = r;
                         observer.onNotifyResponse(r.getId(), r);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onError({1})!", null, e.getMessage()));
+                        mCompositeSubscription.remove(mDisposable);
                         observer.onError(e);
                         observer.onChainEnd();
                     }
 
                     @Override
                     public void onComplete() {
-                        LogUtil.e(MessageFormat.format("Request[{0}]  -  onComplete()!", r.getId()));
+                        mCompositeSubscription.remove(mDisposable);
                         observer.onComplete();
                         observer.onChainEnd();
                     }
                 });
+
     }
 
 

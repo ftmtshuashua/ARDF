@@ -7,5 +7,4 @@ import com.lfp.ardf.module.net.OkHttpRequest;
  * Created by LiFuPing on 2018/5/17.
  */
 public interface IRequestClient extends IChainRequestHelper<OkHttpRequest> {
-
 }

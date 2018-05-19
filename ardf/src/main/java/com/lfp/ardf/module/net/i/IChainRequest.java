@@ -54,12 +54,7 @@ public interface IChainRequest {
     void removeNext();
 
     /**
-     * 终止这个请求链.<br/>终止请求链之后,后面的请求会被舍弃,并且完成这个请求链！
-     */
-    void shutdown();
-
-    /**
-     * 标记这个请求已经完成
+     * 标记这个请求已经完成 - 并且已经拿到回复信息
      */
     void completed();
 
@@ -69,12 +64,19 @@ public interface IChainRequest {
     boolean isCompleted();
 
     /**
-     * @return 返回这个请求的运行状态
-     */
-    boolean isShutdown();
-
-    /**
      * @return 返回之后请求个数
      */
     int getRemainingCount();
+
+    /**
+     * 显示请求信息 . 在请求之前请求管理器会回调这个接口
+     */
+    void showReqeustLog();
+
+    /**
+     * 显示请求回复信息 , 当请求完成之后请求管理器回调此接口显示回复内容
+     */
+    void showResponseLog();
+
+
 }

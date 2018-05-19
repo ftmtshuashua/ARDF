@@ -22,4 +22,5 @@ public class Imp3NetRequestActivity extends Imp2LifeCycleObservedActivity implem
         if (mChainReqeustManager == null) mChainReqeustManager = ChainReqeustManager.defualt(this);
         mChainReqeustManager.request(observer, request_chain);
     }
+    public ChainReqeustManager getReqeustManager(){return mChainReqeustManager;}
 }

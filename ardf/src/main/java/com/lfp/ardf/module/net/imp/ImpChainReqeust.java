@@ -6,16 +6,12 @@ import com.lfp.ardf.module.net.i.IChainRequest;
  * 链式请求实现
  * Created by LiFuPing on 2018/5/17.
  */
-public class ImpChainReqeust implements IChainRequest {
+public abstract class ImpChainReqeust implements IChainRequest {
 
     /**
      * 标识这个请求已经完成，已完成的请求不应该再被操作
      */
     public static final int FLAG_COMPLETED = 0x1;
-    /**
-     * 标识这个请求已经关机,被关机的未完成请求已经之后的请求将被终止
-     */
-    public static final int FLAG_SHUTDOWN = 0x1 << 1;
     /**
      * 标记ID已经分配,如果为分配ID系统会按顺序分配一个以0开始递增的ID
      */
@@ -81,11 +77,10 @@ public class ImpChainReqeust implements IChainRequest {
     }
 
     /**
-     * 替换请求链中下一个请求
+     * 使用一个新请求替换请求链中下一个请求
      */
     @Override
     public void replaceNext(IChainRequest request) {
-        if (isShutdown()) throw new IllegalStateException("替换失败，当前请求链已关机!");
         next = request;
         request.setPre(this);
     }
@@ -111,16 +106,6 @@ public class ImpChainReqeust implements IChainRequest {
     }
 
     /**
-     * 终止这个请求链.<br/>终止请求链之后,后面的请求会被舍弃,并且完成这个请求链！
-     */
-    @Override
-    public void shutdown() {
-        flag |= FLAG_SHUTDOWN;
-        if (next != null) next.shutdown();
-        next = null;
-    }
-
-    /**
      * 标记这个请求已经完成
      */
     @Override
@@ -143,13 +128,6 @@ public class ImpChainReqeust implements IChainRequest {
         return (flag & FLAG_COMPLETED) != 0;
     }
 
-    /**
-     * 返回这个请求的运行状态
-     */
-    @Override
-    public boolean isShutdown() {
-        return (flag & FLAG_SHUTDOWN) != 0;
-    }
 
     @Override
     public int getRemainingCount() {

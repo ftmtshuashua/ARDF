@@ -15,10 +15,10 @@ public interface IChainRequestHelper<R extends IChainRequest> {
      * @param request 具体请求
      * @return 请求结果
      */
-    Object perform(R request) throws IOException;
+    Object perform(R request) throws Exception;
 
     /**
      * 取消这个请求
      */
-    void cancel();
+    void cancel(R request);
 }

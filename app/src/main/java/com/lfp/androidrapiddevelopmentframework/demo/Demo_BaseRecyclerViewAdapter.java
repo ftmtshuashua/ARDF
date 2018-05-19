@@ -28,10 +28,10 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
  * Demo for BaseRecyclerViewAdapter
  * Created by LiFuPing on 2018/5/9.
  */
-public class ADemo_BaseRecyclerViewAdapter extends BaseActivity implements View.OnClickListener {
+public class Demo_BaseRecyclerViewAdapter extends BaseActivity implements View.OnClickListener {
 
     public static final void start(IAppFramework appfk) {
-        Intent intent = new Intent(appfk.getContext(), ADemo_BaseRecyclerViewAdapter.class);
+        Intent intent = new Intent(appfk.getContext(), Demo_BaseRecyclerViewAdapter.class);
         appfk.startActivity(intent);
     }
 
@@ -146,14 +146,14 @@ public class ADemo_BaseRecyclerViewAdapter extends BaseActivity implements View.
     public static final class Demo extends DemoEntrance {
         IAppFramework appfk;
 
-        public Demo(String info, IAppFramework appfk) {
-            super(info);
+        public Demo(IAppFramework appfk) {
+            super("RecyclerViewAdapter");
             this.appfk = appfk;
         }
 
         @Override
         public void enter() {
-            ADemo_BaseRecyclerViewAdapter.start(appfk);
+            Demo_BaseRecyclerViewAdapter.start(appfk);
         }
     }
 

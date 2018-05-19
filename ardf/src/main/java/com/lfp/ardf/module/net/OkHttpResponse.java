@@ -1,40 +1,19 @@
 package com.lfp.ardf.module.net;
 
-import com.lfp.ardf.module.net.i.IChainResponseObserver;
-import com.lfp.ardf.module.net.util.ReqeustExceptionUtil;
+import com.lfp.ardf.module.net.imp.ImpChainResponseObserver;
+import com.lfp.ardf.module.net.util.ExceptionTotalUtil;
 import com.lfp.ardf.util.SdkUtile;
 
 /**
  * OkHttp 请求回复
  * Created by LiFuPing on 2018/5/17.
  */
-public abstract class OkHttpResponse implements IChainResponseObserver<OkHttpRequest> {
-    /**
-     * 禁用并发请求<br/>
-     * 启动这个选项将大大增加请求消耗的事件，建议不必要时不要开启
-     */
-    public static final int FLAG_DISABLE_CONCURRENT_REQUEST = 0x1 << 1;
+public abstract class OkHttpResponse extends ImpChainResponseObserver<OkHttpRequest, OkHttpResponse> {
 
     int mFlag;
-
     public void setFlag(int flg) {
         mFlag |= flg;
     }
-
-    /**
-     * @param disable 设置禁用并发请求
-     */
-    public OkHttpResponse setDisableConcurrentRequest(boolean disable) {
-        if (disable) setFlag(FLAG_DISABLE_CONCURRENT_REQUEST);
-        else mFlag &= ~FLAG_DISABLE_CONCURRENT_REQUEST;
-        return this;
-    }
-
-    @Override
-    public boolean isDisableConcurrentRequest() {
-        return false;
-    }
-
 
     @Override
     public void onChainStart() {
@@ -42,17 +21,16 @@ public abstract class OkHttpResponse implements IChainResponseObserver<OkHttpReq
 
     @Override
     public void onError(Throwable e) {
-
 //                        3 exceptions occurred.
 //                        e.printStackTrace();
+
+
         if (SdkUtile.has(SdkUtile.KITKAT)) {
 //            Throwable[] array = e.getSuppressed();
-            ReqeustExceptionUtil.getInstance().handle(e);
+            ExceptionTotalUtil.handle(e);
         } else {
-            ReqeustExceptionUtil.getInstance().handle(e);
+            ExceptionTotalUtil.handle(e);
         }
-
-
     }
 
     @Override

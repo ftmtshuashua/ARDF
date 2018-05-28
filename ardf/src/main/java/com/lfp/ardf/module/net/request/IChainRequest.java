@@ -1,10 +1,10 @@
-package com.lfp.ardf.module.net.i;
+package com.lfp.ardf.module.net.request;
 
 /**
  * 链式请求,将一堆请求合并为一个请求队列,依次执行
  * Created by LiFuPing on 2018/5/15.
  */
-public interface IChainRequest {
+public interface IChainRequest extends IRequest {
     /**
      * 获得链中下一个请求
      */
@@ -15,9 +15,9 @@ public interface IChainRequest {
      */
     IChainRequest getPre();
 
-    void setNext(IChainRequest mNext);
+    void setNext(IChainRequest next);
 
-    void setPre(IChainRequest mPre);
+    void setPre(IChainRequest pre);
 
     /**
      * 返回是否还有下一个请求
@@ -34,16 +34,6 @@ public interface IChainRequest {
     boolean hasPre();
 
     /**
-     * 设置请求ID
-     */
-    void setId(int id);
-
-    /**
-     * @return 返回请求ID
-     */
-    int getId();
-
-    /**
      * 替换请求链中下一个请求
      */
     void replaceNext(IChainRequest request);
@@ -54,29 +44,9 @@ public interface IChainRequest {
     void removeNext();
 
     /**
-     * 标记这个请求已经完成 - 并且已经拿到回复信息
-     */
-    void completed();
-
-    /**
-     * @return 返回这个请求的完成情况
-     */
-    boolean isCompleted();
-
-    /**
-     * @return 返回之后请求个数
+     * @return 返回剩余请求个数
      */
     int getRemainingCount();
-
-    /**
-     * 显示请求信息 . 在请求之前请求管理器会回调这个接口
-     */
-    void showReqeustLog();
-
-    /**
-     * 显示请求回复信息 , 当请求完成之后请求管理器回调此接口显示回复内容
-     */
-    void showResponseLog();
 
 
 }

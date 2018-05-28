@@ -7,10 +7,15 @@ import com.lfp.ardf.framework.I.ILifeCycleObserve;
 
 
 /**
- * 简单的生命周期观察者
+ * 将注意力集中到需要使用的方法中<br/>
  * Created by LiFuPing on 2017/9/4.
  */
 public abstract class SimpleLifeCycleObserve implements ILifeCycleObserve {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+    }
 
     @Override
     public void onDestroy() {

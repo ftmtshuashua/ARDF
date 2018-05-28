@@ -2,10 +2,11 @@ package com.lfp.ardf.framework.imp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
 import com.lfp.ardf.framework.I.ILifeCycleObserved;
-import com.lfp.ardf.framework.util.LifeCycleObservedUtil;
+import com.lfp.ardf.framework.LifeCycleObservedUtil;
 
 /**
  * Created by LiFuPing on 2018/5/11.
@@ -21,6 +22,12 @@ public class Imp2LifeCycleObservedActivity extends Imp1ContextTransmitActivity i
     @Override
     public void unRegisteredObserve(ILifeCycleObserve l) {
         mLifeCycleObservedUtil.unRegisteredObserve(l);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mLifeCycleObservedUtil.onCreate(savedInstanceState);
     }
 
     @Override

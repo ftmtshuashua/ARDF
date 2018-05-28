@@ -1,4 +1,4 @@
-package com.lfp.ardf.framework.util;
+package com.lfp.ardf.framework;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +33,6 @@ public class LifeCycleObservedUtil implements ILifeCycleObserved, ILifeCycleObse
         obs.removeElement(o);
     }
 
-
     /**
      * 返回这个可观察到的物体的观察者的数量。
      *
@@ -43,14 +42,19 @@ public class LifeCycleObservedUtil implements ILifeCycleObserved, ILifeCycleObse
         return obs.size();
     }
 
-
-    synchronized ILifeCycleObserve[] loop() {
+    synchronized ILifeCycleObserve[] traverse() {
         return obs.toArray(new ILifeCycleObserve[obs.size()]);
+    }
+
+    public synchronized void onCreate(Bundle savedInstanceState) {
+        ILifeCycleObserve[] arrLocal = traverse();
+        for (int i = arrLocal.length - 1; i >= 0; i--)
+            arrLocal[i].onCreate(savedInstanceState);
     }
 
     @Override
     public synchronized void onDestroy() {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onDestroy();
         obs.removeAllElements();
@@ -58,49 +62,49 @@ public class LifeCycleObservedUtil implements ILifeCycleObserved, ILifeCycleObse
 
     @Override
     public synchronized void onSaveInstanceState(Bundle outState) {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onSaveInstanceState(outState);
     }
 
     @Override
     public synchronized void onRestoreInstanceState(Bundle savedInstanceState) {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     public synchronized void onStart() {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onStart();
     }
 
     @Override
     public synchronized void onResume() {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onResume();
     }
 
     @Override
     public synchronized void onPause() {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onPause();
     }
 
     @Override
     public synchronized void onStop() {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onStop();
     }
 
     @Override
     public synchronized void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ILifeCycleObserve[] arrLocal = loop();
+        ILifeCycleObserve[] arrLocal = traverse();
         for (int i = arrLocal.length - 1; i >= 0; i--)
             arrLocal[i].onActivityResult(requestCode, resultCode, data);
     }

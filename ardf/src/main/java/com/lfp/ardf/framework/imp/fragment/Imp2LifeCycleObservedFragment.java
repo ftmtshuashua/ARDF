@@ -2,11 +2,15 @@ package com.lfp.ardf.framework.imp.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
 import com.lfp.ardf.framework.I.ILifeCycleObserved;
-import com.lfp.ardf.framework.util.LifeCycleObservedUtil;
+import com.lfp.ardf.framework.LifeCycleObservedUtil;
 
 /**
  * Created by LiFuPing on 2018/5/11.
@@ -22,6 +26,12 @@ public class Imp2LifeCycleObservedFragment extends Imp1ContextTransmitFragment i
     @Override
     public void unRegisteredObserve(ILifeCycleObserve l) {
         mLifeCycleObservedUtil.unRegisteredObserve(l);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLifeCycleObservedUtil.onCreate(savedInstanceState);
     }
 
     @Override

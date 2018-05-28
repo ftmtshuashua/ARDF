@@ -16,8 +16,10 @@ import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.module.net.OkHttpResponse;
-import com.lfp.ardf.module.net.i.IChainResponseObserver;
+import com.lfp.ardf.module.net.OkHttpRequestObserver;
+import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
+import com.lfp.ardf.module.net.logic.ChainRequestLogic;
+import com.lfp.ardf.module.net.logic.ImpRequestLogi;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -51,6 +53,10 @@ public class Demo_NetRequest extends BaseActivity {
         arrays.add(mDemoEntrance);
         arrays.add(mDemoCanleReqeust);
         mAdapter.setAndUpdata(arrays);
+
+        mRequestLogic = new ChainRequestLogic();
+        mRequestLogic.setAppFramework(getAppFk());
+        mRequestLogic.setRequestClient(OkHttpReqeuestClient.getDefualt());
     }
 
     Handler mHandler = new Handler() {
@@ -63,57 +69,30 @@ public class Demo_NetRequest extends BaseActivity {
                     finish();
                     break;
                 case 1:
-                    getReqeustManager().cancelRequest();
+                    mRequestLogic.shutdown();
                     break;
             }
         }
     };
 
+    ImpRequestLogi mRequestLogic;
+
     void testApi() {
-        request(new OkHttpResponse() {
-
+//        mHandler.sendEmptyMessageDelayed(1, 450);
+        mRequestLogic.perform(
+                new OkHttpRequestObserver() {
                     @Override
-                    public void onChainStart() {
-                        super.onChainStart();
-                        LogUtil.d("OkHttpResponse -  onChainStart()");
-                        mHandler.sendEmptyMessageDelayed(1, 350);
-//                        mHandler.sendEmptyMessage(0);
+                    public void onRequestResponse(OkHttpRequest request) {
+                        LogUtil.e(MessageFormat.format("------------  请求成功 id:{0}------------ ", request.getId()));
+                        try {
+                            Thread.sleep(300);
+                        } catch (Exception e) {
+                        }
+                        LogUtil.e(MessageFormat.format("------------  耗时操作完成 id:{0}------------ ", request.getId()));
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        LogUtil.d(MessageFormat.format("OkHttpResponse onError({1})", e.getMessage()));
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                        LogUtil.d("OkHttpResponse  -  onComplete()");
-                    }
-
-                    @Override
-                    public void onDataProcess(int id, OkHttpRequest request) {
-                        super.onDataProcess(id, request);
-                        LogUtil.d(MessageFormat.format("OkHttpResponse Request[{0}]  -  onDataProcess()", id));
-                    }
-
-                    @Override
-                    public void onResponse(int id, OkHttpRequest request) {
-                        super.onResponse(id, request);
-
-                    }
-
-                    @Override
-                    public void onChainEnd() {
-                        super.onChainEnd();
-                        LogUtil.d("OkHttpResponse  -  onChainEnd()");
-                    }
-                }.setReqeustModel(IChainResponseObserver.ReqeustModel.PERFORMANCE)
+                }
                 , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast().setIgnoreResponse(true)
-                , getApiserver().getWeatherForecast()
-        );
+                , getApiserver().getWeatherForecast());
     }
 
 
@@ -127,7 +106,8 @@ public class Demo_NetRequest extends BaseActivity {
     DemoEntrance mDemoCanleReqeust = new DemoEntrance("取消请求") {
         @Override
         public void enter() {
-            getReqeustManager().cancelRequest();
+//            getReqeustManager().cancelRequest();
+            mRequestLogic.shutdown();
         }
     };
 

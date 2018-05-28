@@ -1,26 +1,23 @@
 package com.lfp.ardf.module.net;
 
 import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.module.net.imp.ImpChainReqeust;
+import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
+import com.lfp.ardf.module.net.request.ImpChainRequest;
 import com.lfp.ardf.module.net.util.UrlFormat;
 
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 
+import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * 适用于OkHttp的请求
- * Created by LiFuPing on 2018/5/17.
+ * Okhttp请求 <br/>
+ * Created by LiFuPing on 2018/5/28.
  */
-public class OkHttpRequest extends ImpChainReqeust {
-
-    /**
-     * 标记忽略请求回复状态,包含这个标记的请求,顶层用户不会收到Response回复结果
-     */
-    public static final int FLAG_IGNORE_RESPONSE = 0x1;
+public class OkHttpRequest extends ImpChainRequest<OkHttpRequest> implements OkHttpReqeuestClient.OkHttpRequestHolper {
 
     /**
      * 突破Loger单行数据限制,显示完整的Body信息
@@ -39,12 +36,17 @@ public class OkHttpRequest extends ImpChainReqeust {
      * OkHttp请求
      */
     Request mRequest;
-
     /**
      * 请求回复数据
      */
     Response response;
+    /**
+     * 回复内容
+     */
     String body;
+
+    Call call;
+
 
     int mFlag;
 
@@ -61,79 +63,18 @@ public class OkHttpRequest extends ImpChainReqeust {
         return api;
     }
 
-    public void setFlag(int flg) {
-        mFlag |= flg;
-    }
-
-    /**
-     * 忽略当前请求的请求结果
-     *
-     * @param is 是否忽略当前请求的结果回复
-     * @return OkHttpRequest
-     */
-    public OkHttpRequest setIgnoreResponse(boolean is) {
-        if (is) setFlag(FLAG_IGNORE_RESPONSE);
-        else mFlag &= ~FLAG_IGNORE_RESPONSE;
-        return this;
-    }
-
     /**
      * @param is 是否显示完整body信息
      * @return OkHttpRequest
      */
     public OkHttpRequest setShowLongBodyLog(boolean is) {
-        if (is) setFlag(FLAG_SHOW_LONG_BODY_LOG);
+        if (is) mFlag |= FLAG_SHOW_LONG_BODY_LOG;
         else mFlag &= ~FLAG_SHOW_LONG_BODY_LOG;
         return this;
     }
 
-    /**
-     * @return 返回是否忽略这个请求的结果
-     */
-    public boolean isIgnoreResponse() {
-        return (mFlag & FLAG_IGNORE_RESPONSE) != 0;
-    }
-
-    /**
-     * 构建请求
-     *
-     * @return
-     */
-    public Request buildRequest() {
-        Request.Builder bulder = new Request.Builder();
-        bulder.url(new UrlFormat(api).toEncodeUrl());
-        return mRequest = bulder.build();
-    }
-
-    /**
-     * @return 返回请求回复结果
-     */
-    public Response getResponse() {
-        return response;
-    }
-
-    /**
-     * @param response 设置请求回复结果
-     */
-    public void setResponse(Response response) throws IOException {
-        this.response = response;
-        body = response.body().string();
-    }
-
-    /**
-     * 获得回复body信息
-     */
-    public String getResponseBody() {
-        return body;
-    }
-
-    /*判断请求已完成*/
-    public boolean isSuccessful() {
-        return isCompleted() && response.isSuccessful();
-    }
-
     @Override
-    public void showReqeustLog() {
+    public void showRequestLog() {
         Request reqeust = buildRequest();
         LogUtil.w(MessageFormat.format("OkHttpRequest --->>\nID:{4},Method:{0},Api:{1},剩余请求:{2},是否忽略回复;{3}"
                 , reqeust.method(), getApi(), getRemainingCount(), isIgnoreResponse(), getId()));
@@ -174,6 +115,46 @@ public class OkHttpRequest extends ImpChainReqeust {
             LogUtil.e("------------- Long body -------------");
             LogUtil.longStr(getResponseBody());
         }
+    }
 
+    @Override
+    public void cancel() {
+        if (call == null || call.isCanceled()) return;
+        call.cancel();
+    }
+
+    /**
+     * 构建请求
+     *
+     * @return
+     */
+    @Override
+    public Request buildRequest() {
+        Request.Builder bulder = new Request.Builder();
+        bulder.url(new UrlFormat(api).toEncodeUrl());
+        return mRequest = bulder.build();
+    }
+
+    @Override
+    public void setCall(Call call) {
+        this.call = call;
+    }
+
+    @Override
+    public void setResponse(Response response) throws IOException {
+        this.response = response;
+        body = response.body().string();
+    }
+
+    /**
+     * 获得回复body信息
+     */
+    public String getResponseBody() {
+        return body;
+    }
+
+    /*判断请求已完成*/
+    public boolean isSuccessful() {
+        return response != null && response.isSuccessful();
     }
 }

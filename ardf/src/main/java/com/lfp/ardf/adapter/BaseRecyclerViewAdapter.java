@@ -52,6 +52,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * 观察Adapter数据变化
      */
     OnAdapterDataChange mOnAdapterDataChange;
+    ViewHolderMessageHandler mViewHolderMessageHandler;
 
     int mFlag;
 
@@ -60,6 +61,13 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      */
     public void setOnAdapterDataChange(OnAdapterDataChange l) {
         mOnAdapterDataChange = l;
+    }
+
+    /**
+     * ViewHolder变化监听
+     */
+    public void setViewHolderMessageHandler(ViewHolderMessageHandler l) {
+        mViewHolderMessageHandler = l;
     }
 
     /**/
@@ -278,25 +286,26 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
         return mArrayModel.size();
     }
 
+
     public static abstract class BaseViewHolder<D> extends RecyclerView.ViewHolder {
         D mSaveData;
         BaseRecyclerViewAdapter<D> mAdapter;
-        Context mContext;
 
         public BaseViewHolder(View itemView) {
             super(itemView);
-            mContext = itemView.getContext();
         }
 
         public Context getContext() {
-            return mContext;
+            return itemView.getContext();
         }
 
         protected BaseRecyclerViewAdapter<D> getAdapter() {
             return mAdapter;
         }
 
-        /**获取当前UI对应的数据*/
+        /**
+         * 获取当前UI对应的数据
+         */
         public D getSaveData() {
             return mSaveData;
         }
@@ -306,13 +315,39 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
          */
         public abstract void onUpdateUI(D data);
 
+        /**
+         * 发送一个消息给Adapter的创建者，创建者调用Adapter的setViewHolderMessageHandler()方法接收消息
+         *
+         * @param what 消息类型
+         * @param obj  消息中携带数据
+         */
+        protected void sendMessage(int what, Object obj) {
+            ViewHolderMessageHandler l = mAdapter.mViewHolderMessageHandler;
+            if (l != null) {
+                l.handlerAdapterMessage(what, obj);
+            } else new NullPointerException("未设置ViewHolderMessageHandler!");
+        }
     }
+
 
     /**
      * 监听适配器的数据变化
      */
     public interface OnAdapterDataChange<D> {
         void onChange(BaseRecyclerViewAdapter<D> adapter);
+    }
+
+    /**
+     * ViewHolder变化监听
+     */
+    public interface ViewHolderMessageHandler<E> {
+
+        /**
+         * @param what 消息类型
+         * @param obj  消息中携带数据
+         */
+        void handlerAdapterMessage(int what, E obj);
+
     }
 
 }

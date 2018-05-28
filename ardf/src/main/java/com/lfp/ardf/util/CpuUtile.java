@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * CUP工具
  * Created by Administrator on 2016/1/13.
  */
-public  final class CpuUtile {
+public final class CpuUtile {
 
     //Private Class to display only CPU devices in the directory listing
     private static final class CpuFilter implements FileFilter {
@@ -28,7 +28,9 @@ public  final class CpuUtile {
         }
     }
 
-    /**获得CPU核心数目*/
+    /**
+     * 获得CPU核心数目
+     */
     public static int getNumCores() {
         try {
             File dir = new File("/sys/devices/system/cpu/");
@@ -40,13 +42,15 @@ public  final class CpuUtile {
         }
     }
 
-    /**获取CPU最小频率（单位KHZ）*/
+    /**
+     * 获取CPU最小频率（单位KHZ）
+     */
     public static String getMinCpuFrequence() {
         String result = "";
         ProcessBuilder cmd;
         try {
-            String[] args = { "/system/bin/cat",
-                    "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq" };
+            String[] args = {"/system/bin/cat",
+                    "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq"};
             cmd = new ProcessBuilder(args);
             Process process = cmd.start();
             InputStream in = process.getInputStream();
@@ -62,7 +66,9 @@ public  final class CpuUtile {
         return result.trim();
     }
 
-    /**实时获取CPU当前频率（单位KHZ）*/
+    /**
+     * 实时获取CPU当前频率（单位KHZ）
+     */
     public static String getCurCpuFreq() {
         String result = "N/A";
         try {
@@ -78,8 +84,10 @@ public  final class CpuUtile {
         }
         return result;
     }
-    
-    /**获取CPU名字*/
+
+    /**
+     * 获取CPU名字
+     */
     public static String getCpuName() {
         try {
             FileReader fr = new FileReader("/proc/cpuinfo");
@@ -97,8 +105,9 @@ public  final class CpuUtile {
         return null;
     }
 
-
-    /**获得CPU信息*/
+    /**
+     * 获得CPU信息
+     */
     public static String getCupInfo() {
         return MessageFormat.format("当前机器CPU信息：\nName:{0}\n核心数:{1}核\n最小频率:{2}khz\n当前频率:{3}khz"
                 , getCpuName()
@@ -107,4 +116,25 @@ public  final class CpuUtile {
                 , getCurCpuFreq()
         );
     }
+
+    /**
+     * 根据CPU核心数计算最优线程数<br/>
+     * CPU敏感的程序，线程数大于处理器个数是没有意义的
+     *
+     * @param blockingRate 阻塞率
+     * @param defualt 默认线程个数
+     * @return 计算之后的线程个数
+     */
+    public static int getThreadValue(float blockingRate, int defualt) {
+        int maxConcurrency;
+        try {
+            maxConcurrency = (int) (getNumCores() * blockingRate);
+            if (maxConcurrency < 1) maxConcurrency = 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            maxConcurrency = defualt;
+        }
+        return maxConcurrency;
+    }
+
 }

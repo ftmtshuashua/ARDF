@@ -4,11 +4,11 @@ import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.module.net.client.IRequestClient;
 import com.lfp.ardf.module.net.observer.IRequestObserver;
 import com.lfp.ardf.module.net.request.IRequest;
-import com.lfp.ardf.module.net.util.ExceptionTotalUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -28,7 +28,7 @@ public class ParallelRequestLogic<R extends IRequest> extends ImpRequestLogi<R> 
     /**
      * 缓存请求列表
      */
-    ArrayList<R> mRequestCache = new ArrayList<>();
+    Vector<IRequest> mRequestCache = new Vector<>();
 
     public ParallelRequestLogic() {
         this.mCompositeSubscription = new CompositeDisposable();
@@ -44,16 +44,16 @@ public class ParallelRequestLogic<R extends IRequest> extends ImpRequestLogi<R> 
                         public void subscribe(ObservableEmitter<R> emitter) throws Exception {
                             mRequestCache.add(request);
                             try {
-                                if (LogUtil.isDebug()) request.showRequestLog();
+                                request.showRequestLog();
                                 client.perform(request);
-                                if (LogUtil.isDebug()) request.showResponseLog();
+                                request.showResponseLog();
 
                                 observer.onComputation(request);
                                 emitter.onNext(request);
                             } catch (Exception e) {
                                 if (emitter.isDisposed()) return;
                                 if (LogUtil.isDebug())
-                                    LogUtil.e(MessageFormat.format("RequestId:{0} - {1}", request.getId(), ExceptionTotalUtil.getThrowableToastInfo(e)));
+                                    LogUtil.e(e, MessageFormat.format("Request_Id:{0} - 出错了!", request.getId()));
 
                                 Observable.just(e)
                                         .subscribeOn(AndroidSchedulers.mainThread())

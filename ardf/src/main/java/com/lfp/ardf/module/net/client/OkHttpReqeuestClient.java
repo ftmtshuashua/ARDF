@@ -46,11 +46,9 @@ public class OkHttpReqeuestClient<T extends OkHttpReqeuestClient.OkHttpRequestHo
         return mInstacel;
     }
 
-
     @Override
     public void perform(T reqeust) throws Exception {
-
-       if(reqeust.getId()!=1) Thread.sleep(300);
+        if (reqeust.getId() != 1) Thread.sleep(300);
 
         Call call = mHttpClient.newCall(reqeust.buildRequest());
         reqeust.setCall(call);

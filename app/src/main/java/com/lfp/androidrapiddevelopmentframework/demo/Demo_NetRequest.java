@@ -20,6 +20,7 @@ import com.lfp.ardf.module.net.OkHttpRequestObserver;
 import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
 import com.lfp.ardf.module.net.logic.ChainRequestLogic;
 import com.lfp.ardf.module.net.logic.ImpRequestLogi;
+import com.lfp.ardf.module.net.util.UrlFormat;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class Demo_NetRequest extends BaseActivity {
                     break;
                 case 1:
                     mRequestLogic.shutdown();
+                    LogUtil.e("----- 取消请求 ------");
                     break;
             }
         }
@@ -78,19 +80,25 @@ public class Demo_NetRequest extends BaseActivity {
     ImpRequestLogi mRequestLogic;
 
     void testApi() {
-//        mHandler.sendEmptyMessageDelayed(1, 450);
+        mHandler.sendEmptyMessageDelayed(1, 450);
         mRequestLogic.perform(
                 new OkHttpRequestObserver() {
                     @Override
                     public void onRequestResponse(OkHttpRequest request) {
-                        LogUtil.e(MessageFormat.format("------------  请求成功 id:{0}------------ ", request.getId()));
                         try {
-                            Thread.sleep(300);
+                            LogUtil.e("------->> 模拟耗时操作 1.5s");
+                            Thread.sleep(1500); /*模拟耗时操作*/
+
+                            OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
+                            UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
+                            urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
+                            reqeust.setApi(urlFormat.toUrl());
+
                         } catch (Exception e) {
                         }
-                        LogUtil.e(MessageFormat.format("------------  耗时操作完成 id:{0}------------ ", request.getId()));
                     }
                 }
+                , getApiserver().getWeatherForecast()
                 , getApiserver().getWeatherForecast()
                 , getApiserver().getWeatherForecast());
     }

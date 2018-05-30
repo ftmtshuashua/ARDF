@@ -5,11 +5,10 @@ import com.lfp.ardf.module.net.client.IRequestClient;
 import com.lfp.ardf.module.net.observer.IRequestObserver;
 import com.lfp.ardf.module.net.request.IChainRequest;
 import com.lfp.ardf.module.net.request.IRequest;
-import com.lfp.ardf.module.net.util.ExceptionTotalUtil;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -30,7 +29,7 @@ public class ChainRequestLogic<R extends IChainRequest> extends ImpRequestLogi<R
     /**
      * 缓存请求列表
      */
-    ArrayList<IRequest> mRequestCache = new ArrayList<>();
+    Vector<IRequest> mRequestCache = new Vector<>();
 
     public ChainRequestLogic() {
         this.mCompositeSubscription = new CompositeDisposable();
@@ -53,96 +52,69 @@ public class ChainRequestLogic<R extends IChainRequest> extends ImpRequestLogi<R
 
     @Override
     protected void perform(final IRequestClient<R> client, final IRequestObserver<R> observer, List<R> request_array) {
+        if (request_array == null || request_array.isEmpty()) return;
         prepareChain(request_array);
+        R first_request = request_array.get(0);
+        observer.onStart();
+        perform_chain(client, observer, first_request);
+    }
 
-        List<Observable<R>> observable_array = new ArrayList<>();
-        for (final R request : request_array) {
-            observable_array.add(Observable.create(new ObservableOnSubscribe<R>() {
-                        @Override
-                        public void subscribe(ObservableEmitter<R> emitter) throws Exception {
-                            mRequestCache.add(request);
-                            try {
-                                if (LogUtil.isDebug()) request.showRequestLog();
-                                client.perform(request);
-                                if (LogUtil.isDebug()) request.showResponseLog();
-
-                                observer.onComputation(request);
-                                emitter.onNext(request);
-                            } catch (Exception e) {
-                                if (emitter.isDisposed()) return;
-                                if (LogUtil.isDebug())
-                                    LogUtil.e(MessageFormat.format("RequestId:{0} - {1}", request.getId(), ExceptionTotalUtil.getThrowableToastInfo(e)));
-
-                                Observable.just(e)
-                                        .subscribeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new Observer<Exception>() {
-                                            Disposable disposable;
-
-                                            @Override
-                                            public void onSubscribe(Disposable d) {
-                                                disposable = d;
-                                                mCompositeSubscription.add(d);
-                                            }
-
-                                            @Override
-                                            public void onNext(Exception e) {
-                                                observer.onError(request, e);
-                                            }
-
-                                            @Override
-                                            public void onError(Throwable e) {
-                                                mCompositeSubscription.remove(disposable);
-                                            }
-
-                                            @Override
-                                            public void onComplete() {
-                                                mCompositeSubscription.remove(disposable);
-                                            }
-                                        });
-                            } finally {
-                                mRequestCache.remove(request);
-                                if (!emitter.isDisposed()) emitter.onComplete();
-                            }
-                        }
-                    })
-                            .subscribeOn(Schedulers.io())
-            );
+    private void perform_chain(final IRequestClient<R> client, final IRequestObserver<R> observer, final R request) {
+        if (request == null) {
+            observer.onEnd();
+            return;
         }
-
-        Observable.concat(observable_array)
+        Observable.create(new ObservableOnSubscribe<R>() {
+            @Override
+            public void subscribe(ObservableEmitter<R> emitter) throws Exception {
+                mRequestCache.add(request);
+                try {
+                    request.showRequestLog();
+                    client.perform(request);
+                    request.showResponseLog();
+                    if (!emitter.isDisposed()) observer.onComputation(request);
+                    if (!emitter.isDisposed()) {
+                        emitter.onNext(request);
+                        emitter.onComplete();
+                    }
+                } catch (Exception e) {
+                    if (emitter.isDisposed()) return;
+                    emitter.onError(e);
+                    LogUtil.e(e, MessageFormat.format("Request_Id:{0} - 出错了!", request.getId()));
+                } finally {
+                    mRequestCache.remove(request);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<R>() {
                     Disposable disposable;
 
                     @Override
                     public void onSubscribe(Disposable d) {
-                        LogUtil.e(MessageFormat.format("---------------->>>  {0}", "onSubscribe"));
                         mCompositeSubscription.add(d);
                         disposable = d;
-                        observer.onStart();
                     }
 
                     @Override
                     public void onNext(R r) {
-                        LogUtil.e(MessageFormat.format("---------------->>>  {0}  ID：{1}", "onNext", r.getId()));
                         observer.onResponse(r);
+                        perform_chain(client, observer, (R) r.getNext());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtil.e(MessageFormat.format("---------------->>>  {0}", "onError"));
                         mCompositeSubscription.remove(disposable);
+                        observer.onError(request, e);
                         observer.onEnd();
                     }
 
                     @Override
                     public void onComplete() {
-                        LogUtil.e(MessageFormat.format("---------------->>>  {0}", "onComplete"));
                         mCompositeSubscription.remove(disposable);
-                        observer.onEnd();
                     }
                 });
-
     }
 
     @Override

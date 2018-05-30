@@ -13,7 +13,7 @@ public class RequestObserver implements IRequestObserver<HttpClientRequest> {
     }
 
     @Override
-    public void onError(HttpClientRequest request, Exception e) {
+    public void onError(HttpClientRequest request, Throwable e) {
 
     }
 

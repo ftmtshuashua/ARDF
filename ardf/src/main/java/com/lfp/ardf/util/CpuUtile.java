@@ -109,7 +109,7 @@ public final class CpuUtile {
      * 获得CPU信息
      */
     public static String getCupInfo() {
-        return MessageFormat.format("当前机器CPU信息：\nName:{0}\n核心数:{1}核\n最小频率:{2}khz\n当前频率:{3}khz"
+        return MessageFormat.format("CPU_Info：\nName:{0}\n核心数:{1}核\n最小频率:{2}khz\n当前频率:{3}khz"
                 , getCpuName()
                 , getNumCores()
                 , getMinCpuFrequence()
@@ -122,7 +122,7 @@ public final class CpuUtile {
      * CPU敏感的程序，线程数大于处理器个数是没有意义的
      *
      * @param blockingRate 阻塞率
-     * @param defualt 默认线程个数
+     * @param defualt      默认线程个数
      * @return 计算之后的线程个数
      */
     public static int getThreadValue(float blockingRate, int defualt) {

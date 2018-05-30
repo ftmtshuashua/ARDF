@@ -29,13 +29,8 @@ public class Apiserver {
      * 感谢<中央天气预报>
      */
     public OkHttpRequest getWeatherForecast() {
-        UrlFormat format = new UrlFormat("http://tj.nineton.cn/Heart/index/all");
+        UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
         format.addQuery("city", "CHSH000000");
-        format.addQuery("language", "zh-chs");
-        format.addQuery("unit", 'c');
-        format.addQuery("aqi", "city");
-        format.addQuery("alarm", 1);
-        format.addQuery("key", "78928e706123c1a8f1766f062bc8676b");
         return new OkHttpRequest(format.toUrl());
     }
 

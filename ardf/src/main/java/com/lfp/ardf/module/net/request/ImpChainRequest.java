@@ -4,34 +4,34 @@ package com.lfp.ardf.module.net.request;
  * 链式请求实现<br/>
  * Created by LiFuPing on 2018/5/28.
  */
-public abstract class ImpChainRequest<T extends ImpChainRequest> extends ImpRequest implements IChainRequest {
+public abstract class ImpChainRequest<R extends IChainRequest> extends ImpRequest implements IChainRequest<R> {
     /**
      * 标记忽略请求回复状态,包含这个标记的请求,顶层用户不会收到Response回复结果
      */
     public static final int FLAG_IGNORE_RESPONSE = 0x1;
 
-    IChainRequest next;
-    IChainRequest pre;
+    R next;
+    R pre;
 
     int mFlag;
 
     @Override
-    public IChainRequest getNext() {
+    public R getNext() {
         return next;
     }
 
     @Override
-    public IChainRequest getPre() {
+    public R getPre() {
         return pre;
     }
 
     @Override
-    public void setNext(IChainRequest next) {
+    public void setNext(R next) {
         this.next = next;
     }
 
     @Override
-    public void setPre(IChainRequest pre) {
+    public void setPre(R pre) {
         this.pre = pre;
     }
 
@@ -46,7 +46,7 @@ public abstract class ImpChainRequest<T extends ImpChainRequest> extends ImpRequ
     }
 
     @Override
-    public void replaceNext(IChainRequest request) {
+    public void replaceNext(R request) {
         if (hasNext()) {
             request.setNext(next.getNext());
             request.setId(next.getId());
@@ -96,9 +96,9 @@ public abstract class ImpChainRequest<T extends ImpChainRequest> extends ImpRequ
      * @param is 是否忽略当前请求的结果回复
      * @return OkHttpRequest
      */
-    public T setIgnoreResponse(boolean is) {
+    public R setIgnoreResponse(boolean is) {
         if (is) mFlag |= FLAG_IGNORE_RESPONSE;
         else mFlag &= ~FLAG_IGNORE_RESPONSE;
-        return (T) this;
+        return (R) this;
     }
 }

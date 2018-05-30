@@ -1,12 +1,12 @@
 # ARDF
---------
-ARDF是一个帮助开发者快速构建项目的基础结构,提供了丰富的可拓展的基础功能.
+
+ARDF是一个帮助开发者快速构建项目的基础框架,提供了丰富的可拓展的基础功能.
 Demo:[下载地址(暂未开放)]()
 
 **简介**
 --------
 Activity/Fragment观察者
-解耦逻辑代码和活动页面
+解耦逻辑代码与活动页面
 
 并发请求/链式请求(ChainRequest)
 各种请求场景使用
@@ -33,7 +33,7 @@ learn 包:先知其然，再知其所以然
 
 **感谢**
 --------
-[okhttp](https://github.com/square/okhttp)   
+[okhttp](https://github.com/square/okhttp)
 [RxJava](https://github.com/ReactiveX/RxJava)
 
 **问题反馈**

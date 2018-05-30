@@ -18,7 +18,7 @@ public abstract class OkHttpRequestObserver implements IRequestObserver<OkHttpRe
     }
 
     @Override
-    public void onError(OkHttpRequest request, Exception e) {
+    public void onError(OkHttpRequest request, Throwable e) {
         LogUtil.e(MessageFormat.format("接收到异常信息:{0} -  Exception：{1}", request.getId(), e.getMessage()));
 //        if (ExceptionTotalUtil.isShowThrowableToast(e)) {
         String massage = ExceptionTotalUtil.getThrowableToastInfo(e);
@@ -29,7 +29,6 @@ public abstract class OkHttpRequestObserver implements IRequestObserver<OkHttpRe
     @Override
     public void onComputation(OkHttpRequest request) {
         LogUtil.e("--->> onComputation()");
-
     }
 
     @Override

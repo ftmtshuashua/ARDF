@@ -4,20 +4,20 @@ package com.lfp.ardf.module.net.request;
  * 链式请求,将一堆请求合并为一个请求队列,依次执行
  * Created by LiFuPing on 2018/5/15.
  */
-public interface IChainRequest extends IRequest {
+public interface IChainRequest<R extends IChainRequest> extends IRequest {
     /**
      * 获得链中下一个请求
      */
-    IChainRequest getNext();
+    R getNext();
 
     /**
      * 获得链中前一个请求
      */
-    IChainRequest getPre();
+    R getPre();
 
-    void setNext(IChainRequest next);
+    void setNext(R next);
 
-    void setPre(IChainRequest pre);
+    void setPre(R pre);
 
     /**
      * 返回是否还有下一个请求
@@ -36,7 +36,7 @@ public interface IChainRequest extends IRequest {
     /**
      * 替换请求链中下一个请求
      */
-    void replaceNext(IChainRequest request);
+    void replaceNext(R request);
 
     /**
      * 抛弃下一个请求
@@ -47,6 +47,5 @@ public interface IChainRequest extends IRequest {
      * @return 返回剩余请求个数
      */
     int getRemainingCount();
-
 
 }

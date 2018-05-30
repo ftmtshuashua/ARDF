@@ -6,12 +6,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
+import com.lfp.androidrapiddevelopmentframework.widget.WaitProgressBar;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.debug.LogUtil;
@@ -34,6 +36,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mBar =findViewById(R.id.view_WaitProgressBar);
+
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -47,6 +51,18 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             LogUtil.e(e);
         }
+
+
+        LogUtil.d("hello %s", "world");
+        LogUtil.d("debug");
+        LogUtil.e("error");
+        LogUtil.w("warning");
+        LogUtil.v("verbose");
+        LogUtil.i("information");
+        LogUtil.wtf("What a Terrible Failure");
+
+        LogUtil.json("[{\"Name\":\"小米\",\"Age\":18}]");
+//        LogUtil.xml(XML_CONTENT);
     }
 
     /*Demo 配置*/
@@ -59,6 +75,7 @@ public class MainActivity extends BaseActivity {
         arrays.add(new PlaceholderEntrance("混淆配置(NotProguard)"));
         arrays.add(new PlaceholderEntrance("工具类说明"));
         arrays.add(new Demo_NetRequest.Demo(getAppFk()));
+        arrays.add(mProgressDemo);
 
         mAdapter.setAndUpdata(arrays);
     }
@@ -95,4 +112,14 @@ public class MainActivity extends BaseActivity {
             ToastUtil.show(getInfo());
         }
     }
+
+    WaitProgressBar mBar;
+
+    DemoEntrance mProgressDemo = new DemoEntrance("测试 ProgressBar") {
+        @Override
+        public void enter() {
+            mBar.setVisibility(mBar.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        }
+    };
+
 }

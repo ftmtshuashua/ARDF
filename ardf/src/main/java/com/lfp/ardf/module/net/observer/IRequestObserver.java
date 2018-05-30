@@ -16,7 +16,7 @@ public interface IRequestObserver<R extends IRequest> {
      * @param request 发生异常的请求
      * @param e       异常信息
      */
-    void onError(R request, Exception e);
+    void onError(R request, Throwable e);
 
     /**
      * 这个方法回调在子线程，可以在这里做一些耗时操作

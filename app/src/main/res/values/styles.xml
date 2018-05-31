@@ -17,6 +17,6 @@
 
 
     <!--透明状态栏主题-->
-    <style name="transparent_StateBar" parent="AppTheme.Base" />
+    <style name="TransparentStateBar" parent="AppTheme.Base" />
 
 </resources>

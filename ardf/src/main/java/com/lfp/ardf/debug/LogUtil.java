@@ -125,7 +125,7 @@ public class LogUtil {
     }
 
     /*---------------------------- 输出Csv格式到本地--------------------------------*/
-    public static void Csv_e(@Nullable Object object) {
+    public static void csv_e(@Nullable Object object) {
         Log(getCsvFormat(), LEVEL_ERROR, null, LogFormat(object));
     }
 
@@ -222,6 +222,8 @@ public class LogUtil {
 
 
     private static synchronized void Log(LogAdapter logAdapter, int level, @Nullable String tag, @Nullable String message, @Nullable Throwable throwable) {
+        if (!isDebug()) return;
+
         if (throwable != null) {
             if (message == null) message = GetStackTraceString(throwable);
             else message += " : " + GetStackTraceString(throwable);

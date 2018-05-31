@@ -1,10 +1,12 @@
 package com.lfp.ardf.util;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
-
+/**
+ * 提示消息
+ */
 public class ToastUtil {
     private static ToastUtil mInstance;
     private Toast toast;
@@ -24,15 +26,17 @@ public class ToastUtil {
     }
 
     public static final void show(String text) {
-        if (mInstance == null) return;
-        if (TextUtils.isEmpty(text)) return;
-        mInstance.toast.setText(text);
-        mInstance.toast.show();
+        if (mInstance != null && Utils.isMainThread() && !Utils.isEmpty(text)) {
+            mInstance.toast.setText(text);
+            mInstance.toast.show();
+        }
     }
 
-    public static final void show(int resid) {
-        if (mInstance == null) return;
-        mInstance.toast.setText(resid);
-        mInstance.toast.show();
+    public static final void show(@StringRes int resid) {
+        if (mInstance != null && Utils.isMainThread()) {
+            mInstance.toast.setText(resid);
+            mInstance.toast.show();
+        }
     }
+
 }

@@ -1,8 +1,10 @@
 package com.lfp.ardf.module.net.client;
 
+import com.lfp.ardf.exception.NetStateException;
 import com.lfp.ardf.module.net.request.IChainRequest;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -54,6 +56,9 @@ public class OkHttpReqeuestClient<T extends OkHttpReqeuestClient.OkHttpRequestHo
         reqeust.setCall(call);
         Response response = call.execute();
         reqeust.setResponse(response);
+        /*将错误消息交给 logic 处理，logic 会将这个错误反馈给 observer*/
+        if (!response.isSuccessful())
+            throw new NetStateException(MessageFormat.format("{0}{1}", response.code(), response.message()));
     }
 
 

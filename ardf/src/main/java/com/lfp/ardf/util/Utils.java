@@ -1,6 +1,6 @@
 package com.lfp.ardf.util;
 
-import android.support.annotation.NonNull;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -70,6 +70,13 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    /**
+     * @return 如果当前线程是主线程则返回true
+     */
+    public static boolean isMainThread() {
+        return Looper.getMainLooper() == Looper.myLooper();
     }
 
 }

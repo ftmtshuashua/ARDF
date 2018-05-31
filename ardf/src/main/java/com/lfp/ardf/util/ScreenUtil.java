@@ -25,7 +25,7 @@ public class ScreenUtil {
     /**
      * PX 转 DP
      */
-    public static int px2dp(float value) {
+    public static int px2dip(float value) {
         final float sale = mContext.getResources().getDisplayMetrics().density;
         return (int) ((value - 0.5f) / sale);
     }
@@ -33,7 +33,7 @@ public class ScreenUtil {
     /**
      * DP 转 PX
      */
-    public static int dp2px(float value) {
+    public static int dip2px(float value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, mContext.getResources().getDisplayMetrics());
     }
 

@@ -37,20 +37,23 @@ public class ExceptionTotalUtil {
             return e.getMessage();
         } else if (e instanceof NetStateException) {//网络状态异常
             return e.getMessage();
-        } else if (e instanceof MsgException) {
+        } else if (e instanceof MsgException) {//消息异常
             return e.getMessage();
         }
         return e.getMessage();
     }
 
     /**
+     * 通常情况下，网络请求终止等异常不应该被提示
+     *
      * @param e 错误
      * @return 返回是否应该提示这个错误信息
      */
     public static boolean isShowThrowableToast(Throwable e) {
         if (e == null) return false;
         if (e instanceof IOException) {
-            if ("Socket closed".equals(e.getMessage()) || "Canceled".equals(e.getMessage()))
+            String msg = e.getMessage();
+            if ("Socket closed".equals(msg) || "Canceled".equals(msg))
                 return false;
             if (e instanceof InterruptedIOException) return false;
         }
@@ -65,7 +68,7 @@ public class ExceptionTotalUtil {
     public static void handle(Throwable e) {
         try {
             String excptin_info = getThrowableToastInfo(e);
-            if (LogUtil.isDebug()) LogUtil.e(MessageFormat.format("错误日志：{0}", excptin_info));
+            LogUtil.e(MessageFormat.format("错误日志：{0}", excptin_info));
             if (isShowThrowableToast(e)) ToastUtil.show(excptin_info);
         } catch (Exception e2) {
             e2.printStackTrace();

@@ -2,15 +2,13 @@ package com.lfp.androidrapiddevelopmentframework.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.lfp.ardf.debug.LogUtil;
+import com.lfp.androidrapiddevelopmentframework.widget.style.CoolWaitLoadingRenderer;
 import com.lfp.ardf.widget.BaseProgressBarView;
-
-import java.text.MessageFormat;
 
 /**
  * 等待动画<br/>
@@ -18,25 +16,47 @@ import java.text.MessageFormat;
  */
 public class WaitProgressBar extends BaseProgressBarView {
     public WaitProgressBar(Context context) {
-        this(context ,null);
+        this(context, null);
     }
 
     public WaitProgressBar(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public WaitProgressBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mPaint = new Paint();
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(color_border);
+
+        mCoolWaitLoadingRenderer = new CoolWaitLoadingRenderer();
+
+        setDuration(2000);
     }
 
+    int color_border = 0x88000000;
     Paint mPaint;
+    RectF border_rectf;
+    float radius_border;
+
+    CoolWaitLoadingRenderer mCoolWaitLoadingRenderer;
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (border_rectf == null) border_rectf = new RectF();
+        border_rectf.set(0, 0, right - left, bottom - top);
+        radius_border = border_rectf.width() * 0.1f;
+
+        mCoolWaitLoadingRenderer.setCircleRadius(Math.min(border_rectf.width(), border_rectf.height()) / 3);
+    }
 
     @Override
     protected void onDrawAnimation(Canvas canvas, float scale) {
-        canvas.drawColor(Color.BLACK);
-        canvas.drawText(String.valueOf(scale), getWidth()/2, getHeight()/2, mPaint);
-        LogUtil.e(MessageFormat.format("进度比例:{0,number,0.##}", scale));
+        int saveCount = canvas.save();
+        canvas.drawRoundRect(border_rectf, radius_border, radius_border, mPaint);
+
+        mCoolWaitLoadingRenderer.computeRender(scale);
+        mCoolWaitLoadingRenderer.draw(canvas, border_rectf);
+        canvas.restoreToCount(saveCount);
     }
 }

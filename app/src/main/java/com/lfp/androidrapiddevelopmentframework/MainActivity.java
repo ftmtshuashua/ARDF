@@ -1,12 +1,13 @@
 package com.lfp.androidrapiddevelopmentframework;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
@@ -29,6 +30,12 @@ import java.util.List;
  * Created by LiFuPing on 2018/5/9.
  */
 public class MainActivity extends BaseActivity {
+    public static final void start(Context c) {
+        Intent intent = new Intent(c, MainActivity.class);
+        c.startActivity(intent);
+    }
+
+
     SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
     @Override
@@ -36,7 +43,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBar =findViewById(R.id.view_WaitProgressBar);
+        mBar = findViewById(R.id.view_WaitProgressBar);
 
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -68,6 +75,7 @@ public class MainActivity extends BaseActivity {
     /*Demo 配置*/
     void initListConfig() {
         List<DemoEntrance> arrays = new ArrayList<>();
+        arrays.add(new IntroduceActivity.Demo(getAppFk()));
         arrays.add(new Demo_BaseRecyclerViewAdapter.Demo(getAppFk()));
         arrays.add(new PlaceholderEntrance("框架核心-业务分离(验证名字，验证年龄，选择数据)"));
         arrays.add(new PlaceholderEntrance("地图城市选择器"));

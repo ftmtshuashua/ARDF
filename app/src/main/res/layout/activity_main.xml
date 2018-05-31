@@ -20,8 +20,8 @@
 
     <com.lfp.androidrapiddevelopmentframework.widget.WaitProgressBar
         android:id="@+id/view_WaitProgressBar"
-        android:layout_width="120dp"
+        android:layout_width="60dp"
         android:visibility="gone"
         android:layout_centerInParent="true"
-        android:layout_height="120dp" />
+        android:layout_height="60dp" />
 </RelativeLayout>

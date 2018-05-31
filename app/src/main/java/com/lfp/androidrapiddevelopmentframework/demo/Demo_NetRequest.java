@@ -12,11 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import com.lfp.androidrapiddevelopmentframework.MainActivity;
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.module.net.OkHttpRequestObserver;
 import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
 import com.lfp.ardf.module.net.logic.ChainRequestLogic;
 import com.lfp.ardf.module.net.logic.ImpRequestLogi;
@@ -80,9 +80,9 @@ public class Demo_NetRequest extends BaseActivity {
     ImpRequestLogi mRequestLogic;
 
     void testApi() {
-        mHandler.sendEmptyMessageDelayed(1, 450);
+//        mHandler.sendEmptyMessageDelayed(1, 450);
         mRequestLogic.perform(
-                new OkHttpRequestObserver() {
+                new UnifyResponse(getActivity()) {
                     @Override
                     public void onRequestResponse(OkHttpRequest request) {
                         try {

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.lfp.ardf.AppFrameworkHolper;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.CpuUtile;
+import com.lfp.ardf.util.PhoneUtil;
 import com.lfp.ardf.util.ScreenUtil;
 
 import java.text.MessageFormat;
@@ -17,7 +18,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AppFrameworkHolper.init(getApplicationContext());
-        
-        LogUtil.i_Pretty(MessageFormat.format("{0}\n{1}", ScreenUtil.getScreenInfo(), CpuUtile.getCupInfo()));
+
+        LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtil.getPhoneInfo(), ScreenUtil.getScreenInfo(), CpuUtile.getCupInfo()));
     }
 }

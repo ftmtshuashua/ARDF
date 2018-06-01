@@ -1,7 +1,6 @@
-package com.lfp.androidrapiddevelopmentframework;
+package com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.R;
+import com.lfp.androidrapiddevelopmentframework.activity.module.app.IntroduceActivity;
+import com.lfp.androidrapiddevelopmentframework.base.BaseFragment;
 import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
@@ -26,20 +27,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Demo列表
- * Created by LiFuPing on 2018/5/9.
+ * <br/>
+ * Created by LiFuPing on 2018/6/1.
  */
-public class MainActivity extends BaseActivity {
-    public static final void start(Context c) {
-        Intent intent = new Intent(c, MainActivity.class);
-        c.startActivity(intent);
-    }
-
+public class ListFragment extends BaseFragment {
 
     SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
+    void setContentView(int t){
+
+    }
+    <T extends View> T findViewById(int id){return null;}
+
+    Context getApplicationContext(){return null;}
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -51,13 +54,6 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoEntranceHolder.class, R.layout.layout_simpler_textview));
 
         initListConfig();
-
-        try {
-            StatConfig.setDebugEnable(false);
-            StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
-        } catch (Exception e) {
-            LogUtil.e(e);
-        }
 
 
         LogUtil.d("hello %s", "world");

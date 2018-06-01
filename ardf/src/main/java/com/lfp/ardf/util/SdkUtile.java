@@ -128,8 +128,6 @@ public class SdkUtile {
      */
     public static final int KITKAT_WATCH = 20;
 
-    public static final int L = 21;
-
     /**
      * Lollipop. A flat one with beautiful shadows. But still tasty.  Android 5.0
      */
@@ -149,4 +147,58 @@ public class SdkUtile {
      * N is for ¯\_(ツ)_/¯. Android 7.0
      */
     public static final int N = 24;
+
+    public static Object getSdkVersionName() {
+        switch (getSdkVersion()) {
+            case BASE:
+                return "Android_1.0";
+            case BASE_1_1:
+                return "Android_1.1";
+            case CUPCAKE:
+                return "Android_1.5";
+            case DONUT:
+                return "Android_1.6";
+            case ECLAIR:
+                return "Android_2.0";
+            case ECLAIR_0_1:
+                return "Android_2.0.1";
+            case ECLAIR_MR1:
+                return "Android_2.1";
+            case FROYO:
+                return "Android_2.2";
+            case GINGERBREAD:
+                return "Android_2.3";
+            case GINGERBREAD_MR1:
+                return "Android_2.3.3";
+            case HONEYCOMB:
+                return "Android_3.0";
+            case HONEYCOMB_MR1:
+                return "Android_3.1";
+            case HONEYCOMB_MR2:
+                return "Android_3.2";
+            case ICE_CREAM_SANDWICH:
+                return "Android_4.0";
+            case ICE_CREAM_SANDWICH_MR1:
+                return "Android_4.0.3";
+            case JELLY_BEAN:
+                return "Android_4.1";
+            case JELLY_BEAN_MR1:
+                return "Android_4.2";
+            case JELLY_BEAN_MR2:
+                return "Android_4.3";
+            case KITKAT:
+                return "Android_4.4";
+            case KITKAT_WATCH:
+                return "Android_4.4W";
+            case LOLLIPOP:
+                return "Android_5.0";
+            case LOLLIPOP_MR1:
+                return "Android_5.1";
+            case M:
+                return "Android_6.0";
+            case N:
+                return "Android_7.0";
+        }
+        return "unknown";
+    }
 }

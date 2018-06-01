@@ -1,9 +1,10 @@
-package com.lfp.androidrapiddevelopmentframework;
+package com.lfp.androidrapiddevelopmentframework.activity.module.app;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.ardf.framework.I.IAppFramework;

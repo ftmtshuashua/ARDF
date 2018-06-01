@@ -9,7 +9,7 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppTheme.Base">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -17,6 +17,6 @@
 
 
     <!--透明状态栏主题-->
-    <style name="TransparentStateBar" parent="AppTheme.Base" />
+    <style name="TransparentStateBar" parent="AppTheme" />
 
 </resources>

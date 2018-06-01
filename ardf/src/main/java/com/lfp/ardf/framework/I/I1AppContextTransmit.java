@@ -22,7 +22,7 @@ public interface I1AppContextTransmit {
     void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options);
 
     /**
-     * 在Activity中等同与getFragmentManager()
+     * 在Activity中等同与getSupportFragmentManager()
      * <br/>
      * 在Fragment中等同与getChildFragmentManager()
      * * @return FragmentManager

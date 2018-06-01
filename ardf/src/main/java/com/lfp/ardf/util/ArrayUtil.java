@@ -13,7 +13,7 @@ public class ArrayUtil {
         return TextUtils.join(delimiter, tokens);
     }
 
-    public static String join(Iterable[] tokens, CharSequence delimiter) {
+    public static String join(Iterable  tokens, CharSequence delimiter) {
         return TextUtils.join(delimiter, tokens);
     }
 

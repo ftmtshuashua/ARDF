@@ -1,15 +1,20 @@
-package com.lfp.androidrapiddevelopmentframework;
+package com.lfp.androidrapiddevelopmentframework.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 
+import com.lfp.androidrapiddevelopmentframework.Constants;
+import com.lfp.androidrapiddevelopmentframework.R;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.HomeActivity;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.ardf.debug.LogUtil;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
 import java.text.MessageFormat;
 
@@ -24,6 +29,13 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        try {
+            StatConfig.setDebugEnable(false);
+            StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
+        } catch (Exception e) {
+            LogUtil.e(e);
+        }
 
         mSplashAD = new SplashAD(getActivity(), (ViewGroup) findViewById(R.id.view_Splash), Constants.APPID, Constants.SplashPosID, mSplashADListener, 3000);
     }
@@ -68,7 +80,7 @@ public class LoadingActivity extends BaseActivity {
     };
 
     void next() {
-        MainActivity.start(getActivity());
+        HomeActivity.start(getActivity());
         finish();
     }
 }

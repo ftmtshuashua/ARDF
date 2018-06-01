@@ -9,8 +9,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.lfp.androidrapiddevelopmentframework.MainActivity;
 import com.lfp.androidrapiddevelopmentframework.R;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.ListFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
@@ -47,7 +47,7 @@ public class Demo_NetRequest extends BaseActivity {
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(MainActivity.DemoEntranceHolder.class, R.layout.layout_simpler_textview));
+        mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(ListFragment.DemoEntranceHolder.class, R.layout.layout_simpler_textview));
 
 
         List<DemoEntrance> arrays = new ArrayList<>();
@@ -83,18 +83,25 @@ public class Demo_NetRequest extends BaseActivity {
 //        mHandler.sendEmptyMessageDelayed(1, 450);
         mRequestLogic.perform(
                 new UnifyResponse(getActivity()) {
+
                     @Override
-                    public void onRequestResponse(OkHttpRequest request) {
+                    public void onComputation(OkHttpRequest request) {
+                        super.onComputation(request);
+                        if (!request.hasNext()) return;
                         try {
                             LogUtil.e("------->> 模拟耗时操作 1.5s");
                             Thread.sleep(1500); /*模拟耗时操作*/
+                        } catch (Exception e) {
+                        }
+                    }
 
+                    @Override
+                    public void onRequestResponse(OkHttpRequest request) {
+                        if (request.hasNext()) {
                             OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
                             UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
                             urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
                             reqeust.setApi(urlFormat.toUrl());
-
-                        } catch (Exception e) {
                         }
                     }
                 }

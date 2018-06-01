@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/divider_line"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <FrameLayout
+        android:id="@+id/view_Content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="内容区域"
+            android:textColor="@color/colorBlack_Explain"
+            android:textSize="@dimen/TextSize_Content" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal">
+
+        <com.lfp.ardf.widget.DrawableCenterTextView
+            android:id="@+id/tab_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/Unified_Margin_Middle"
+            android:drawableTop="@mipmap/ico_img"
+            android:text="大厅"
+            android:textColor="@color/colorBlack_Content"
+            android:textSize="@dimen/TextSize_Hint" />
+
+        <com.lfp.ardf.widget.DrawableCenterTextView
+            android:id="@+id/tab_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/Unified_Margin_Middle"
+            android:drawableTop="@mipmap/ico_img"
+            android:text="大厅"
+            android:textColor="@color/colorBlack_Content"
+            android:textSize="@dimen/TextSize_Hint" />
+
+        <com.lfp.ardf.widget.DrawableCenterTextView
+            android:id="@+id/tab_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/Unified_Margin_Middle"
+            android:drawableTop="@mipmap/ico_img"
+            android:text="大厅"
+            android:textColor="@color/colorBlack_Content"
+            android:textSize="@dimen/TextSize_Hint" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoadingActivity"
+            android:name=".activity.LoadingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStateBar">
@@ -36,8 +36,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask" />
+            android:name=".activity.module.home.HomeActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/TransparentStateBar" />
 
 
         <!-- 声明SDK所需要的组件 -->
@@ -51,7 +52,7 @@
         <!--Demo activity-->
         <activity android:name=".demo.Demo_BaseRecyclerViewAdapter" />
         <activity android:name=".demo.Demo_NetRequest" />
-        <activity android:name=".IntroduceActivity" />
+        <activity android:name=".activity.module.app.IntroduceActivity" />
     </application>
 
 </manifest>

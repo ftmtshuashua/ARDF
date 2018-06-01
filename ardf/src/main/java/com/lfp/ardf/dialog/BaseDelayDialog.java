@@ -3,9 +3,13 @@ package com.lfp.ardf.dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.lfp.ardf.debug.LogUtil;
+
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -38,10 +42,12 @@ public class BaseDelayDialog extends BaseDialog {
 
     @Override
     public void show() {
+        LogUtil.e(MessageFormat.format("mDisposable == null:{0} && !isShowing():{1}", mDisposable == null, !isShowing()));
         if (mDisposable == null && !isShowing()) {
-            mDisposable = Observable.timer(DEFUALT_DELAY_TIME, TimeUnit.SECONDS).subscribe(new Consumer<Long>() {
+            mDisposable = Observable.timer(DEFUALT_DELAY_TIME, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
                 @Override
                 public void accept(Long aLong) throws Exception {
+                    LogUtil.e("显示：" + aLong);
                     if (!isShowing()) {
                         BaseDelayDialog.super.show();
                     }

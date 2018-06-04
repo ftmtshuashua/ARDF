@@ -2,24 +2,23 @@ package com.lfp.androidrapiddevelopmentframework.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
-import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.OkHttpRequest;
 import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
 import com.lfp.ardf.module.net.logic.ChainRequestLogic;
 import com.lfp.ardf.module.net.logic.ImpRequestLogi;
+import com.lfp.ardf.module.net.logic.ParallelRequestLogic;
 import com.lfp.ardf.module.net.util.UrlFormat;
 
 import java.text.MessageFormat;
@@ -38,11 +37,15 @@ public class Demo_NetRequest extends BaseActivity {
 
     SimpleRecyclerViewAdapter mAdapter;
 
+    TextView mTV_Info;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("网络请求");
+        mTV_Info = findViewById(R.id.view_Info);
+
 
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -51,78 +54,87 @@ public class Demo_NetRequest extends BaseActivity {
 
 
         List<DemoEntrance> arrays = new ArrayList<>();
+        arrays.add(mDemoEntrance2);
         arrays.add(mDemoEntrance);
         arrays.add(mDemoCanleReqeust);
         mAdapter.setAndUpdata(arrays);
 
-        mRequestLogic = new ChainRequestLogic();
-        mRequestLogic.setAppFramework(getAppFk());
-        mRequestLogic.setRequestClient(OkHttpReqeuestClient.getDefualt());
+
+        mRequestLogic_Chain = new ChainRequestLogic();
+        mRequestLogic_Chain.setAppFramework(getAppFk());
+        mRequestLogic_Chain.setRequestClient(OkHttpReqeuestClient.getDefualt());
+
+        mRequestLogic_Parallel = new ParallelRequestLogic();
+        mRequestLogic_Parallel.setAppFramework(getAppFk());
+        mRequestLogic_Parallel.setRequestClient(OkHttpReqeuestClient.getDefualt());
     }
 
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    LogUtil.e("------------notify Activity onDestroy() ------------");
-                    finish();
-                    break;
-                case 1:
-                    mRequestLogic.shutdown();
-                    LogUtil.e("----- 取消请求 ------");
-                    break;
-            }
-        }
-    };
-
-    ImpRequestLogi mRequestLogic;
-
-    void testApi() {
-//        mHandler.sendEmptyMessageDelayed(1, 450);
-        mRequestLogic.perform(
-                new UnifyResponse(getActivity()) {
-
-                    @Override
-                    public void onComputation(OkHttpRequest request) {
-                        super.onComputation(request);
-                        if (!request.hasNext()) return;
-                        try {
-                            LogUtil.e("------->> 模拟耗时操作 1.5s");
-                            Thread.sleep(1500); /*模拟耗时操作*/
-                        } catch (Exception e) {
-                        }
-                    }
-
-                    @Override
-                    public void onRequestResponse(OkHttpRequest request) {
-                        if (request.hasNext()) {
-                            OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
-                            UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
-                            urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
-                            reqeust.setApi(urlFormat.toUrl());
-                        }
-                    }
-                }
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast());
-    }
+    ImpRequestLogi mRequestLogic_Chain;
+    ImpRequestLogi mRequestLogic_Parallel;
 
 
-    DemoEntrance mDemoEntrance = new DemoEntrance("接口请求测试") {
+    DemoEntrance mDemoEntrance = new DemoEntrance("链式请求测试") {
         @Override
         public void enter() {
-            testApi();
+            mTV_Info.setText("");
+            mRequestLogic_Chain.perform(
+                    new UnifyResponse(getActivity()) {
+
+                        @Override
+                        protected void onLog(String str) {
+                            super.onLog(str);
+                            mTV_Info.append("\n" + str);
+                        }
+
+                        @Override
+                        public void onRequestResponse(OkHttpRequest request) {
+                            super.onRequestResponse(request);
+                            if (request.hasNext()) {
+                                OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
+                                UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
+                                urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
+                                reqeust.setApi(urlFormat.toUrl());
+                            }
+                        }
+                    }
+                    , getApiserver().getWeatherForecast()
+                    , getApiserver().getWeatherForecast()
+                    , getApiserver().getWeatherForecast());
         }
     };
 
+    DemoEntrance mDemoEntrance2 = new DemoEntrance("并行请求测试") {
+        @Override
+        public void enter() {
+            mTV_Info.setText("");
+            mRequestLogic_Parallel.perform(
+                    new UnifyResponse(getActivity()) {
+                        @Override
+                        protected void onLog(String str) {
+                            super.onLog(str);
+                            mTV_Info.append("\n" + str);
+                        }
+
+                        @Override
+                        public void onRequestResponse(OkHttpRequest request) {
+                            super.onRequestResponse(request);
+                            if (request.hasNext()) {
+                                OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
+                                UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
+                                urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
+                                reqeust.setApi(urlFormat.toUrl());
+                            }
+                        }
+                    }
+                    , getApiserver().getWeatherForecast()
+                    , getApiserver().getWeatherForecast()
+                    , getApiserver().getWeatherForecast());
+        }
+    };
     DemoEntrance mDemoCanleReqeust = new DemoEntrance("取消请求") {
         @Override
         public void enter() {
-//            getReqeustManager().cancelRequest();
-            mRequestLogic.shutdown();
+            mRequestLogic_Chain.shutdown();
         }
     };
 

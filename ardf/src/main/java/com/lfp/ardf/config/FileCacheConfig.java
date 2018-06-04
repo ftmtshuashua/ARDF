@@ -10,6 +10,9 @@ import java.io.IOException;
 
 /**
  * 文件缓存配置<br/>
+ * 如果SD卡可用，缓存目录为SD卡下{@code PATH_SD_ROOT}<br/>
+ * 如果SKD卡不可用，缓存目录为/data/data/包/{@code PATH_SD_ROOT}<br/>
+ * 自定义目录除外<br/>
  * Created by LiFuPing on 2018/6/4.
  */
 public class FileCacheConfig {
@@ -63,25 +66,28 @@ public class FileCacheConfig {
     }
 
     /*------------------  缓存目录  -----------------*/
-
     public final File getRootDir() {
         return PATH_SD_ROOT;
     }
 
     public File getDownloadDir() {
-        return verifyDir(new File(getRootDir(), DIR_NAME_DOWNLOAD));
+        return getDir(DIR_NAME_DOWNLOAD);
     }
 
     public File getTemporaryDir() {
-        return verifyDir(new File(getRootDir(), DIR_NAME_TEMPORARY));
+        return getDir(DIR_NAME_TEMPORARY);
     }
 
     public File getCacheDir() {
-        return verifyDir(new File(getRootDir(), DIR_NAME_CACHE));
+        return getDir(DIR_NAME_CACHE);
     }
 
     public File getLogDir() {
-        return verifyDir(new File(getRootDir(), DIR_NAME_LOG));
+        return getDir(DIR_NAME_LOG);
+    }
+
+    public File getDir(String dir_name) {
+        return verifyDir(new File(getRootDir(), dir_name));
     }
 
     private File verifyDir(File dir) {

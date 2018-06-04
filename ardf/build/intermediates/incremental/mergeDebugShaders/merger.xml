@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\GitProject\ARDF\ardf\src\main\shaders"/></dataSet><dataSet config="debug"><source path="F:\GitProject\ARDF\ardf\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\GitHubProject\ARDF\ardf\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\GitHubProject\ARDF\ardf\src\debug\shaders"/></dataSet></merger>

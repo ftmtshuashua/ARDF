@@ -21,7 +21,7 @@ import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.widget.WaitProgressBar;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
-import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.util.StatusBarUtil;
 import com.lfp.ardf.util.ToastUtil;
 
 import java.util.ArrayList;
@@ -42,7 +42,6 @@ public class DemoFragment extends BaseFragment {
 
     SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
@@ -54,23 +53,12 @@ public class DemoFragment extends BaseFragment {
         mBar = view.findViewById(R.id.view_WaitProgressBar);
 
         RecyclerView mRecyclerView = view.findViewById(R.id.view_ReyclerView);
+        StatusBarUtil.fitLayoutAtFullScreen(mRecyclerView, false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoEntranceHolder.class, R.layout.layout_simpler_textview));
 
         initListConfig();
-
-
-        LogUtil.d("---------->> hello %s", "world");
-        LogUtil.d("---------->> debug");
-        LogUtil.e("---------->> error");
-        LogUtil.w("---------->> warning");
-        LogUtil.v("---------->> verbose");
-        LogUtil.i("---------->> information");
-        LogUtil.wtf("---------->> What a Terrible Failure");
-
-        LogUtil.json("[{\"Name\":\"小米\",\"Age\":18}]");
-//        LogUtil.xml(XML_CONTENT);
     }
 
     /*Demo 配置*/
@@ -78,11 +66,11 @@ public class DemoFragment extends BaseFragment {
         List<DemoEntrance> arrays = new ArrayList<>();
         arrays.add(new IntroduceActivity.Demo(getAppFk()));
         arrays.add(new Demo_BaseRecyclerViewAdapter.Demo(getAppFk()));
-        arrays.add(new PlaceholderEntrance("框架核心-业务分离(验证名字，验证年龄，选择数据)"));
-        arrays.add(new PlaceholderEntrance("地图城市选择器"));
-        arrays.add(new PlaceholderEntrance("Dialog框架(BaseDialog)"));
-        arrays.add(new PlaceholderEntrance("混淆配置(NotProguard)"));
-        arrays.add(new PlaceholderEntrance("工具类说明"));
+//        arrays.add(new PlaceholderEntrance("框架核心-业务分离(验证名字，验证年龄，选择数据)"));
+//        arrays.add(new PlaceholderEntrance("地图城市选择器"));
+//        arrays.add(new PlaceholderEntrance("Dialog框架(BaseDialog)"));
+//        arrays.add(new PlaceholderEntrance("混淆配置(NotProguard)"));
+//        arrays.add(new PlaceholderEntrance("工具类说明"));
         arrays.add(new Demo_NetRequest.Demo(getAppFk()));
         arrays.add(mProgressDemo);
 

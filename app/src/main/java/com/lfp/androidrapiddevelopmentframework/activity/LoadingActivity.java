@@ -16,7 +16,6 @@ import com.qq.e.comm.util.AdError;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
-import java.io.NotActiveException;
 import java.text.MessageFormat;
 
 /**
@@ -31,6 +30,7 @@ public class LoadingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+
         try {
             StatConfig.setDebugEnable(false);
             StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
@@ -38,6 +38,10 @@ public class LoadingActivity extends BaseActivity {
             LogUtil.e(e);
         }
 
+        if(true){
+            next();
+            return;
+        }
         mSplashAD = new SplashAD(getActivity(), (ViewGroup) findViewById(R.id.view_Splash), Constants.APPID, Constants.SplashPosID, mSplashADListener, 3000);
     }
 

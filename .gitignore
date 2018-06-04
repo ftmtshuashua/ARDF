@@ -27,3 +27,7 @@ ardf/build/intermediates/manifests/full/debug/output.json
 ardf/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
 ardf/build/intermediates/symbols/debug/R.txt
 ardf/build/outputs/logs/manifest-merger-debug-report.txt
+.idea/encodings.xml
+ardf/build/intermediates/incremental/packageDebugResources/merged.dir/values/values.xml
+ardf/build/intermediates/incremental/packageDebugResources/merged.dir/values/values.xml
+ardf/build/intermediates/incremental/packageDebugResources/merged.dir/values/values.xml

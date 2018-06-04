@@ -89,7 +89,6 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
         return mArrayModel;
     }
 
-
     /**
      * 设置数据并且更新
      *
@@ -267,7 +266,6 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
         }
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<D> holder, int position) {
         D model = getItemData(position);
@@ -285,7 +283,6 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
     public int getItemCount() {
         return mArrayModel.size();
     }
-
 
     public static abstract class BaseViewHolder<D> extends RecyclerView.ViewHolder {
         D mSaveData;
@@ -328,7 +325,6 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
             } else new NullPointerException("未设置ViewHolderMessageHandler!");
         }
     }
-
 
     /**
      * 监听适配器的数据变化

@@ -26,6 +26,7 @@ public class Apiserver {
     /**
      * 获取天气预报信息<br/>
      * http://tj.nineton.cn/Heart/index/all?city=CHSH000000&language=zh-chs&unit=c&aqi=city&alarm=1&key=78928e706123c1a8f1766f062bc8676b<br/>
+     * http://www.weather.com.cn/data/cityinfo/101190408.html
      * 感谢<中央天气预报>
      */
     public OkHttpRequest getWeatherForecast() {

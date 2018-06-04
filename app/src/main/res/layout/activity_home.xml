@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@mipmap/ico_img"
-            android:text="大厅"
+            android:text="发现"
             android:textColor="@color/colorBlack_Content"
             android:textSize="@dimen/TextSize_Hint" />
 
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@mipmap/ico_img"
-            android:text="大厅"
+            android:text="Demo"
             android:textColor="@color/colorBlack_Content"
             android:textSize="@dimen/TextSize_Hint" />
 
@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@mipmap/ico_img"
-            android:text="大厅"
+            android:text="集成"
             android:textColor="@color/colorBlack_Content"
             android:textSize="@dimen/TextSize_Hint" />
 

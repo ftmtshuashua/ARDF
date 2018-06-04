@@ -7,11 +7,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.exception.MsgException;
 import com.lfp.ardf.framework.I.IAppFramework;
+import com.lfp.ardf.util.Utils;
 
-import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -23,95 +21,142 @@ import java.util.List;
  * Created by LiFuPing on 2018/6/1.
  */
 public abstract class FragmentControl<T> {
+
     FragmentManager mFragmentManager;
-    int mFragmentContentLayout;
     /**
-     * 当前显示中Fragment
+     * Optional identifier of the container this fragment is
+     * to be placed in.  If 0, it will not be placed in a container.
+     */
+    int mCcontainerViewId;
+    /**
+     * 当前显示中的Fragment
      */
     Fragment mCurrentFragment;
+    /**
+     * Fragment初始化监听器
+     */
+    OnFragmentInit mOnFragmentInit;
+    /**
+     * Fragment切换监听器
+     */
+    OnFragmentChange mOnFragmentChange;
 
-    public FragmentControl(@LayoutRes int contentLayout) {
-        mFragmentContentLayout = contentLayout;
+    public FragmentControl(@LayoutRes int containerViewId) {
+        mCcontainerViewId = containerViewId;
     }
 
-
-    public FragmentControl(@NonNull IAppFramework appFk, @LayoutRes int contentLayout) {
-        mFragmentContentLayout = contentLayout;
+    public FragmentControl(@NonNull IAppFramework appFk, @LayoutRes int containerViewId) {
+        mCcontainerViewId = containerViewId;
         init(appFk);
     }
 
-    public FragmentControl(@NonNull FragmentActivity activity, @LayoutRes int contentLayout) {
-        mFragmentContentLayout = contentLayout;
+    public FragmentControl(@NonNull FragmentActivity activity, @LayoutRes int containerViewId) {
+        mCcontainerViewId = containerViewId;
         init(activity);
     }
 
-    public FragmentControl(@NonNull Fragment fragment, @LayoutRes int contentLayout) {
-        mFragmentContentLayout = contentLayout;
+    public FragmentControl(@NonNull Fragment fragment, @LayoutRes int containerViewId) {
+        mCcontainerViewId = containerViewId;
         init(fragment);
     }
 
-
+    /**
+     * 初始化
+     */
     public void init(@NonNull IAppFramework appFk) {
         mFragmentManager = appFk.getSmartFragmentManager();
-        resetChache();
+        recover();
     }
 
+    /**
+     * 初始化
+     */
     public void init(@NonNull FragmentActivity activity) {
         mFragmentManager = activity.getSupportFragmentManager();
-        resetChache();
+        recover();
     }
 
+    /**
+     * 初始化
+     */
     public void init(@NonNull Fragment fragment) {
         mFragmentManager = fragment.getChildFragmentManager();
-        resetChache();
+        recover();
+    }
+
+    /**
+     * 一些情况下导致缓存信息被回收。在这里进行恢复
+     */
+    void recover() {
+        List<Fragment> mData = mFragmentManager.getFragments();
+        if (mData != null && !mData.isEmpty()) {
+            for (Fragment f : mData) {
+                if (f.getId() != mCcontainerViewId) continue;
+                if (f.isAdded() && !f.isHidden()) {
+                    mCurrentFragment = f;
+                }
+            }
+        }
     }
 
 
-    void resetChache() { /*异常情况重构Fragment的时候重置缓信息*/
-//        List<Fragment> mData = mFragmentManager.getFragments();
-//        if (mData != null) {
-//            for (Fragment f : mData) {
-//                if (f instanceof OnFragmentControlProcessor && !f.isHidden()) {
-//                    mOnFragmentChange = (OnFragmentChange) f;
-//                    mCurrentTag = f.getTag();
-//                    return;
-//                }
-//            }
-//        }
-    }
-
-    OnFragmentInit mOnFragmentInit;
-
+    /**
+     * 设置Fragment初始化监听器
+     *
+     * @param l 初始化监听器
+     */
     public void setOnFragmentInit(OnFragmentInit l) {
         mOnFragmentInit = l;
     }
 
-    OnFragmentChange mOnFragmentChange;
 
+    /**
+     * 设置Fragment切换监听器
+     *
+     * @param l 切换监听器
+     */
     public void setOnFragmentChange(OnFragmentChange l) {
         mOnFragmentChange = l;
     }
 
+    /*转换tag为Fragment认识的tag*/
     String parseTag(T tag) {
         return String.valueOf(tag);
     }
 
+    /**
+     * 判断当前显示的Fragment是否为tag的Fragment
+     *
+     * @param tag Fragment私有的唯一标准
+     * @return 如果Fragment是tag对应的Fragment则return true
+     */
     public boolean isCurrentTag(T tag) {
         Fragment fragment = getCurrentFragment();
         if (fragment == null) return false;
         return parseTag(tag).equals(fragment.getTag());
     }
 
+    /**
+     * 如果有Fragment是显示的,获得当前显示的Fragment
+     *
+     * @return 当前显示的Fragment
+     */
     public Fragment getCurrentFragment() {
         return mCurrentFragment;
     }
 
+
     /**
-     * 切换显示的Fragment
+     * 切换到 tag 对应的Fragment，并且因此旧的Fragment。
+     *
+     * @param tag 每一个Fragment对应一个不同的tag
      */
     public void change(@NonNull T tag) {
         checNonNull();
+
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+        onFragmentTransactionConfig(mFragmentTransaction);
+
 
         Fragment fragment = mFragmentManager.findFragmentByTag(parseTag(tag));
         if (fragment != null && fragment == mCurrentFragment) return;
@@ -119,12 +164,15 @@ public abstract class FragmentControl<T> {
         List<Fragment> mData = mFragmentManager.getFragments();
         if (mData != null && !mData.isEmpty()) {
             for (Fragment f : mData) {
-                if (f.getId() != mFragmentContentLayout) continue;
+                if (f.getId() != mCcontainerViewId) continue;
                 if (fragment != null && fragment == f) {
                     mCurrentFragment = f;
                     if (f.isAdded() && f.isHidden()) mFragmentTransaction.show(fragment);
 
                 } else if (f.isAdded() && !f.isHidden()) {
+                    if (f instanceof OnFragmentControlProcessor) {
+                        ((OnFragmentControlProcessor) f).onFragmentHidden();
+                    }
                     mFragmentTransaction.hide(f);
                 }
 
@@ -134,7 +182,7 @@ public abstract class FragmentControl<T> {
         if (fragment == null) {
             fragment = getFragment(tag);
             if (fragment == null) return;
-            mFragmentTransaction.add(mFragmentContentLayout, fragment, parseTag(tag));
+            mFragmentTransaction.add(mCcontainerViewId, fragment, parseTag(tag));
             mFragmentTransaction.show(fragment);
             mCurrentFragment = fragment;
         }
@@ -143,6 +191,7 @@ public abstract class FragmentControl<T> {
 
         onChange(tag, fragment);
         if (mOnFragmentChange != null) mOnFragmentChange.onChange(fragment, tag);
+
 
         if (fragment instanceof OnFragmentControlProcessor) {
             OnFragmentControlProcessor processor = (OnFragmentControlProcessor) fragment;
@@ -168,7 +217,16 @@ public abstract class FragmentControl<T> {
     }
 
     /**
-     * 初始化一个新的Fragment
+     * 在切换的时候回调用FragmentTransaction，根据需求更改它的Style
+     *
+     * @param ft change ->　FragmentTransaction
+     */
+    protected void onFragmentTransactionConfig(FragmentTransaction ft) {
+
+    }
+
+    /**
+     * 通过tag创建，tag所对应的Fragment。这个tag是唯一指向这个Fragment的比标记
      */
     public abstract Fragment onInit(T tag);
 
@@ -182,23 +240,38 @@ public abstract class FragmentControl<T> {
 
     }
 
+    /**
+     * 当调用{@code change(T tag)}的时候如果切换到Fragment已创建将会回调{@code onFragmentShow())方法。
+     * 使用onFragmentShow来表示从其他地方回到该Fragment的时机
+     */
     public interface OnFragmentControlProcessor {
         /**
-         * 当Fragment已经创建 显示的时候回调方法
+         * 当Fragment已经创建，从其他fragment回来的时候回调
          */
         void onFragmentShow();
+
+        /**
+         * 当Fragment已经创建，改变到其他fragment的时候回调
+         */
+        void onFragmentHidden();
+
     }
 
-    /*当页面切换的时候回调方法*/
+    /**
+     * 当页面切换的时候回调方法
+     */
     public interface OnFragmentChange<T> {
         void onChange(Fragment fragment, T tag);
     }
 
+    /**
+     * 当页面初始化的时候回调方法
+     */
     public interface OnFragmentInit<T> {
         void onInit(Fragment fragment, T tag);
     }
 
     private void checNonNull() {
-        if (mFragmentManager == null) throw new MsgException("未调用init()方法进行初始化!");
+        Utils.checkNotNull(mFragmentManager, "未调用init()方法进行初始化!");
     }
 }

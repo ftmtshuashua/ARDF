@@ -18,4 +18,7 @@ public class ImpFragment extends Imp3NetRequestFragment implements IAppFramework
     public void onFragmentShow() {
     }
 
+    @Override
+    public void onFragmentHidden() {
+    }
 }

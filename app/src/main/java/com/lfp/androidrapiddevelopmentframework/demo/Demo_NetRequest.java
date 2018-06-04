@@ -10,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.ListFragment;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
@@ -47,7 +47,7 @@ public class Demo_NetRequest extends BaseActivity {
         RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(ListFragment.DemoEntranceHolder.class, R.layout.layout_simpler_textview));
+        mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoFragment.DemoEntranceHolder.class, R.layout.layout_simpler_textview));
 
 
         List<DemoEntrance> arrays = new ArrayList<>();

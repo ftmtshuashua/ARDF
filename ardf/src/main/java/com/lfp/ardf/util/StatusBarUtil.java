@@ -57,6 +57,30 @@ public class StatusBarUtil {
     }
 
     /**
+     * 全屏模式下，为一个布局的顶部增加状态栏高度的内边距，使得布局内容位于状态栏的下方
+     *
+     * @param v 需要调整的布局
+     * @param resize 为true的时候会在布局原来高度的基础上增加状态栏的高度
+     */
+    public static void fitLayoutAtFullScreen(final View v, boolean resize) {
+        if (Build.VERSION.SDK_INT < 19) return;
+        final int mStateBarHeight = getStatusBarHeight(v.getContext());
+        v.setPadding(0, v.getPaddingTop() + mStateBarHeight, 0, 0);
+        if (resize) {
+            v.post(new Runnable() {
+                @Override
+                public void run() {
+                    ViewGroup.LayoutParams params = v.getLayoutParams();
+                    if (params != null) {
+                        params.height += mStateBarHeight;
+                        v.setLayoutParams(params);
+                    }
+                }
+            });
+        }
+    }
+
+    /**
      * 小米MIUI系统 亲测好用
      *
      * @param window

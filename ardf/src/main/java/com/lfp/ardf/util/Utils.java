@@ -43,6 +43,16 @@ public class Utils {
     }
 
     /**
+     *  如果这个对象为空这抛出 {@code NullPointerException},否则返回这个对象
+     * @param obj 被检测的对象
+     * @param msg 对象为空时候显示的消息
+     * @return 如果对象不为空则返回这个对象
+     */
+    public static <T> T checkNotNull(@Nullable final T obj,String msg){
+        if (obj == null) throw new NullPointerException(msg);
+        return obj;
+    }
+    /**
      * Returns true if a and b are equal, including if they are both null.
      * <p><i>Note: In platform versions 1.1 and earlier, this method only worked well if
      * both the arguments were instances of String.</i></p>

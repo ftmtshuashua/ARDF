@@ -1,12 +1,15 @@
 package com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
@@ -20,8 +23,6 @@ import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.ToastUtil;
-import com.tencent.stat.StatConfig;
-import com.tencent.stat.StatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,25 +31,29 @@ import java.util.List;
  * <br/>
  * Created by LiFuPing on 2018/6/1.
  */
-public class ListFragment extends BaseFragment {
+public class DemoFragment extends BaseFragment {
+
+
+    public static Fragment newInstance() {
+        DemoFragment fragment = new DemoFragment();
+
+        return fragment;
+    }
 
     SimpleRecyclerViewAdapter<DemoEntrance> mAdapter;
 
-    void setContentView(int t){
-
-    }
-    <T extends View> T findViewById(int id){return null;}
-
-    Context getApplicationContext(){return null;}
 
     @Override
-     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
+    }
 
-        mBar = findViewById(R.id.view_WaitProgressBar);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mBar = view.findViewById(R.id.view_WaitProgressBar);
 
-        RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
+        RecyclerView mRecyclerView = view.findViewById(R.id.view_ReyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoEntranceHolder.class, R.layout.layout_simpler_textview));
@@ -56,13 +61,13 @@ public class ListFragment extends BaseFragment {
         initListConfig();
 
 
-        LogUtil.d("hello %s", "world");
-        LogUtil.d("debug");
-        LogUtil.e("error");
-        LogUtil.w("warning");
-        LogUtil.v("verbose");
-        LogUtil.i("information");
-        LogUtil.wtf("What a Terrible Failure");
+        LogUtil.d("---------->> hello %s", "world");
+        LogUtil.d("---------->> debug");
+        LogUtil.e("---------->> error");
+        LogUtil.w("---------->> warning");
+        LogUtil.v("---------->> verbose");
+        LogUtil.i("---------->> information");
+        LogUtil.wtf("---------->> What a Terrible Failure");
 
         LogUtil.json("[{\"Name\":\"小米\",\"Age\":18}]");
 //        LogUtil.xml(XML_CONTENT);

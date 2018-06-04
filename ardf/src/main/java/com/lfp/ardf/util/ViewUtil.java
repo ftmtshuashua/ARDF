@@ -4,6 +4,8 @@ import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * View 工具集合
@@ -64,6 +66,53 @@ public class ViewUtil {
     }
     public interface Action2<A, B> {
         void call(A a, B b);
+    }
+
+
+
+
+    /**
+     * 设置View显示状态
+     */
+    public static final void setVisibility(View view, int visibility) {
+        if (view == null) return;
+        if (view.getVisibility() != visibility) view.setVisibility(visibility);
+    }
+
+    /**
+     * 设置ImageView的显示图片
+     */
+    public static final void setImageResource(ImageView view, int resid) {
+        if (view == null) return;
+        int key = 3 << 24;
+        Object value = view.getTag(key);
+        if (value != null && (int) value == resid) return;
+        view.setImageResource(resid);
+        view.setTag(key, resid);
+    }
+
+    /**
+     * 设置ImageView的显示图片
+     */
+    public static final void setBackgroundResource(View view, int resid) {
+        if (view == null) return;
+        int key = 4 << 24;
+        Object value = view.getTag(key);
+        if (value != null && (int) value == resid) return;
+        view.setBackgroundResource(resid);
+        view.setTag(key, resid);
+    }
+
+    /**
+     * 设置文本字体颜色
+     */
+    public static final void setTextColor(TextView view, int color) {
+        if (view == null) return;
+        int key = 5 << 24;
+        Object value = view.getTag(key);
+        if (value != null && (int) value == color) return;
+        view.setTextColor(color);
+        view.setTag(key, color);
     }
 
 }

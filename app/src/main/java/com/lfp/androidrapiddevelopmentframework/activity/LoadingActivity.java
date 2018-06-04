@@ -16,6 +16,7 @@ import com.qq.e.comm.util.AdError;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
+import java.io.NotActiveException;
 import java.text.MessageFormat;
 
 /**

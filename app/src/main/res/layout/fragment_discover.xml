@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/layout_Actionabr"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ActionBar_Height"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/view_Back"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ActionBar_Height"
+            android:gravity="center"
+            android:paddingLeft="@dimen/Unified_Margin_Basic"
+            android:paddingRight="@dimen/Unified_Margin_Basic"
+            android:text="返回"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TextSize_Explain"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/view_Title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ActionBar_Height"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="70dp"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/Unified_Margin_LeftAndRight"
+            android:paddingRight="@dimen/Unified_Margin_LeftAndRight"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TextSize_Title"
+            tools:text="title" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/view_Banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#AAA"
+        android:gravity="center"
+        android:text="Banner"
+        app:layout_constraintDimensionRatio="H,16:0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <com.lfp.ardf.widget.WebViewFk
+        android:id="@+id/view_WebView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_Actionabr" />
+
+
+    <com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar
+        android:id="@+id/view_WebProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>

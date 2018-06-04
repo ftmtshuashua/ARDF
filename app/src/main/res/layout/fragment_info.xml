@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context=".activity.module.home.HomeActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_Actionabr"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ActionBar_Height"
+        android:background="@drawable/bg_actionbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ActionBar_Height"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="集成"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TextSize_Title" />
+    </RelativeLayout>
+
+    <com.lfp.widget.springview.SpringView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:enable_springback="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/view_Info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:focusable="true"
+                android:padding="@dimen/Unified_Margin_LeftAndRight"
+                android:textColor="@color/colorBlack_Content"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/TextSize_Content" />
+        </ScrollView>
+
+    </com.lfp.widget.springview.SpringView>
+
+
+</LinearLayout>

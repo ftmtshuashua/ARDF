@@ -4,12 +4,11 @@ import android.content.Context;
 
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.ApkUtil;
+import com.lfp.ardf.util.AssetsUtil;
 import com.lfp.ardf.util.PhoneUtil;
 import com.lfp.ardf.util.ScreenUtil;
 import com.lfp.ardf.util.ToastUtil;
 import com.lfp.ardf.util.Utils;
-
-import java.text.MessageFormat;
 
 /**
  * 帮助框架做一些必要的初始化工作
@@ -21,16 +20,14 @@ public class AppFrameworkHolper {
      */
     public static final void init(Context c) {
         Utils.checkNotNull(c);
-        LogUtil.init(c.getApplicationContext());
+        Context context = c.getApplicationContext();
+        LogUtil.init(context);
         LogUtil.i("----------- AppFramework init -----------");
-        ToastUtil.init(c.getApplicationContext());
-        ScreenUtil.init(c.getApplicationContext());
-        ApkUtil.init(c.getApplicationContext());
-        PhoneUtil.init(c.getApplicationContext());
-
-        /*配置缓存目录*/
-        LogUtil.i(MessageFormat.format("配置缓存目录:{0}", ""));
-
+        ToastUtil.init(context);
+        ScreenUtil.init(context);
+        ApkUtil.init(context);
+        PhoneUtil.init(context);
+        AssetsUtil.init(context);
     }
 
 }

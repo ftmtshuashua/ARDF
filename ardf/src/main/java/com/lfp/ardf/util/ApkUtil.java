@@ -28,6 +28,10 @@ public class ApkUtil {
         mContext = c.getApplicationContext();
     }
 
+    public static final boolean isInit(){
+        return mContext!=null;
+    }
+
     static PackageInfo getPackageInfo() {
         if (mPackInfo == null) try {
             mPackInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
@@ -86,6 +90,15 @@ public class ApkUtil {
      */
     public static PackageInfo getAppPackageInfo() {
         return getPackageInfo();
+    }
+
+    /**
+     * 获得App对于的data目录
+     *
+     * @return data目录地址
+     */
+    public static String getPackageDataPath() {
+        return "/data/data/" + ApkUtil.getAppPackageInfo().packageName;
     }
 
     /**

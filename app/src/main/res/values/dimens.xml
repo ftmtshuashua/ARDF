@@ -11,7 +11,7 @@
     <!--标题-->
     <dimen name="TextSize_Title">18sp</dimen>
     <!--副标题-->
-    <dimen name="TextSize_Subtitle">17sp</dimen>
+    <dimen name="TextSize_Subtitle">16sp</dimen>
     <!--正文-->
     <dimen name="TextSize_Content">15sp</dimen>
     <!--说明-->

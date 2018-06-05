@@ -11,7 +11,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -22,12 +22,14 @@ android {
         manifestPlaceholders = [MTA_CHANNEL: "智者",
                                 MTA_APPKEY : "AUFW43Z4G4VN"]
     }
+
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled false
             shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro'
         }
 
         release {
@@ -36,11 +38,42 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro'
+
+
+            /*包文件命名*/
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "ARDF_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                }
+            }
         }
+    }
+    lintOptions {
+        checkReleaseBuilds true
+        abortOnError true
     }
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
+        }
+    }
+
+    //gradlew assembleRelease
+
+    /*批量打包配置*/
+    flavorDimensions "market"
+    productFlavors {
+        ARDF {
+            dimension "market"
+            manifestPlaceholders=[
+                    MTA_CHANNEL:"智者"
+            ]
+        }
+        HuaWei {
+            dimension "market"
+            manifestPlaceholders=[
+                    MTA_CHANNEL:"华为"
+            ]
         }
     }
 }
@@ -66,4 +99,11 @@ dependencies {
     //    implementation 'com.qq.visual:visual:3.3.1-release' 高级功能：可视化埋点
     implementation 'com.orhanobut:logger:2.2.0'
     implementation files('src/main/libs/GDTUnionSDK.TBS.4.16.564.min.jar')
+
+    implementation 'com.yanzhenjie:permission:2.0.0-rc8'
+}
+
+//获取当前时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }

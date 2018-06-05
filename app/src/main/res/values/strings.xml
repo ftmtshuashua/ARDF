@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ARDF</string>
     <string name="activity_recyclerview_info">Click the bottom button to change the data.</string>
-
+    <string name="introduce_app">ARDF是一个帮助开发者快速构建项目的基础框架,提供了丰富的可拓展的基础功能,简单配置即可开始业务开发.\n\nGitHub\nhttps://github.com/ftmtshuashua/ARDF</string>
 </resources>

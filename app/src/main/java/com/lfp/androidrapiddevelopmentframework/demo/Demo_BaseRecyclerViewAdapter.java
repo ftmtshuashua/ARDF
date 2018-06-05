@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,14 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity implements View.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ToastUtil.show(R.string.activity_recyclerview_info);
+        setContentView(R.layout.demo_recycleradapter);
 
-        setContentView(R.layout.activity_recycleradapter);
+        Toolbar toolbar = findViewById(R.id.view_Toolbar);
+        toolbar.setTitle("RecyclerView Adapter");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.mipmap.arrow_left_white);
+
+
         findViewById(R.id.view_Set3).setOnClickListener(this);
         findViewById(R.id.view_Set5).setOnClickListener(this);
         findViewById(R.id.view_Add3).setOnClickListener(this);
@@ -101,7 +108,7 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity implements View.O
         @NonNull
         @Override
         public BaseViewHolder<Model> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new VHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycleradapter_listitem, parent, false));
+            return new VHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.demo_recycleradapter_listitem, parent, false));
         }
 
     }

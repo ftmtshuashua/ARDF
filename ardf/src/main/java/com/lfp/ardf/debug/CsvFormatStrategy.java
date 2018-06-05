@@ -6,6 +6,7 @@ import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.lfp.ardf.config.FileCacheConfig;
 import com.lfp.ardf.util.Utils;
 
 import java.io.File;
@@ -139,9 +140,9 @@ public class CsvFormatStrategy implements LogAdapter {
                 dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.UK);
             }
             if (logStrategy == null) {
-                String diskPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-                String folder = diskPath + File.separatorChar + "logger";
-
+//                String diskPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+//                String folder = diskPath + File.separatorChar + "logger";
+                String folder = FileCacheConfig.getDefualt().getLogDir().getAbsolutePath();
                 HandlerThread ht = new HandlerThread("AndroidFileLogger." + folder);
                 ht.start();
                 Handler handler = new DiskLogStrategy.WriteHandler(ht.getLooper(), folder, MAX_BYTES);

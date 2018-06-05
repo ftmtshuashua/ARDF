@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--标题栏高度-->
-    <dimen name="ActionBar_Height">43dp</dimen>
+    <dimen name="ActionBar_Height">58dp</dimen>
 
 
 
@@ -11,7 +11,7 @@
     <!--标题-->
     <dimen name="TextSize_Title">18sp</dimen>
     <!--副标题-->
-    <dimen name="TextSize_Subtitle">16sp</dimen>
+    <dimen name="TextSize_Subtitle">15sp</dimen>
     <!--正文-->
     <dimen name="TextSize_Content">15sp</dimen>
     <!--说明-->
@@ -25,6 +25,7 @@
     <dimen name="Unified_Margin_Basic">8dp</dimen> <!--两个模块之间的间距-->
     <dimen name="Unified_Margin_LeftAndRight">15dp</dimen> <!--模块与边缘的距离-->
     <dimen name="Unified_Margin_LeftAndRight_X2">30dp</dimen>
+    <dimen name="Unified_Margin_LeftAndRight_Reverse">-15dp</dimen> <!--模块与边缘的距离-->
 
 
     <!--统一圆角角度-->

@@ -181,7 +181,7 @@ public class LogUtil {
     }
 
     public static void e_Pretty(@NonNull String message, @Nullable Object... args) {
-        e(null, message, args);
+        e_Pretty(null, message, args);
     }
 
     public static void e_Pretty(@Nullable Object object) {

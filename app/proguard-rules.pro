@@ -22,7 +22,8 @@
 
 
 
-
+#AndPermission
+-dontwarn com.yanzhenjie.permission.**
 
 #腾讯统计
 -keep class com.tencent.stat.*{*;}

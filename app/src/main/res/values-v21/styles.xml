@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+    </style>
+
     <style name="TransparentStateBar" parent="AppTheme">
         <!--透明状态栏-->
         <item name="android:windowTranslucentStatus">true</item>

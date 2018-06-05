@@ -19,7 +19,6 @@ import com.lfp.androidrapiddevelopmentframework.demo.DemoEntrance;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.widget.WaitProgressBar;
-import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.util.StatusBarUtil;
 import com.lfp.ardf.util.ToastUtil;
@@ -77,7 +76,7 @@ public class DemoFragment extends BaseFragment {
         mAdapter.setAndUpdata(arrays);
     }
 
-    public static final class DemoEntranceHolder extends BaseRecyclerViewAdapter.BaseViewHolder<DemoEntrance> implements View.OnClickListener {
+    public static final class DemoEntranceHolder extends SimpleRecyclerViewAdapter.NotProguardPViewHolder<DemoEntrance> implements View.OnClickListener {
         TextView mTV_Info;
 
         public DemoEntranceHolder(View itemView) {

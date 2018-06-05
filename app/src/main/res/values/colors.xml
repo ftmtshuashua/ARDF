@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#00A0B4</color>
     <color name="colorAccent">#FF4081</color>
 
 
@@ -15,6 +15,7 @@
     <color name="colorBlack_Explain">#b3b3b3</color>   <!--说明文本颜色-->
     <color name="colorBlack_Line">#dcdcdc</color>   <!--边框线条颜色-->
     <color name="colorBlack_DividerLine">#f6f6f6</color>   <!--分割线颜色-->
+    <color name="colorBlack_Dark">#dcdcdc</color>   <!--点击效果颜色-->
 
     <color name="colorBlack_Backgroung">#f5f5f5</color>    <!--内容背景-->
 

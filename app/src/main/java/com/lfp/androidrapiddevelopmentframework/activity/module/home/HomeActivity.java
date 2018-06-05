@@ -11,8 +11,10 @@ import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.De
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DiscoverFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.InfoFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
+import com.yanzhenjie.permission.Permission;
 
 /**
  * Demo列表
@@ -59,6 +61,9 @@ public class HomeActivity extends BaseActivity {
         mRadioGroupControl.addRadio(new RadioGroupControl.SimperRadioItem(findViewById(R.id.tab_2)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimperRadioItem(findViewById(R.id.tab_3)));
         mRadioGroupControl.check(R.id.tab_1);
+
+        new PermissonManager(getContext()) {
+        }.request(Permission.ACCESS_COARSE_LOCATION);
     }
 
 

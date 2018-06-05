@@ -9,14 +9,19 @@ import com.lfp.androidrapiddevelopmentframework.Constants;
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.HomeActivity;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.debug.LogUtil;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * 开屏页面<br/>
@@ -38,8 +43,15 @@ public class LoadingActivity extends BaseActivity {
             LogUtil.e(e);
         }
 
-        if(true){
-            next();
+        new PermissonManager(getContext()) {
+            @Override
+            public void onFinish(List<String> data) {
+                super.onFinish(data);
+                next();
+            }
+        }.request(Permission.WRITE_EXTERNAL_STORAGE);
+
+        if (true) {
             return;
         }
         mSplashAD = new SplashAD(getActivity(), (ViewGroup) findViewById(R.id.view_Splash), Constants.APPID, Constants.SplashPosID, mSplashADListener, 3000);
@@ -88,4 +100,6 @@ public class LoadingActivity extends BaseActivity {
         HomeActivity.start(getActivity());
         finish();
     }
+
+
 }

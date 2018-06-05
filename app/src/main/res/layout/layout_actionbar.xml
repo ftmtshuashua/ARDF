@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_ActionBar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ActionBar_Height"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/layout_LeftControl"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/view_Back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/clickable__t__s_grey"
+            android:paddingLeft="@dimen/Unified_Margin_LeftAndRight"
+            android:paddingRight="@dimen/Unified_Margin_LeftAndRight"
+            android:src="@mipmap/arrow_left_white"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/view_Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/clickable__t__s_grey"
+            android:gravity="center"
+            android:paddingRight="@dimen/Unified_Margin_LeftAndRight"
+            android:text="关闭"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/TextSize_Content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/view_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/clickable__t__s_grey"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/TextSize_Title"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/view_SubTitle"
+        app:layout_constraintLeft_toRightOf="@+id/layout_LeftControl"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_goneMarginLeft="@dimen/Unified_Margin_LeftAndRight"
+        tools:text="Title"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/view_SubTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/clickable__t__s_grey"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/TextSize_Subtitle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/layout_LeftControl"
+        app:layout_constraintTop_toBottomOf="@+id/view_Title"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_goneMarginLeft="@dimen/Unified_Margin_LeftAndRight"
+        tools:text="SubTitle"
+        tools:visibility="visible" />
+
+</android.support.constraint.ConstraintLayout>

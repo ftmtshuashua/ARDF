@@ -1,5 +1,8 @@
 package com.lfp.androidrapiddevelopmentframework.base;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.lfp.androidrapiddevelopmentframework.api.Apiserver;
 import com.lfp.ardf.framework.imp.activity.ImpActivity;
 import com.tencent.stat.StatService;

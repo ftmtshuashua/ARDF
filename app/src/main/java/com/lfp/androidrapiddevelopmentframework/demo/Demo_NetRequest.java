@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
+import com.lfp.androidrapiddevelopmentframework.event.InfoEvent;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
+import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.OkHttpRequest;
@@ -43,7 +46,12 @@ public class Demo_NetRequest extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("网络请求");
+        new ActionBarControl(getActivity())
+                .setTitle("网络请求")
+                .setSubTitle("并发请求/链式请求")
+                .showBack()
+                .setBackFinishActivity(getActivity());
+
         mTV_Info = findViewById(R.id.view_Info);
 
 
@@ -53,7 +61,7 @@ public class Demo_NetRequest extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoFragment.DemoEntranceHolder.class, R.layout.layout_simpler_textview));
 
 
-        List<DemoEntrance> arrays = new ArrayList<>();
+        List<InfoEvent> arrays = new ArrayList<>();
         arrays.add(mDemoEntrance2);
         arrays.add(mDemoEntrance);
         arrays.add(mDemoCanleReqeust);
@@ -73,9 +81,9 @@ public class Demo_NetRequest extends BaseActivity {
     ImpRequestLogi mRequestLogic_Parallel;
 
 
-    DemoEntrance mDemoEntrance = new DemoEntrance("链式请求测试") {
+    InfoEvent mDemoEntrance = new InfoEvent("链式请求测试") {
         @Override
-        public void enter() {
+        public void call() {
             mTV_Info.setText("");
             mRequestLogic_Chain.perform(
                     new UnifyResponse(getActivity()) {
@@ -103,9 +111,9 @@ public class Demo_NetRequest extends BaseActivity {
         }
     };
 
-    DemoEntrance mDemoEntrance2 = new DemoEntrance("并行请求测试") {
+    InfoEvent mDemoEntrance2 = new InfoEvent("并行请求测试") {
         @Override
-        public void enter() {
+        public void call() {
             mTV_Info.setText("");
             mRequestLogic_Parallel.perform(
                     new UnifyResponse(getActivity()) {
@@ -131,25 +139,24 @@ public class Demo_NetRequest extends BaseActivity {
                     , getApiserver().getWeatherForecast());
         }
     };
-    DemoEntrance mDemoCanleReqeust = new DemoEntrance("取消请求") {
+    InfoEvent mDemoCanleReqeust = new InfoEvent("取消请求") {
         @Override
-        public void enter() {
+        public void call() {
             mRequestLogic_Chain.shutdown();
         }
     };
 
     /*Demo入口*/
-    public static final class Demo extends DemoEntrance {
-        IAppFramework appfk;
+    public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super("网络请求");
-            this.appfk = appfk;
+            super(appfk, "网络请求");
+            setInfo("并发请求/链式请求解决方案");
         }
 
         @Override
-        public void enter() {
-            Demo_NetRequest.start(appfk);
+        public void call() {
+            Demo_NetRequest.start(getAppFk());
         }
     }
 }

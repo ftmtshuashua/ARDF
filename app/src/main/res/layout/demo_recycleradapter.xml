@@ -1,31 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/view_Toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary" />
+    <include
+        android:id="@+id/layout_ActionBar"
+        layout="@layout/layout_actionbar" />
+
+    <com.lfp.widget.springview.SpringView
+        android:id="@+id/layout_Menu"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_ReyclerViewMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.lfp.widget.springview.SpringView>
 
 
     <TextView
-        android:id="@+id/view_Info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/Unified_Margin_Middle"
-        android:text="@string/activity_recyclerview_info"
+        android:layout_margin="@dimen/Unified_Margin_LeftAndRight"
+        android:gravity="center_vertical"
+        android:text="☜ Menu"
         android:textColor="@color/colorBlack_Explain"
-        android:textSize="@dimen/TextSize_Content" />
+        android:textSize="@dimen/TextSize_Content"
+        app:layout_constraintLeft_toRightOf="@+id/layout_Menu"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar" />
 
     <com.lfp.widget.springview.SpringView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:enable_springback="true">
+        android:layout_marginLeft="1dp"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/layout_Menu"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/view_ReyclerView"
@@ -34,79 +53,5 @@
 
     </com.lfp.widget.springview.SpringView>
 
-    <com.lfp.widget.springview.SpringView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:enable_springback="true">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/Unified_Margin_Middle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/divider_transparent_margin_middle"
-                android:orientation="horizontal"
-                android:showDividers="middle">
-
-                <TextView
-                    android:id="@+id/view_Set3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="set(3)" />
-
-                <TextView
-                    android:id="@+id/view_Set5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="set(5)" />
-
-                <TextView
-                    android:id="@+id/view_Add5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="add(5)" />
-
-                <TextView
-                    android:id="@+id/view_Add3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="add(3)" />
-
-                <TextView
-                    android:id="@+id/view_Insert1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="Insert(1,1)" />
-
-                <TextView
-                    android:id="@+id/view_Insert2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="Insert(1,2)" />
-
-                <TextView
-                    android:id="@+id/view_Move"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/clickable_a_white__defualt"
-                    android:padding="@dimen/Unified_Margin_LeftAndRight"
-                    android:text="Move(1,3)" />
-            </LinearLayout>
-        </HorizontalScrollView>
-    </com.lfp.widget.springview.SpringView>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -36,7 +36,7 @@ public class InfoFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StatusBarUtil.fitLayoutAtFullScreen(view.findViewById(R.id.layout_Actionabr), true);
+        StatusBarUtil.fitLayoutAtFullScreen(view.findViewById(R.id.layout_ActionBar), true);
         mTV_Info = view.findViewById(R.id.view_Info);
 
         mTV_Info.setText(AssetsUtil.getString("README.txt"));

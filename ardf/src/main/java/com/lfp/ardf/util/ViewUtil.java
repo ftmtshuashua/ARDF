@@ -31,6 +31,7 @@ public class ViewUtil {
             }
         });
     }
+
     public static void getViewWideHigh2(final View v, final Action2<Integer, Integer> acion) {
         v.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -42,6 +43,7 @@ public class ViewUtil {
         });
 
     }
+
     public static void getViewWideHigh3(final View v, final Action2<Integer, Integer> acion) {
         v.post(new Runnable() {
             @Override
@@ -50,6 +52,7 @@ public class ViewUtil {
             }
         });
     }
+
     public static void getViewWideHigh4(final View v, final Action2<Integer, Integer> acion) {
         v.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -59,17 +62,27 @@ public class ViewUtil {
             }
         });
     }
-    public static void getViewWideHigh5(final View v, final Action2<Integer, Integer> acion){
+
+    public static void getViewWideHigh5(final View v, final Action2<Integer, Integer> acion) {
         if (ViewCompat.isLaidOut(v)) {
             acion.call(v.getWidth(), v.getHeight());
         }
     }
+
     public interface Action2<A, B> {
         void call(A a, B b);
     }
 
 
-
+    /**
+     * View显示状态切换
+     * View.GONE | View.VISIBLE
+     *
+     * @param view
+     */
+    public static final void setVisibilitySwitch(View view) {
+        setVisibility(view, view.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+    }
 
     /**
      * 设置View显示状态

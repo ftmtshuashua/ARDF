@@ -14,6 +14,7 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
+import com.lfp.ardf.util.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
 
 /**

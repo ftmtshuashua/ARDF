@@ -57,13 +57,14 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
     }
 
     public void check(T radio) {
-        if (radio.onInterceptCheck()) return;
         setCheck(radio);
     }
 
     private void setCheck(T radio) {
+
         if (mCheckedRadio != null && mCheckedRadio == radio) return;
-        if (mCheckedRadio != null) mCheckedRadio.setCheck(false);
+        if (mCheckedRadio != null && mCheckedRadio != radio) mCheckedRadio.setCheck(false);
+
         mCheckedRadio = radio;
         radio.setCheck(true);
 
@@ -88,13 +89,13 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
     /**
      * RadioItem 在任何View外套一个的壳。以实现类似RadioGroup的效果
      */
-    public static abstract class RadioItem implements View.OnClickListener {
+    public static abstract class RadioItem<V extends View> implements View.OnClickListener {
         RadioGroupControl mControl;
-        View mView;
+        V mView;
         boolean mIsCheck;
 
 
-        public RadioItem(View view) {
+        public RadioItem(V view) {
             mIsCheck = false;
             mView = view;
             view.setOnClickListener(this);
@@ -104,19 +105,24 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
             mControl = control;
         }
 
-        public View getView() {
+        public V getView() {
             return mView;
         }
 
         /**
          * 拦截点击事件，在一些特殊情况下通过拦截事件来阻止RadioGroup切换选中状态
          */
-        public boolean onInterceptCheck() {
-            return isCheck();
+        public boolean onInterceptCheck(boolean isCheck) {
+            return isCheck() && isCheck;
         }
 
-        public void setCheck(boolean isCheck) {
+        protected boolean setCheck(boolean isCheck) {
+            boolean isIntercept = onInterceptCheck(isCheck);
+            if (isIntercept) return false;
+
             mIsCheck = isCheck;
+            onChange();
+            return true;
         }
 
         public boolean isCheck() {
@@ -139,7 +145,6 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
         public SimperRadioItem(View view) {
             super(view);
         }
-
 
         @Override
         public void onChange() {

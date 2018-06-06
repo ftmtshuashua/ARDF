@@ -1,7 +1,6 @@
 package com.lfp.ardf.adapter;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,15 @@ import java.text.MessageFormat;
 
 /**
  * 自动创建Adapter，少写几行代码
+ * 推荐使用 BaseRecyclerViewAdapter自己实现
  * Created by LiFuPing on 2018/5/11.
  */
 public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {
 
-    Class<? extends NotProguardPViewHolder<D>> cls_vh;
+    Class<? extends NotProguardViewHolder<D>> cls_vh;
     int layout_resouce_id;
 
-    public SimpleRecyclerViewAdapter(Class<? extends NotProguardPViewHolder<D>> vh, int layout_resouce_id) {
+    public SimpleRecyclerViewAdapter(Class<? extends NotProguardViewHolder<D>> vh, int layout_resouce_id) {
         this.cls_vh = vh;
         this.layout_resouce_id = layout_resouce_id;
     }
@@ -30,8 +30,8 @@ public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {
     @Override
     public BaseViewHolder<D> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         try {
-            Constructor<NotProguardPViewHolder<D>> cls = (Constructor<NotProguardPViewHolder<D>>) cls_vh.getDeclaredConstructor(View.class);
-            LogUtil.e_Pretty(MessageFormat.format("通过反射获取构造方法：{0}" , cls.getName()));
+            Constructor<NotProguardViewHolder<D>> cls = (Constructor<NotProguardViewHolder<D>>) cls_vh.getDeclaredConstructor(View.class);
+            LogUtil.e_Pretty(MessageFormat.format("通过反射获取构造方法：{0}", cls.getName()));
             if (!cls.isAccessible()) cls.setAccessible(true);
             return cls.newInstance(LayoutInflater.from(parent.getContext()).inflate(layout_resouce_id, parent, false));
         } catch (NoSuchMethodException ex) {
@@ -43,12 +43,13 @@ public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {
 
     /**
      * 使用反射创建ViewHolder必须保证它不被混淆
+     * 推荐使用 BaseRecyclerViewAdapter自己实现
      *
      * @param <T>
      */
-    public static abstract class NotProguardPViewHolder<T> extends BaseRecyclerViewAdapter.BaseViewHolder<T> implements NotProguard{
+    public static abstract class NotProguardViewHolder<T> extends BaseRecyclerViewAdapter.BaseViewHolder<T> implements NotProguard {
 
-        public NotProguardPViewHolder(View itemView) {
+        public NotProguardViewHolder(View itemView) {
             super(itemView);
         }
     }

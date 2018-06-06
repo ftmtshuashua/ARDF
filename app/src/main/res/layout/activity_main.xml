@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_Root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_actionbar" />
+    <include
+        android:id="@+id/layout_ActionBar"
+        layout="@layout/layout_actionbar" />
 
     <com.lfp.widget.springview.SpringView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:enable_springback="true">
+        android:layout_height="0dp"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/view_ReyclerView"
@@ -25,7 +29,11 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/view_Info"
@@ -35,4 +43,4 @@
         android:padding="@dimen/Unified_Margin_LeftAndRight"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/TextSize_Content" />
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

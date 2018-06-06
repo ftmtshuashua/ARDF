@@ -9,7 +9,7 @@
     tools:context=".activity.module.home.HomeActivity">
 
     <RelativeLayout
-        android:id="@+id/layout_Actionabr"
+        android:id="@+id/layout_ActionBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ActionBar_Height"
         android:background="@drawable/bg_actionbar">

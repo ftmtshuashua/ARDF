@@ -53,6 +53,8 @@
         <activity android:name=".demo.Demo_BaseRecyclerViewAdapter" />
         <activity android:name=".demo.Demo_NetRequest" />
         <activity android:name=".activity.module.app.IntroduceActivity" />
+        <activity android:name=".demo.Demo_FragmentControl" />
+        <activity android:name=".demo.Demo_RadioGroupControl" />
     </application>
 
 </manifest>

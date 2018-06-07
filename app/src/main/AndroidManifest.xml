@@ -18,7 +18,7 @@
 
     <application
         android:name=".app.App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -52,8 +52,6 @@
         <!--Demo activity-->
         <activity android:name=".demo.Demo_BaseRecyclerViewAdapter" />
         <activity android:name=".demo.Demo_NetRequest" />
-        <activity android:name=".activity.module.app.IntroduceActivity" />
-        <activity android:name=".demo.Demo_FragmentControl" />
         <activity android:name=".demo.Demo_RadioGroupControl" />
     </application>
 

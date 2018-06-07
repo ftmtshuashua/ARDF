@@ -14,7 +14,6 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
-import com.lfp.ardf.util.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
 
 /**
@@ -58,9 +57,9 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         mFragmentControl.init(getAppFk());
 
-        mRadioGroupControl.addRadio(new RadioGroupControl.SimperRadioItem(findViewById(R.id.tab_1)));
-        mRadioGroupControl.addRadio(new RadioGroupControl.SimperRadioItem(findViewById(R.id.tab_2)));
-        mRadioGroupControl.addRadio(new RadioGroupControl.SimperRadioItem(findViewById(R.id.tab_3)));
+        mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_1)));
+        mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_2)));
+        mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_3)));
         mRadioGroupControl.check(R.id.tab_1);
 
         new PermissonManager(getContext()) {

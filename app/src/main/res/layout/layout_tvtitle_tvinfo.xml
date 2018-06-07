@@ -31,7 +31,7 @@
             android:textColor="@color/colorBlack_Content"
             android:textSize="@dimen/TextSize_Content"
             app:layout_constraintTop_toBottomOf="@+id/view_Title"
-            tools:text="Text info" />
+            tools:text="info" />
 
 
     </android.support.constraint.ConstraintLayout>

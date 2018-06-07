@@ -1,0 +1,2 @@
+com.lfp.ardf
+int style BaseDialogStyle 0x7f160001

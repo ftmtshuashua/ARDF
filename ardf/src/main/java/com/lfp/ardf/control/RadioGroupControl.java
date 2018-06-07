@@ -15,18 +15,30 @@ import java.util.List;
  */
 public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
 
+    /**
+     * 缓存所有添加到RadioGroupControl中到布局,在主动check()到时候使用
+     */
     private final List<T> mRadioArray;
 
     /**
-     * 当前选中的Radio
+     * 当前被选中的Radio
      */
     T mCheckedRadio;
+
+    /**
+     * 监听Radio状态改变,在某些时候非常有用
+     */
     OnRadioChangeListener mOnCheckedChangeListener;
 
     public RadioGroupControl() {
         mRadioArray = new ArrayList<>();
     }
 
+    /**
+     * 设置状态改变监听
+     *
+     * @param l
+     */
     public void setOnRadioChangeListener(OnRadioChangeListener l) {
         mOnCheckedChangeListener = l;
     }
@@ -43,10 +55,34 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
         }
     }
 
+    /**
+     * 当RadioGroupControl被回收,会导致状态丢失
+     * 必要时在重新创建之后调用此方法恢复之前状态
+     */
+    public void recoverRadioState() {
+        List<T> array = mRadioArray;
+        for (T r : array) {
+            if (r.isCheck()) {
+                setCheck(r);
+                break;
+            }
+        }
+    }
+
+    /**
+     * 选中下标对应当Radio
+     *
+     * @param index radio 下标
+     */
     public void checkByIndex(int index) {
         setCheck(mRadioArray.get(index));
     }
 
+    /**
+     * 遍历Radio View到ID,当找到对应View当时候选中这个View
+     *
+     * @param id
+     */
     public void check(@IdRes int id) {
         for (T radio : mRadioArray) {
             if (id == radio.getView().getId()) {
@@ -56,31 +92,66 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
         }
     }
 
+    /**
+     * 选中Radio
+     *
+     * @param radio radio
+     */
     public void check(T radio) {
         setCheck(radio);
     }
 
+    /*
+       切换逻辑
+    */
     private void setCheck(T radio) {
+        T current = mCheckedRadio;
 
-        if (mCheckedRadio != null && mCheckedRadio == radio) return;
-        if (mCheckedRadio != null && mCheckedRadio != radio) mCheckedRadio.setCheck(false);
-
-        mCheckedRadio = radio;
-        radio.setCheck(true);
-
-        onRadioChange(radio);
-        if (mOnCheckedChangeListener != null) mOnCheckedChangeListener.onRadioChange(radio);
+        boolean isCheck = radio.setCheck(true);
+        if (isCheck) {
+            mCheckedRadio = radio;
+            if (current != null && current != radio)
+                current.setCheck(false);
+            notifyRadioChange(radio);
+        } else {
+            mCheckedRadio = current;
+        }
     }
 
+    /**
+     * 获得当前选中当radio
+     *
+     * @return radio
+     */
     public T getCheckRadio() {
         return mCheckedRadio;
     }
 
+    /**
+     * 获得当前选中radio当view id
+     *
+     * @return view id
+     */
     @IdRes
     public int getCheckedId() {
         return getCheckRadio().getView().getId();
     }
 
+    /**
+     * 通知状态改变
+     *
+     * @param radio 当前被选中当radio
+     */
+    private void notifyRadioChange(T radio) {
+        onRadioChange(radio);
+        if (mOnCheckedChangeListener != null) mOnCheckedChangeListener.onRadioChange(radio);
+    }
+
+    /**
+     * 交给子类实现,当radio改变或者被重复选中当时候调用
+     *
+     * @param radio 当前被选中当radio
+     */
     public void onRadioChange(T radio) {
 
     }
@@ -88,23 +159,29 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
 
     /**
      * RadioItem 在任何View外套一个的壳。以实现类似RadioGroup的效果
+     * <p>
+     * 简单实现可以使用{@Code SimpleRadioItem}
      */
     public static abstract class RadioItem<V extends View> implements View.OnClickListener {
         RadioGroupControl mControl;
         V mView;
-        boolean mIsCheck;
 
 
         public RadioItem(V view) {
-            mIsCheck = false;
             mView = view;
             view.setOnClickListener(this);
         }
 
-        public void attach(RadioGroupControl control) {
+        /*关联RadioGroupControl*/
+        protected void attach(RadioGroupControl control) {
             mControl = control;
         }
 
+        /**
+         * 被Radio包裹控制的View
+         *
+         * @return
+         */
         public V getView() {
             return mView;
         }
@@ -112,24 +189,39 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
         /**
          * 拦截点击事件，在一些特殊情况下通过拦截事件来阻止RadioGroup切换选中状态
          */
-        public boolean onInterceptCheck(boolean isCheck) {
-            return isCheck() && isCheck;
+        public boolean onInterceptCheck(boolean check) {
+            return false;
         }
 
-        protected boolean setCheck(boolean isCheck) {
-            boolean isIntercept = onInterceptCheck(isCheck);
-            if (isIntercept) return false;
-
-            mIsCheck = isCheck;
-            onChange();
-            return true;
+        /**
+         * 准备改变这个Raido的选中状态
+         *
+         * @param check 准备改变到 isCheck 状态
+         * @return 改变之后的选中状态
+         */
+        protected boolean setCheck(boolean check) {
+            boolean isIntercept = onInterceptCheck(check);
+            if (!isIntercept) {
+                onChange(getView(), check);
+            }
+            return isCheck();
         }
 
-        public boolean isCheck() {
-            return mIsCheck;
-        }
+        /**
+         * 获得这个radio的选中状态
+         * 在一些特殊场景,如被内存被回收之后还能获得正确当状态
+         *
+         * @return 当前选中状态
+         */
+        public abstract boolean isCheck();
 
-        public abstract void onChange();
+        /**
+         * 根据根据最终结果改变View显示状态
+         *
+         * @param v       被radio包裹当View
+         * @param check 准备改变为当选中状态
+         */
+        public abstract void onChange(V v, boolean check);
 
         @Override
         public void onClick(View v) {
@@ -139,24 +231,38 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
 
     /**
      * RadioItem简单实现
+     * 如果View是RadioButton则通过setChecked()方法改变他的状态
+     * 如果是其他View则通过setSelected()方法来改变状态
      */
-    public static class SimperRadioItem extends RadioItem {
+    public static class SimpleRadioItem<V extends View> extends RadioItem<V> {
 
-        public SimperRadioItem(View view) {
+        public SimpleRadioItem(V view) {
             super(view);
         }
 
         @Override
-        public void onChange() {
+        public boolean isCheck() {
             View v = getView();
             if (v instanceof RadioButton) {
-                ((RadioButton) v).setChecked(isCheck());
-            } else getView().setSelected(isCheck());
+                return ((RadioButton) v).isChecked();
+            } else return v.isSelected();
+        }
+
+        @Override
+        public boolean onInterceptCheck(boolean isCheck) {
+            return isCheck() == isCheck;
+        }
+
+        @Override
+        public void onChange(V v, boolean isCheck) {
+            if (v instanceof RadioButton) {
+                ((RadioButton) v).setChecked(isCheck);
+            } else v.setSelected(isCheck);
         }
     }
 
     /**
-     * 切换监听
+     * Radio切换监听
      */
     public interface OnRadioChangeListener<T extends RadioItem> {
 

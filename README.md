@@ -5,31 +5,41 @@ Demo:[下载地址(暂未开放)]()
 
 **简介**
 --------
-Activity/Fragment观察者
-解耦逻辑代码与活动页面
-
-并发请求/链式请求(ChainRequest)
-各种请求场景使用
-
+LifecycleObserved - Activity/Fragment观察者,实现业务逻辑和Activity的解耦
+FragmentControl - 控制Fragment的加载/显示/切换。优化性能预防内存泄漏
+RadioGroupControl - 让任何布局带有RadioGroup的功能
+BaseDelayDialog - 延迟Dialog，尽量减少Dialog的显示
+NotProguard - 不混淆配置.为一些不想被混淆的类添加实现,在混淆的时候它将不会被混淆
+请求融合 - 将多个请求融合在一起,逻辑清晰,容易维护
+并发请求 - 请求并行,急速网络请求方案
+链式请求 - 请求排队,随时修改,饲适用与多种场景
+BaseProgressBarView - 动画解决方案,专注动画实现
+WebViewFk - 基于WebView的浏览器实现
 
 **入门指南**
 --------
 设置依赖项
 ```
-implementation "---"
+implementation "暂不提供"
 ```
-```
-在项目中创建 Application 并且调用 AppFrameworkHolper.init(getApplicationContext()); 完成框架的初始化
-```
-
 如果想使用默认okhttp发起请求:
 ```
 implementation "com.squareup.okhttp3:okhttp:3.2.0"
 implementation "com.squareup.okio:okio:1.7.0"
 ```
 
-learn 包:先知其然，再知其所以然
+在proguard-rules中添加以下代码
+```
+-keep class com.lfp.ardf.model.NotProguard {*;}
+-keep class * extends com.lfp.ardf.model.NotProguard {*;}
+-keep class **.**$** extends com.lfp.ardf.model.NotProguard {*;}
+```
 
+为APP创建Applicaiton,并且在onCreate()方法中调用
+```
+AppFrameworkHolper.init(getApplicationContext()); - 初始化配置
+FileCacheConfig.init(getApplicationContext(), "ARDF"); - 文件缓存配置
+```
 
 **感谢**
 --------

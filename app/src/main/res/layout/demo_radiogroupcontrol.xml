@@ -59,6 +59,10 @@
                     android:text="Radio_3" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/colorBlack_Line"
+                android:layout_height="1dp"/>
             <!--TextView-->
             <TextView
                 android:layout_width="wrap_content"
@@ -99,6 +103,10 @@
                     android:text="TextView_3" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/colorBlack_Line"
+                android:layout_height="1dp"/>
             <!--各种混合使用-->
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +119,8 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:minHeight="300dp">
 
                 <RadioButton
                     android:id="@+id/view_hh_RadioButton"
@@ -154,6 +163,23 @@
                         android:src="@drawable/switch_arrow_down_up" />
                 </LinearLayout>
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:padding="@dimen/Unified_Margin_Basic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_hh_IcoSwitch">
+
+                    <TextView
+                        android:id="@+id/view_AnimationTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape__c5__s_red"
+                        android:padding="@dimen/Unified_Margin_Basic"
+                        android:text="点不到我" />
+
+
+                </FrameLayout>
 
             </android.support.constraint.ConstraintLayout>
 

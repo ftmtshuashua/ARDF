@@ -15,19 +15,20 @@ import android.widget.TextView;
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseFragment;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
-import com.lfp.androidrapiddevelopmentframework.demo.Demo_FragmentControl;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_RadioGroupControl;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
+import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.Utils;
 import com.lfp.ardf.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <br/>
+ * Demo 展示列表 <br/>
  * Created by LiFuPing on 2018/6/1.
  */
 public class DemoFragment extends BaseFragment {
@@ -65,7 +66,7 @@ public class DemoFragment extends BaseFragment {
     void initListConfig(View view) {
         List<DemoEvent> arrays = new ArrayList<>();
         arrays.add(new Demo_RadioGroupControl.Demo(getAppFk()));
-        arrays.add(new Demo_FragmentControl.Demo(getAppFk()));
+        arrays.add(new ToastControlEvent("FragmentControl", "请参考HomeActivity"));
         arrays.add(new Demo_BaseRecyclerViewAdapter.Demo(getAppFk()));
 //        arrays.add(new PlaceholderEntrance("框架核心-业务分离(验证名字，验证年龄，选择数据)"));
 //        arrays.add(new PlaceholderEntrance("地图城市选择器"));
@@ -73,7 +74,7 @@ public class DemoFragment extends BaseFragment {
 //        arrays.add(new PlaceholderEntrance("混淆配置(NotProguard)"));
 //        arrays.add(new PlaceholderEntrance("工具类说明"));
         arrays.add(new Demo_NetRequest.Demo(getAppFk()));
-        arrays.add(new VisibilityControl(view.findViewById(R.id.view_WaitProgressBar), "BaseProgressBarView", "ProgressBar解决方案"));
+        arrays.add(new VisibilityControlEvent(view.findViewById(R.id.view_WaitProgressBar), "BaseProgressBarView", "ProgressBar解决方案"));
 
         mAdapter.setAndUpdata(arrays);
     }
@@ -91,7 +92,9 @@ public class DemoFragment extends BaseFragment {
         @Override
         public void onUpdateUI(DemoEvent data) {
             mTV_Title.setText(data.getTitle());
-            mTV_Info.setText(data.getInfo());
+            boolean hasInfo = !Utils.isEmpty(data.getInfo());
+            if (hasInfo) mTV_Info.setText(data.getInfo());
+            ViewUtil.setVisibility(mTV_Info, hasInfo ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -100,16 +103,16 @@ public class DemoFragment extends BaseFragment {
         }
     }
 
-
-    private static final class VisibilityControl extends DemoEvent {
+    /*控件显示控制*/
+    private static final class VisibilityControlEvent extends DemoEvent {
         View mView;
 
-        public VisibilityControl(View view, String title) {
+        public VisibilityControlEvent(View view, String title) {
             super(null, title);
             mView = view;
         }
 
-        public VisibilityControl(View view, String title, String info) {
+        public VisibilityControlEvent(View view, String title, String info) {
             super(null, title);
             mView = view;
             setInfo(info);
@@ -118,6 +121,24 @@ public class DemoFragment extends BaseFragment {
         @Override
         public void call() {
             ViewUtil.setVisibilitySwitch(mView);
+        }
+    }
+
+    /*Toast消息*/
+    private static final class ToastControlEvent extends DemoEvent {
+
+        public ToastControlEvent(String title) {
+            super(null, title);
+        }
+
+        public ToastControlEvent(String title, String info) {
+            super(null, title);
+            setInfo(info);
+        }
+
+        @Override
+        public void call() {
+            if (!Utils.isEmpty(getInfo())) ToastUtil.show(getInfo());
         }
     }
 

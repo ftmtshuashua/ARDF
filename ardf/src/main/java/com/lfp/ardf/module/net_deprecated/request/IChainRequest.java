@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net.request;
+package com.lfp.ardf.module.net_deprecated.request;
 
 /**
  * 链式请求,将一堆请求合并为一个请求队列,依次执行

@@ -1,6 +1,6 @@
-package com.lfp.ardf.module.net.observer;
+package com.lfp.ardf.module.net_deprecated.observer;
 
-import com.lfp.ardf.module.net.request.IRequest;
+import com.lfp.ardf.module.net_deprecated.request.IRequest;
 
 /**
  * 请求结果接口<br/>

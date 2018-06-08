@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net.request;
+package com.lfp.ardf.module.net_deprecated.request;
 
 /**
  * 批量请求<br/>

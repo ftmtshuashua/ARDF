@@ -1,9 +1,9 @@
-package com.lfp.ardf.module.net;
+package com.lfp.ardf.module.net_deprecated;
 
 import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
-import com.lfp.ardf.module.net.request.ImpChainRequest;
-import com.lfp.ardf.module.net.util.UrlFormat;
+import com.lfp.ardf.module.net_deprecated.client.OkHttpReqeuestClient;
+import com.lfp.ardf.module.net_deprecated.request.ImpChainRequest;
+import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
 
 import java.io.IOException;
 import java.text.MessageFormat;

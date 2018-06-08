@@ -1,7 +1,7 @@
-package com.lfp.ardf.module.net;
+package com.lfp.ardf.module.net_deprecated;
 
-import com.lfp.ardf.module.net.observer.IRequestObserver;
-import com.lfp.ardf.module.net.util.ExceptionTotalUtil;
+import com.lfp.ardf.module.net_deprecated.observer.IRequestObserver;
+import com.lfp.ardf.module.net_deprecated.util.ExceptionTotalUtil;
 import com.lfp.ardf.util.ToastUtil;
 
 /**

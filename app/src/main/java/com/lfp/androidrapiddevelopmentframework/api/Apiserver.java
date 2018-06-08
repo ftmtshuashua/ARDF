@@ -1,7 +1,7 @@
 package com.lfp.androidrapiddevelopmentframework.api;
 
-import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.module.net.util.UrlFormat;
+import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
+import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
 
 /**
  * 接口文档

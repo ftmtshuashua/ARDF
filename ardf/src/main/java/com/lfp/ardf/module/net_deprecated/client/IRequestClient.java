@@ -1,6 +1,6 @@
-package com.lfp.ardf.module.net.client;
+package com.lfp.ardf.module.net_deprecated.client;
 
-import com.lfp.ardf.module.net.request.IRequest;
+import com.lfp.ardf.module.net_deprecated.request.IRequest;
 
 /**
  * 请求客户端<br/>

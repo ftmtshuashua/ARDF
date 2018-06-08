@@ -1,10 +1,10 @@
-package com.lfp.ardf.module.net.logic;
+package com.lfp.ardf.module.net_deprecated.logic;
 
 import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.module.net.client.IRequestClient;
-import com.lfp.ardf.module.net.observer.IRequestObserver;
-import com.lfp.ardf.module.net.request.IChainRequest;
-import com.lfp.ardf.module.net.request.IRequest;
+import com.lfp.ardf.module.net_deprecated.client.IRequestClient;
+import com.lfp.ardf.module.net_deprecated.observer.IRequestObserver;
+import com.lfp.ardf.module.net_deprecated.request.IChainRequest;
+import com.lfp.ardf.module.net_deprecated.request.IRequest;
 
 import java.text.MessageFormat;
 import java.util.List;

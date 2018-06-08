@@ -1,8 +1,8 @@
 package com.lfp.ardf.framework.imp.fragment;
 
 import com.lfp.ardf.framework.I.INetRequest;
-import com.lfp.ardf.module.net.observer.IRequestObserver;
-import com.lfp.ardf.module.net.request.IRequest;
+import com.lfp.ardf.module.net_deprecated.observer.IRequestObserver;
+import com.lfp.ardf.module.net_deprecated.request.IRequest;
 
 /**
  * Created by LiFuPing on 2018/5/17.

@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net.util;
+package com.lfp.ardf.module.net_deprecated.util;
 
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.exception.MsgException;

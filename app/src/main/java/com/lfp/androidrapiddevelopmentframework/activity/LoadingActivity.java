@@ -16,12 +16,15 @@ import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
 import java.text.MessageFormat;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 开屏页面<br/>
@@ -34,7 +37,7 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-
+        test();
 
         try {
             StatConfig.setDebugEnable(false);
@@ -101,5 +104,19 @@ public class LoadingActivity extends BaseActivity {
         finish();
     }
 
+
+    void test() {
+//        for (int i = 0; i < 10; i++) {
+//            Observable.just(i)
+//                    .observeOn(Schedulers.io())
+//                    .subscribeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<Integer>() {
+//                        @Override
+//                        public void accept(Integer integer) throws Exception {
+//                            LogUtil.e(MessageFormat.format("Integer:{0}", integer));
+//                        }
+//                    });
+//        }
+    }
 
 }

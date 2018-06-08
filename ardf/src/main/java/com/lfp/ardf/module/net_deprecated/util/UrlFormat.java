@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net.util;
+package com.lfp.ardf.module.net_deprecated.util;
 
 import android.text.TextUtils;
 import android.webkit.URLUtil;

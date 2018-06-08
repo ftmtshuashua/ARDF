@@ -1,7 +1,7 @@
-package com.lfp.ardf.module.net.client;
+package com.lfp.ardf.module.net_deprecated.client;
 
 import com.lfp.ardf.exception.NetStateException;
-import com.lfp.ardf.module.net.request.IChainRequest;
+import com.lfp.ardf.module.net_deprecated.request.IChainRequest;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -50,7 +50,6 @@ public class OkHttpReqeuestClient<T extends OkHttpReqeuestClient.OkHttpRequestHo
 
     @Override
     public void perform(T reqeust) throws Exception {
-        if (reqeust.getId() != 1) Thread.sleep(300);
 
         Call call = mHttpClient.newCall(reqeust.buildRequest());
         reqeust.setCall(call);

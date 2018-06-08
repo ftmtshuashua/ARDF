@@ -9,16 +9,15 @@ import android.widget.TextView;
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
-import com.lfp.androidrapiddevelopmentframework.event.InfoEvent;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.framework.I.IAppFramework;
-import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.module.net.client.OkHttpReqeuestClient;
-import com.lfp.ardf.module.net.logic.ChainRequestLogic;
-import com.lfp.ardf.module.net.logic.ImpRequestLogi;
-import com.lfp.ardf.module.net.logic.ParallelRequestLogic;
-import com.lfp.ardf.module.net.util.UrlFormat;
+import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
+import com.lfp.ardf.module.net_deprecated.client.OkHttpReqeuestClient;
+import com.lfp.ardf.module.net_deprecated.logic.ChainRequestLogic;
+import com.lfp.ardf.module.net_deprecated.logic.ImpRequestLogi;
+import com.lfp.ardf.module.net_deprecated.logic.ParallelRequestLogic;
+import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
 
 import java.text.MessageFormat;
 

@@ -3,8 +3,8 @@ package com.lfp.androidrapiddevelopmentframework.net;
 import android.content.Context;
 
 import com.lfp.androidrapiddevelopmentframework.dialog.ProgressDelayDialog;
-import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.module.net.OkHttpRequestObserver;
+import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
+import com.lfp.ardf.module.net_deprecated.OkHttpRequestObserver;
 
 import java.text.MessageFormat;
 

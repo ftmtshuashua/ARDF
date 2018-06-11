@@ -17,6 +17,7 @@ import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,6 +28,7 @@ import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
 import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
 import com.lfp.ardf.util.ApkUtil;
+import com.lfp.ardf.util.SdkUtile;
 
 import java.io.File;
 import java.text.MessageFormat;
@@ -65,22 +67,25 @@ public class WebViewFk extends WebView {
     }
 
     public WebViewFk(Context context) {
-        this(context, null);
+        super(context);
+        init(context);
     }
 
     public WebViewFk(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init(context);
     }
 
     public WebViewFk(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-        if (context instanceof IAppFramework)
-            ((IAppFramework) context).registeredObserve(mActivityLifeObserve);
+        init(context);
     }
 
     /*初始化 Web设置*/
-    void init() {
+    void init(Context context) {
+        if (context instanceof IAppFramework)
+            ((IAppFramework) context).registeredObserve(mActivityLifeObserve);
+
         CookieManager.getInstance().setAcceptCookie(true);// 允许网页写入CooKie
         if (getContext() instanceof Activity)
             ((Activity) getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
@@ -98,6 +103,13 @@ public class WebViewFk extends WebView {
 
 
         WebSettings settings = getSettings();
+//        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        settings.setLoadWithOverviewMode(true);
+//        settings.setUseWideViewPort(true);
+//        settings.setJavaScriptEnabled(true);
+//        settings.setDomStorageEnabled(true);
+//        settings.setBlockNetworkImage(true);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)  /*支持不安全的HTTPS*/
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); /*一些不安全的内容可能被允许被安全的来源加载*/
@@ -151,6 +163,13 @@ public class WebViewFk extends WebView {
         }
     };
 
+    WebViewClient test = new WebViewClient() {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return super.shouldOverrideUrlLoading(view, request);
+        }
+    };
 
     WebViewClient mWebViewClient = new WebViewClient() {
 

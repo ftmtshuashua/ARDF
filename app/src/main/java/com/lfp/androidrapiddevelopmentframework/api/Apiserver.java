@@ -35,4 +35,8 @@ public class Apiserver {
         return new OkHttpRequest(format.toUrl());
     }
 
+    public com.lfp.ardf.module.net.OkHttpRequest getNewRequest(){
+        UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
+        return new com.lfp.ardf.module.net.OkHttpRequest(format.toUrl());
+    }
 }

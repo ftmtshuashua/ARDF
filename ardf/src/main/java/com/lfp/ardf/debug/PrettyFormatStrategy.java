@@ -41,7 +41,7 @@ public class PrettyFormatStrategy implements LogAdapter{
     /**
      * The minimum stack trace index, starts at this class after two native calls.
      */
-    private static final int MIN_STACK_OFFSET = 5;
+    public static final int MIN_STACK_OFFSET = 5;
 
     /**
      * Drawing toolbox

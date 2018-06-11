@@ -15,7 +15,6 @@ public abstract class IRequest {
      * 开始这个请求
      */
     public void start() {
-        if (monitor != null) monitor.onStart();
         call();
     }
 
@@ -38,7 +37,6 @@ public abstract class IRequest {
     public void setMonitor(IRequestMonitor l) {
         monitor = l;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -63,4 +61,26 @@ public abstract class IRequest {
 
     /*关闭请求*/
     public abstract void shutdown();
+
+
+    protected void notifyStart() {
+        if (monitor != null) monitor.onStart(this);
+    }
+
+    protected void notifyError(Throwable e) {
+        if (monitor != null) monitor.onError(this, e);
+    }
+
+    protected void notifyComplete() {
+        if (monitor != null) monitor.onComplete(this);
+    }
+
+    protected void notifyNext() {
+        if (monitor != null) monitor.onNext(this);
+    }
+
+    protected void notifyEnd() {
+        if (monitor != null) monitor.onEnd(this);
+    }
+
 }

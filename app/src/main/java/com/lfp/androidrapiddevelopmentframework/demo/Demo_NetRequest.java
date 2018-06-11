@@ -11,7 +11,11 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
+import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
+import com.lfp.ardf.module.net.RequestChain;
+import com.lfp.ardf.module.net.i.IRequest;
+import com.lfp.ardf.module.net.i.IRequestMonitor;
 import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
 import com.lfp.ardf.module.net_deprecated.client.OkHttpReqeuestClient;
 import com.lfp.ardf.module.net_deprecated.logic.ChainRequestLogic;
@@ -65,7 +69,8 @@ public class Demo_NetRequest extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.view_ParallelRequest:
-                parallelRequest();
+                testNewRequest();
+//                parallelRequest();
                 break;
             case R.id.view_ChainRequest:
                 chainRequest();
@@ -130,6 +135,40 @@ public class Demo_NetRequest extends BaseActivity implements View.OnClickListene
                 , getApiserver().getWeatherForecast());
     }
 
+
+    void testNewRequest() {
+        RequestChain chain = RequestChain.request(
+                getApiserver().getNewRequest(),
+                getApiserver().getNewRequest()
+        );
+        chain.setRequestMonitor(new IRequestMonitor() {
+            @Override
+            public void onStart(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onStart id:{0}", request.getId()));
+            }
+
+            @Override
+            public void onError(IRequest request, Throwable e) {
+                LogUtil.e(MessageFormat.format("---- onError id:{0}  e:{1}", request.getId(), e.getMessage()));
+            }
+
+            @Override
+            public void onComplete(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onComplete id:{0}", request.getId()));
+            }
+
+            @Override
+            public void onNext(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onNext id:{0}", request.getId()));
+            }
+
+            @Override
+            public void onEnd(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onEnd id:{0}", request.getId()));
+            }
+        });
+        chain.start();
+    }
 
     /*Demo入口*/
     public static final class Demo extends DemoEvent {

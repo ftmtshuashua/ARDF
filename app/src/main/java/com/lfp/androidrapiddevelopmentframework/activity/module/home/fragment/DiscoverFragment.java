@@ -34,6 +34,9 @@ public class DiscoverFragment extends BaseFragment {
     }
 
     final String URL = "https://www.baidu.com";
+//        final String URL = "http://cz.ydbfl.com/web/wap/index.html";
+//        final String URL = "https://m.caibb.com/supply/transfer?game=JCZQ&pid=10020&sign=5d8f118493b3d83b1dd5fe297e7cdb27&type=HH&ubalance=0&uid=ff3f5402a9fda76a";
+
     WebProgressBar mWebProgressBar;
     WebViewFk mWebViewFx;
 

@@ -31,7 +31,6 @@ public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {
     public BaseViewHolder<D> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         try {
             Constructor<NotProguardViewHolder<D>> cls = (Constructor<NotProguardViewHolder<D>>) cls_vh.getDeclaredConstructor(View.class);
-            LogUtil.e_Pretty(MessageFormat.format("通过反射获取构造方法：{0}", cls.getName()));
             if (!cls.isAccessible()) cls.setAccessible(true);
             return cls.newInstance(LayoutInflater.from(parent.getContext()).inflate(layout_resouce_id, parent, false));
         } catch (NoSuchMethodException ex) {

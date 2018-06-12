@@ -1,7 +1,7 @@
 package com.lfp.ardf.module.net;
 
 import com.lfp.ardf.module.net.i.IRequest;
-import com.lfp.ardf.module.net.i.IRequestMonitor;
+import com.lfp.ardf.module.net.i.RequestListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,26 +9,34 @@ import java.util.List;
 
 /**
  * 请求链条<br/>
+ * 将多个请求节点进行串联,按顺序执行
+ * 如果某个节点异常中断则链条断裂抛出错误信息并结束这条请求链
+ * <p>
  * Created by LiFuPing on 2018/6/8.
  */
 public class RequestChain {
-    private static final int FLAG_RUNING = 0x1 << 16;
+
+    private static final long FLAG_PREPARE = 0x1 << 32;
+    private static final long FLAG_START = 0x1 << 33;
+    private static final long FLAG_END = 0x1 << 34;
+    private static final long FLAG_SHUTDOWN = 0x1 << 35;
     /*状态标记*/
-    private static final int FLAG_STATE_MASK = 0xf << 16;
+    private static final long FLAG_STATE_MASK = 0xFF << 32;
     /*状态标记*/
-    private static final int FLAG_ID_MASK = 0xffff;
-    List<IRequest> mRequestArray;
+    private static final long FLAG_REQUEST_ID_MASK = 0xFFFFFFFF;
 
-    IRequestMonitor mRequestMonitor;
 
-    int flag;
+    IRequest mRequestHead;
+    RequestListener mRequestListener;
 
-    private RequestChain(List<IRequest> reqeust_array) {
-        mRequestArray = reqeust_array;
+    long mFlag;
+
+    private RequestChain(IRequest reqeust_head) {
+        mRequestHead = reqeust_head;
     }
 
-    public void setRequestMonitor(IRequestMonitor l) {
-        mRequestMonitor = l;
+    public void setRequestListener(RequestListener l) {
+        mRequestListener = l;
     }
 
 
@@ -63,75 +71,93 @@ public class RequestChain {
         for (int i = 0; i < reqeust_array.size() - 1; i++) {
             reqeust_array.get(i).setNextRequest(reqeust_array.get(i + 1));
         }
-        return new RequestChain(reqeust_array);
+        return new RequestChain(reqeust_array.get(0));
     }
 
     public void start() {
         if (isRuning()) {
             throw new IllegalStateException("无法启动一个已经启动的请求链!");
         }
-        IRequest requet = mRequestArray.get(0);
-        requet.setMonitor(requestMonitor);
-        requet.start();
+        mRequestHead.setRequestListener(requestMonitor);
+        mRequestHead.start();
+        setFlag(FLAG_PREPARE);
     }
 
     /*关闭请求链*/
     public void shutdown() {
-        if (mRequestArray == null) return;
-        for (IRequest request : mRequestArray) {
-            request.shutdown();
+        if (isRuning() && !isShutdown()) {
+            IRequest request = mRequestHead;
+            endReqeuestChain(request);
+            while (request != null) {
+                request.shutdown();
+                request = request.getNextRequest();
+            }
         }
     }
 
+    public boolean isShutdown() {
+        return (mFlag & FLAG_SHUTDOWN) != 0;
+    }
+
     public boolean isRuning() {
-        return (flag & FLAG_RUNING) != 0;
+        return (mFlag & FLAG_STATE_MASK) != 0;
     }
 
-    public int getRequetId() {
-        return flag & FLAG_ID_MASK;
+    public int getRequestId() {
+        return (int) (mFlag & FLAG_REQUEST_ID_MASK);
     }
 
-    IRequestMonitor requestMonitor = new IRequestMonitor() {
+
+    RequestListener requestMonitor = new RequestListener() {
         @Override
         public void onStart(IRequest request) {
-            if ((flag & FLAG_RUNING) == 0) {
-                if (mRequestMonitor != null) mRequestMonitor.onStart(request);
-                flag |= FLAG_RUNING;
+            if ((mFlag & FLAG_START) == 0) {
+                setFlag(FLAG_START);
+                if (mRequestListener != null) mRequestListener.onStart(request);
             }
-            flag |= request.getId();
+            mFlag |= request.getId();
         }
 
         @Override
         public void onError(IRequest request, Throwable e) {
-            if (mRequestMonitor != null) mRequestMonitor.onError(request, e);
+            if (mRequestListener != null) mRequestListener.onError(request, e);
             endReqeuestChain(request);
         }
 
         @Override
-        public void onComplete(IRequest request) {
-            if (mRequestMonitor != null) mRequestMonitor.onComplete(request);
+        public void onResponse(IRequest request) {
+            if (mRequestListener != null) mRequestListener.onResponse(request);
         }
 
         @Override
-        public void onNext(IRequest request) {
-            if (mRequestMonitor != null) mRequestMonitor.onNext(request);
+        public void onComplete(IRequest request) {
+            if (mRequestListener != null) mRequestListener.onComplete(request);
         }
 
         @Override
         public void onEnd(IRequest request) {
-            if (request.hasNextRequest()) {
-                IRequest requet = request.getNextRequest();
-                requet.setMonitor(requestMonitor);
-                requet.start();
-            } else {
+            if (isShutdown()) {
                 endReqeuestChain(request);
+            } else {
+                if (request.hasNextRequest()) {
+                    IRequest requet = request.getNextRequest();
+                    requet.setRequestListener(requestMonitor);
+                    requet.start();
+                } else {
+                    endReqeuestChain(request);
+                }
             }
         }
 
-        void endReqeuestChain(IRequest request) {
-            flag &= ~FLAG_STATE_MASK;
-            if (mRequestMonitor != null) mRequestMonitor.onEnd(request);
-        }
     };
+
+    void endReqeuestChain(IRequest request) {
+        setFlag(FLAG_END | FLAG_SHUTDOWN);
+        if (mRequestListener != null) mRequestListener.onEnd(request);
+    }
+
+    private void setFlag(long flag) {
+        mFlag |= flag;
+    }
 
 }

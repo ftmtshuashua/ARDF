@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.ardf.dialog.BaseDelayDialog;
+import com.lfp.ardf.framework.I.IAppFramework;
 
 /**
  * 自定义延时等待Dialog<br/>
@@ -14,8 +15,8 @@ import com.lfp.ardf.dialog.BaseDelayDialog;
 public class ProgressDelayDialog extends BaseDelayDialog {
 
 
-    public ProgressDelayDialog(@NonNull Context context) {
-        super(context);
+    public ProgressDelayDialog(@NonNull IAppFramework appfk) {
+        super(appfk);
     }
 
     @Override

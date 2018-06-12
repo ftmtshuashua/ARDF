@@ -6,7 +6,7 @@ package com.lfp.ardf.module.net.i;
  * <p>
  * Created by LiFuPing on 2018/6/8.
  */
-public interface IRequestMonitor {
+public interface RequestListener {
     /**
      * 当请求开始之前它应该调用onStart(),通知观察者.
      */
@@ -20,9 +20,9 @@ public interface IRequestMonitor {
      */
     void onError(IRequest request, Throwable e);
 
-    void onComplete(IRequest request);
+    void onResponse(IRequest request);
 
-    void onNext(IRequest request);
+    void onComplete(IRequest request);
 
     /**
      * 通知请求完成

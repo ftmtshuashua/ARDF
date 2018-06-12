@@ -7,15 +7,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
+import com.lfp.androidrapiddevelopmentframework.api.Apiserver;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
+import com.lfp.androidrapiddevelopmentframework.dialog.ProgressDelayDialog;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.dialog.BaseDialog;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.RequestChain;
 import com.lfp.ardf.module.net.i.IRequest;
-import com.lfp.ardf.module.net.i.IRequestMonitor;
+import com.lfp.ardf.module.net.i.RequestListener;
 import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
 import com.lfp.ardf.module.net_deprecated.client.OkHttpReqeuestClient;
 import com.lfp.ardf.module.net_deprecated.logic.ChainRequestLogic;
@@ -137,14 +140,14 @@ public class Demo_NetRequest extends BaseActivity implements View.OnClickListene
 
 
     void testNewRequest() {
-        RequestChain chain = RequestChain.request(
-                getApiserver().getNewRequest(),
-                getApiserver().getNewRequest()
-        );
-        chain.setRequestMonitor(new IRequestMonitor() {
+        LogUtil.e("准备发起请求:");
+        final BaseDialog mDialog = new ProgressDelayDialog(getAppFk());
+        mDialog.show();
+        RequestListener mRequestListener = new RequestListener() {
             @Override
             public void onStart(IRequest request) {
                 LogUtil.e(MessageFormat.format("---- onStart id:{0}", request.getId()));
+
             }
 
             @Override
@@ -153,21 +156,35 @@ public class Demo_NetRequest extends BaseActivity implements View.OnClickListene
             }
 
             @Override
-            public void onComplete(IRequest request) {
-                LogUtil.e(MessageFormat.format("---- onComplete id:{0}", request.getId()));
+            public void onResponse(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onResponse id:{0}", request.getId()));
+                try {
+                    Thread.sleep(1500);
+                } catch (Exception e) {
+
+                }
             }
 
             @Override
-            public void onNext(IRequest request) {
-                LogUtil.e(MessageFormat.format("---- onNext id:{0}", request.getId()));
+            public void onComplete(IRequest request) {
+                LogUtil.e(MessageFormat.format("---- onComplete id:{0}", request.getId()));
+
+//                finish();
             }
 
             @Override
             public void onEnd(IRequest request) {
                 LogUtil.e(MessageFormat.format("---- onEnd id:{0}", request.getId()));
+                mDialog.dismiss();
             }
-        });
-        chain.start();
+        };
+
+        RequestChain mRequestChain = RequestChain.request(
+                Apiserver.getNewRequest()
+                , Apiserver.getNewRequest()
+        );
+        mRequestChain.setRequestListener(mRequestListener);
+        mRequestChain.start();
     }
 
     /*Demo入口*/

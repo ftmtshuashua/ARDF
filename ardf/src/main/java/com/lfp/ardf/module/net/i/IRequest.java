@@ -6,17 +6,16 @@ package com.lfp.ardf.module.net.i;
  * Created by LiFuPing on 2018/6/8.
  */
 public abstract class IRequest {
-    IRequestMonitor monitor;
+
+
+    RequestListener monitor;
     IRequest mext;
     int id;
-
 
     /**
      * 开始这个请求
      */
-    public void start() {
-        call();
-    }
+    public abstract void start();
 
     /**
      * 这个方法用来给子类实现,不同当请求方式当实现是不相同的.
@@ -27,19 +26,24 @@ public abstract class IRequest {
      * <p>
      * 所以call方法不应该是异步的,这会导致onEnd信号发送之后,请求实际上是未完成的
      */
-    protected abstract void call();
+    protected abstract void call() throws Exception;
 
     /**
      * 设置这个请求当监测器,它用来获取请求当开始与结束状态
      *
      * @param l 监测器
      */
-    public void setMonitor(IRequestMonitor l) {
+    public void setRequestListener(RequestListener l) {
         monitor = l;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    /*表示请求个数*/
+    public int length() {
+        return 1;
     }
 
     public int getId() {
@@ -58,10 +62,10 @@ public abstract class IRequest {
         return mext;
     }
 
-
     /*关闭请求*/
     public abstract void shutdown();
 
+    public abstract void cancel();
 
     protected void notifyStart() {
         if (monitor != null) monitor.onStart(this);
@@ -71,16 +75,17 @@ public abstract class IRequest {
         if (monitor != null) monitor.onError(this, e);
     }
 
-    protected void notifyComplete() {
-        if (monitor != null) monitor.onComplete(this);
+    protected void notifyResponse() {
+        if (monitor != null) monitor.onResponse(this);
     }
 
-    protected void notifyNext() {
-        if (monitor != null) monitor.onNext(this);
+    protected void notifyComplete() {
+        if (monitor != null) monitor.onComplete(this);
     }
 
     protected void notifyEnd() {
         if (monitor != null) monitor.onEnd(this);
     }
+
 
 }

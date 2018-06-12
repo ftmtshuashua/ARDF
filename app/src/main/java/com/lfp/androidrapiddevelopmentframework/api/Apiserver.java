@@ -29,13 +29,13 @@ public class Apiserver {
      * http://www.weather.com.cn/data/cityinfo/101190408.html
      * 感谢<中央天气预报>
      */
-    public OkHttpRequest getWeatherForecast() {
+    public static OkHttpRequest getWeatherForecast() {
         UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
         format.addQuery("city", "CHSH000000");
         return new OkHttpRequest(format.toUrl());
     }
 
-    public com.lfp.ardf.module.net.OkHttpRequest getNewRequest(){
+    public static com.lfp.ardf.module.net.OkHttpRequest getNewRequest(){
         UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
         return new com.lfp.ardf.module.net.OkHttpRequest(format.toUrl());
     }

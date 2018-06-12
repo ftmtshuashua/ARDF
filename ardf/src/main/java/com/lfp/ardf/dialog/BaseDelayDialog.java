@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.framework.I.IAppFramework;
 
-import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -27,8 +27,8 @@ public class BaseDelayDialog extends BaseDialog {
     Disposable mDisposable;
     long delay_time = DEFUALT_DELAY_TIME;
 
-    public BaseDelayDialog(@NonNull Context context) {
-        super(context);
+    public BaseDelayDialog(@NonNull IAppFramework appfk) {
+        super(appfk);
     }
 
     /**
@@ -42,13 +42,15 @@ public class BaseDelayDialog extends BaseDialog {
 
     @Override
     public void show() {
-        LogUtil.e(MessageFormat.format("mDisposable == null:{0} && !isShowing():{1}", mDisposable == null, !isShowing()));
         if (mDisposable == null && !isShowing()) {
-            mDisposable = Observable.timer(DEFUALT_DELAY_TIME, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
+            mDisposable = Observable
+                    .timer(DEFUALT_DELAY_TIME, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Long>() {
                 @Override
                 public void accept(Long aLong) throws Exception {
-                    LogUtil.e("显示：" + aLong);
                     if (!isShowing()) {
+                        LogUtil.e("BaseDelayDialog.super.show()");
                         BaseDelayDialog.super.show();
                     }
                     mDisposable = null;
@@ -59,7 +61,10 @@ public class BaseDelayDialog extends BaseDialog {
 
     @Override
     public void dismiss() {
-        if (mDisposable != null) mDisposable.dispose();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+            mDisposable = null;
+        }
         super.dismiss();
     }
 

@@ -1,7 +1,6 @@
 package com.lfp.ardf.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -9,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lfp.ardf.R;
-import com.lfp.ardf.framework.I.ILifeCycleObserved;
+import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
 import com.lfp.ardf.util.ScreenUtil;
 
@@ -28,25 +28,24 @@ public class BaseDialog extends Dialog {
      */
     public static final int DEFUALT_MARGIN = 30;
 
-    public BaseDialog(@NonNull Context context) {
-        super(context, R.style.BaseDialogStyle);
-        attachAppFk();
+    public BaseDialog(@NonNull IAppFramework appfk) {
+        super(appfk.getContext(), R.style.BaseDialogStyle);
+        attachAppFk(appfk);
     }
 
 
     /**
      * 如果这个Dialog是在框架中调用的，这监听框架生命周期
      */
-    protected void attachAppFk() {
-        if (getContext() instanceof ILifeCycleObserved) {
-            ((ILifeCycleObserved) getContext()).registeredObserve(new SimpleLifeCycleObserve() {
-                @Override
-                public void onDestroy() {
-                    super.onDestroy();
-                    dismiss();
-                }
-            });
-        }
+    protected void attachAppFk(IAppFramework appfk) {
+        appfk.registeredObserve(new SimpleLifeCycleObserve() {
+            @Override
+            public void onDestroy() {
+                super.onDestroy();
+                dismiss();
+                LogUtil.e("BaseDialog  -   dismiss();");
+            }
+        });
     }
 
 

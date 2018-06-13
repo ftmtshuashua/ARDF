@@ -6,14 +6,23 @@ Demo:[下载地址(暂未开放)]()
 **简介**
 --------
 LifecycleObserved - Activity/Fragment观察者,实现业务逻辑和Activity的解耦
+
 FragmentControl - 控制Fragment的加载/显示/切换。优化性能预防内存泄漏
+
 RadioGroupControl - 让任何布局带有RadioGroup的功能
+
 BaseDelayDialog - 延迟Dialog，尽量减少Dialog的显示
+
 NotProguard - 不混淆配置.为一些不想被混淆的类添加实现,在混淆的时候它将不会被混淆
+
 请求融合 - 将多个请求融合在一起,逻辑清晰,容易维护
+
 并发请求 - 请求并行,急速网络请求方案
+
 链式请求 - 请求排队,随时修改,饲适用与多种场景
+
 BaseProgressBarView - 动画解决方案,专注动画实现
+
 WebViewFk - 基于WebView的浏览器实现
 
 **入门指南**

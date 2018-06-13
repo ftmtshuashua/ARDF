@@ -3,6 +3,7 @@ package com.lfp.androidrapiddevelopmentframework.net;
 import android.content.Context;
 
 import com.lfp.androidrapiddevelopmentframework.dialog.ProgressDelayDialog;
+import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
 import com.lfp.ardf.module.net_deprecated.OkHttpRequestObserver;
 
@@ -20,7 +21,7 @@ public abstract class UnifyResponse extends OkHttpRequestObserver {
 
     public UnifyResponse(Context c) {
         context = c;
-        mDialog = new ProgressDelayDialog(context);
+        mDialog = new ProgressDelayDialog((IAppFramework) context);
     }
 
     @Override

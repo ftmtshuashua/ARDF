@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net_deprecated.util;
+package com.lfp.ardf.module.net.util;
 
 import android.text.TextUtils;
 import android.webkit.URLUtil;
@@ -186,5 +186,4 @@ public class UrlFormat {
         }
         return data;
     }
-
 }

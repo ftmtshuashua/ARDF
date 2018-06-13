@@ -1,4 +1,4 @@
-package com.lfp.ardf.module.net_deprecated.util;
+package com.lfp.ardf.module.net.util;
 
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.exception.MsgException;
@@ -10,6 +10,7 @@ import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.text.MessageFormat;
+
 
 /**
  * 错误信息提示工具
@@ -74,6 +75,5 @@ public class ExceptionTotalUtil {
             e2.printStackTrace();
         }
     }
-
 
 }

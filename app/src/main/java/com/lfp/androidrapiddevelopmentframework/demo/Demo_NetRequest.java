@@ -11,20 +11,14 @@ import com.lfp.androidrapiddevelopmentframework.api.Apiserver;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.dialog.ProgressDelayDialog;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
-import com.lfp.androidrapiddevelopmentframework.net.UnifyResponse;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.dialog.BaseDialog;
 import com.lfp.ardf.framework.I.IAppFramework;
-import com.lfp.ardf.module.net.RequestChain;
-import com.lfp.ardf.module.net.i.IRequest;
+import com.lfp.ardf.module.net.imp.RequestChain;
+import com.lfp.ardf.module.net.i.RequestNode;
+import com.lfp.ardf.module.net.imp.RequestMerge;
 import com.lfp.ardf.module.net.i.RequestListener;
-import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
-import com.lfp.ardf.module.net_deprecated.client.OkHttpReqeuestClient;
-import com.lfp.ardf.module.net_deprecated.logic.ChainRequestLogic;
-import com.lfp.ardf.module.net_deprecated.logic.ImpRequestLogi;
-import com.lfp.ardf.module.net_deprecated.logic.ParallelRequestLogic;
-import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
 
 import java.text.MessageFormat;
 
@@ -56,133 +50,89 @@ public class Demo_NetRequest extends BaseActivity implements View.OnClickListene
         findViewById(R.id.view_ChainRequest).setOnClickListener(this);
         findViewById(R.id.view_ClearRequest).setOnClickListener(this);
 
-        mRequestLogic_Chain = new ChainRequestLogic();
-        mRequestLogic_Chain.setAppFramework(getAppFk());
-        mRequestLogic_Chain.setRequestClient(OkHttpReqeuestClient.getDefualt());
 
-        mRequestLogic_Parallel = new ParallelRequestLogic();
-        mRequestLogic_Parallel.setAppFramework(getAppFk());
-        mRequestLogic_Parallel.setRequestClient(OkHttpReqeuestClient.getDefualt());
+        createListener();
+        singleRequest();
     }
 
-    ImpRequestLogi mRequestLogic_Chain;
-    ImpRequestLogi mRequestLogic_Parallel;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.view_ParallelRequest:
-                testNewRequest();
-//                parallelRequest();
+                mergeRequest();
                 break;
             case R.id.view_ChainRequest:
-                chainRequest();
+                testNewRequest();
                 break;
             case R.id.view_ClearRequest:
-                mRequestLogic_Chain.shutdown();
-                mRequestLogic_Parallel.shutdown();
+                hhRequest();
                 break;
         }
     }
 
-    void parallelRequest() {
-        mTV_Info.setText("");
-        mRequestLogic_Parallel.perform(
-                new UnifyResponse(getActivity()) {
-                    @Override
-                    protected void onLog(String str) {
-                        super.onLog(str);
-                        mTV_Info.append("\n" + str);
-                    }
+    long mTime;
+    RequestListener mRequestListener;
 
-                    @Override
-                    public void onRequestResponse(OkHttpRequest request) {
-                        super.onRequestResponse(request);
-                        if (request.hasNext()) {
-                            OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
-                            UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
-                            urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
-                            reqeust.setApi(urlFormat.toUrl());
-                        }
-                    }
-                }
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast());
-    }
+    void createListener() {
+        mRequestListener = new RequestListener() {
+            BaseDialog mDialog = new ProgressDelayDialog(getAppFk());
 
-    void chainRequest() {
-        mTV_Info.setText("");
-        mRequestLogic_Chain.perform(
-                new UnifyResponse(getActivity()) {
-
-                    @Override
-                    protected void onLog(String str) {
-                        super.onLog(str);
-                        mTV_Info.append("\n" + str);
-                    }
-
-                    @Override
-                    public void onRequestResponse(OkHttpRequest request) {
-                        super.onRequestResponse(request);
-                        if (request.hasNext()) {
-                            OkHttpRequest reqeust = (OkHttpRequest) request.getNext();
-                            UrlFormat urlFormat = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
-                            urlFormat.addQuery("r", MessageFormat.format("修改来自 - ID:{0}", reqeust.getId()));
-                            reqeust.setApi(urlFormat.toUrl());
-                        }
-                    }
-                }
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast()
-                , getApiserver().getWeatherForecast());
-    }
-
-
-    void testNewRequest() {
-        LogUtil.e("准备发起请求:");
-        final BaseDialog mDialog = new ProgressDelayDialog(getAppFk());
-        mDialog.show();
-        RequestListener mRequestListener = new RequestListener() {
             @Override
-            public void onStart(IRequest request) {
+            public void onStart(RequestNode request) {
+                mDialog.show();
                 LogUtil.e(MessageFormat.format("---- onStart id:{0}", request.getId()));
-
+                mTime = System.currentTimeMillis();
             }
 
             @Override
-            public void onError(IRequest request, Throwable e) {
+            public void onError(RequestNode request, Throwable e) {
                 LogUtil.e(MessageFormat.format("---- onError id:{0}  e:{1}", request.getId(), e.getMessage()));
             }
 
             @Override
-            public void onResponse(IRequest request) {
+            public void onResponse(RequestNode request) {
                 LogUtil.e(MessageFormat.format("---- onResponse id:{0}", request.getId()));
-                try {
-                    Thread.sleep(1500);
-                } catch (Exception e) {
-
-                }
             }
 
             @Override
-            public void onComplete(IRequest request) {
+            public void onComplete(RequestNode request) {
                 LogUtil.e(MessageFormat.format("---- onComplete id:{0}", request.getId()));
-
-//                finish();
             }
 
             @Override
-            public void onEnd(IRequest request) {
-                LogUtil.e(MessageFormat.format("---- onEnd id:{0}", request.getId()));
+            public void onEnd(RequestNode request) {
+                LogUtil.e(MessageFormat.format("---- onEnd id:{0}   耗时:{1}ms", request.getId(), (System.currentTimeMillis() - mTime)));
                 mDialog.dismiss();
             }
         };
+    }
 
-        RequestChain mRequestChain = RequestChain.request(
-                Apiserver.getNewRequest()
-                , Apiserver.getNewRequest()
-        );
+    /*单个请求*/
+    void singleRequest() {
+        RequestNode request = Apiserver.getNewRequest();
+        request.setRequestListener(mRequestListener);
+        request.start();
+    }
+
+    /*链式请求*/
+    void testNewRequest() {
+        RequestChain mRequestChain = RequestChain.request(Apiserver.getNewRequest(), Apiserver.getNewRequest());
+        mRequestChain.setRequestListener(mRequestListener);
+        mRequestChain.start();
+    }
+
+    /*并发请求*/
+    void mergeRequest() {
+        RequestMerge request = new RequestMerge(Apiserver.getNewRequest(), Apiserver.getNewRequest());
+        request.setRequestListener(mRequestListener);
+        request.start();
+    }
+
+    /*混合请求*/
+    void hhRequest() {
+        RequestMerge request = new RequestMerge(Apiserver.getNewRequest(), Apiserver.getNewRequest());
+        RequestChain mRequestChain = RequestChain.request(Apiserver.getNewRequest(), request);
         mRequestChain.setRequestListener(mRequestListener);
         mRequestChain.start();
     }

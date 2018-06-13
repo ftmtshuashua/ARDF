@@ -2,10 +2,8 @@ package com.lfp.ardf.module.net;
 
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.exception.NetStateException;
-import com.lfp.ardf.module.net.i.IRequest;
-import com.lfp.ardf.module.net.i.RequestListener;
-import com.lfp.ardf.module.net.i.SimpleRequest;
-import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
+import com.lfp.ardf.module.net.imp.RequestCall;
+import com.lfp.ardf.module.net.util.UrlFormat;
 
 import java.text.MessageFormat;
 
@@ -17,7 +15,7 @@ import okhttp3.Response;
  * <br/>
  * Created by LiFuPing on 2018/6/11.
  */
-public class OkHttpRequest extends SimpleRequest implements RequestListener {
+public class OkHttpRequest extends RequestCall {
 
     /*忽略请求结果*/
     static final int FLAG_IGNORE_RESPONSE = 0x1;
@@ -30,7 +28,6 @@ public class OkHttpRequest extends SimpleRequest implements RequestListener {
 
 
     public OkHttpRequest(String api) {
-        super.setRequestListener(this);
         setApi(api);
     }
 
@@ -65,6 +62,21 @@ public class OkHttpRequest extends SimpleRequest implements RequestListener {
             throw new NetStateException(MessageFormat.format("{0}{1}", response.code(), response.message()));
     }
 
+    @Override
+    public void cancel() {
+        if (mCall != null) mCall.cancel();
+    }
+
+    public boolean isIgnoreComplete() {
+        return (flag & FLAG_IGNORE_RESPONSE) != 0;
+    }
+
+    public OkHttpRequest setIgnoreComplete(boolean ignore) {
+        if (ignore) flag |= FLAG_IGNORE_RESPONSE;
+        else flag &= ~FLAG_IGNORE_RESPONSE;
+        return this;
+    }
+
     void showLog(Request request, Response response) {
         if (response == null) {
             LogUtil.e_Pretty(
@@ -87,50 +99,5 @@ public class OkHttpRequest extends SimpleRequest implements RequestListener {
         else LogUtil.e_Pretty(msg);
     }
 
-    @Override
-    public void cancel() {
-        if (mCall != null) mCall.cancel();
-    }
 
-    public boolean isIgnoreComplete() {
-        return (flag & FLAG_IGNORE_RESPONSE) != 0;
-    }
-
-    public OkHttpRequest setIgnoreComplete(boolean ignore) {
-        if (ignore) flag |= FLAG_IGNORE_RESPONSE;
-        else flag &= ~FLAG_IGNORE_RESPONSE;
-        return this;
-    }
-
-    RequestListener mRequestListener;
-
-    @Override
-    public void setRequestListener(RequestListener l) {
-        mRequestListener = l;
-    }
-
-    @Override
-    public void onStart(IRequest request) {
-        if (mRequestListener != null) mRequestListener.onStart(request);
-    }
-
-    @Override
-    public void onError(IRequest request, Throwable e) {
-        if (mRequestListener != null) mRequestListener.onError(request, e);
-    }
-
-    @Override
-    public void onResponse(IRequest request) {
-        if (mRequestListener != null) mRequestListener.onResponse(request);
-    }
-
-    @Override
-    public void onComplete(IRequest request) {
-        if (mRequestListener != null && !isIgnoreComplete()) mRequestListener.onComplete(request);
-    }
-
-    @Override
-    public void onEnd(IRequest request) {
-        if (mRequestListener != null) mRequestListener.onEnd(request);
-    }
 }

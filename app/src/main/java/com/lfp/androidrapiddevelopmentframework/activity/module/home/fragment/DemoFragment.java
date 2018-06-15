@@ -17,6 +17,7 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseFragment;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_RadioGroupControl;
+import com.lfp.androidrapiddevelopmentframework.demo.Demo_WebActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
@@ -75,6 +76,7 @@ public class DemoFragment extends BaseFragment {
 //        arrays.add(new PlaceholderEntrance("工具类说明"));
         arrays.add(new Demo_NetRequest.Demo(getAppFk()));
         arrays.add(new VisibilityControlEvent(view.findViewById(R.id.view_WaitProgressBar), "BaseProgressBarView", "ProgressBar解决方案"));
+        arrays.add(new Demo_WebActivity.Demo(getAppFk()));
 
         mAdapter.setAndUpdata(arrays);
     }

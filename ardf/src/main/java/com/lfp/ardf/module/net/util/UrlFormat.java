@@ -45,7 +45,7 @@ public class UrlFormat {
      */
     public UrlFormat(String url, boolean fixurl) {
         originalUrl = url;
-        if (fixurl) url = URLUtil.guessUrl(url);
+        if (fixurl) url = fixUrl(url);
         if (url.contains("?")) {
             String[] urlformat = url.split("\\?", 2);
             path = urlformat[0];
@@ -56,6 +56,16 @@ public class UrlFormat {
                 query.put(key, Params.get(key));
             }
         } else path = url;
+    }
+
+    /**
+     * 修复
+     *
+     * @param url
+     * @return
+     */
+    public static String fixUrl(String url) {
+        return URLUtil.guessUrl(url);
     }
 
     /**

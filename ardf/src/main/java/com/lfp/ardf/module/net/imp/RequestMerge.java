@@ -3,6 +3,7 @@ package com.lfp.ardf.module.net.imp;
 
 import com.lfp.ardf.module.net.i.RequestListener;
 import com.lfp.ardf.module.net.i.RequestNode;
+import com.lfp.ardf.module.net.util.IndexDistributor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,34 +30,35 @@ public final class RequestMerge extends RequestNode implements RequestListener {
     }
 
     public static RequestMerge request(RequestNode... reqeust_array) {
-        if (reqeust_array == null || reqeust_array.length == 0) return null;
         List<RequestNode> array = new ArrayList<>();
-        for (int i = 0; i < reqeust_array.length; i++) {
-            RequestNode request = reqeust_array[i];
-            array.add(request);
-            if (request != null) request.indexId(i);
+
+        if (reqeust_array != null && reqeust_array.length > 0) {
+            for (int i = 0; i < reqeust_array.length; i++) {
+                RequestNode request = reqeust_array[i];
+                array.add(request);
+            }
+            IndexDistributor.distribution(array, 0);
         }
+
         RequestMerge mRequestMerge = new RequestMerge();
         mRequestMerge.merge_array = array;
         return mRequestMerge;
     }
 
     public static RequestMerge request(Iterable<RequestNode> reqeust_array) {
-        if (reqeust_array == null) return null;
-        Iterator<RequestNode> iterator = reqeust_array.iterator();
         List<RequestNode> array = new ArrayList<>();
-        int id = 0;
-        while (iterator.hasNext()) {
-            RequestNode request = iterator.next();
-            array.add(request);
-            if (request != null) request.indexId(id);
-            id++;
+        if (reqeust_array != null) {
+            Iterator<RequestNode> iterator = reqeust_array.iterator();
+            while (iterator.hasNext()) {
+                RequestNode request = iterator.next();
+                array.add(request);
+            }
+            IndexDistributor.distribution(array, 0);
         }
         RequestMerge mRequestMerge = new RequestMerge();
         mRequestMerge.merge_array = array;
         return mRequestMerge;
     }
-
 
     @Override
     public void shutdown() {
@@ -77,32 +79,15 @@ public final class RequestMerge extends RequestNode implements RequestListener {
     }
 
     @Override
-    public void indexId(int id) {
-        super.indexId(id);
-        if (merge_array != null) {
-            int offset = 0;
-            for (RequestNode request : merge_array) {
-                if (request == null) {
-                    offset++;
-                } else {
-                    request.indexId(offset + id);
-                    offset += request.length();
-                }
-            }
-        }
+    public void setIndex(int index) {
+        super.setIndex(index);
+        IndexDistributor.distribution(merge_array, index);
     }
 
     @Override
     public int length() {
-        int count = 0;
-        if (merge_array == null) return count;
-        for (RequestNode request : merge_array) {
-            if (request == null) count++;
-            else count += request.length();
-        }
-        return count;
+        return IndexDistributor.nodeLenth(merge_array);
     }
-
 
     void setFlag(int flag) {
         mflag |= flag;
@@ -119,7 +104,9 @@ public final class RequestMerge extends RequestNode implements RequestListener {
         return (mflag & FLAG_CALL_MASK) == FLAG_END;
     }
 
-    /*请求计数*/
+    /*
+     * 请求计数
+     * */
     volatile int request_count = 0;
 
     @Override
@@ -139,12 +126,18 @@ public final class RequestMerge extends RequestNode implements RequestListener {
             for (RequestNode request : request_array) {
                 request.start();
             }
+
+            if (request_count == 0) {
+                request_count = 1;
+                onStart(this);
+                onEnd(this);
+            }
         }
     }
 
     @Override
     public void onStart(RequestNode request) {
-        if ((mflag & FLAG_CALL_MASK) != FLAG_STARTED) {
+        if ((mflag & FLAG_STARTED) != FLAG_STARTED) {
             setFlag(FLAG_STARTED);
             notifyStart(this);
         }
@@ -153,7 +146,6 @@ public final class RequestMerge extends RequestNode implements RequestListener {
     @Override
     public void onError(RequestNode request, Throwable e) {
         notifyError(request, e);
-        endRequest();
     }
 
     @Override
@@ -168,10 +160,6 @@ public final class RequestMerge extends RequestNode implements RequestListener {
 
     @Override
     public void onEnd(RequestNode request) {
-        endRequest();
-    }
-
-    private void endRequest() {
         if (isShutdown()) return;
         request_count--;
         if (request_count == 0) {

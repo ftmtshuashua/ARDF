@@ -29,6 +29,7 @@
 
 
     <!--统一圆角角度-->
+    <dimen name="Unified_Angle_15">15dp</dimen>
     <dimen name="Unified_Angle_Mellow">5dp</dimen>
     <dimen name="Unified_Angle_Rectangle">3dp</dimen>
 </resources>

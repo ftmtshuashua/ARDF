@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * <br/>
+ * 请求执行者 <br/>
  * Created by LiFuPing on 2018/6/12.
  */
 public abstract class RequestCall extends RequestNode {

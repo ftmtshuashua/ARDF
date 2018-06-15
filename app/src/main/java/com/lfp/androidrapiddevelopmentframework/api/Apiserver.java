@@ -1,10 +1,16 @@
 package com.lfp.androidrapiddevelopmentframework.api;
 
-import com.lfp.ardf.module.net_deprecated.OkHttpRequest;
-import com.lfp.ardf.module.net_deprecated.util.UrlFormat;
+
+import com.lfp.ardf.module.net.OkHttpRequest;
+import com.lfp.ardf.module.net.util.UrlFormat;
 
 /**
  * 接口文档
+ * <p>
+ * 感谢:WAN ANDROID 提供自定义API
+ * http://www.wanandroid.com/tools/mockapi
+ * <p>
+ * <p>
  * Created by LiFuPing on 2018/5/17.
  */
 public class Apiserver {
@@ -24,19 +30,16 @@ public class Apiserver {
 
 
     /**
-     * 获取天气预报信息<br/>
-     * http://tj.nineton.cn/Heart/index/all?city=CHSH000000&language=zh-chs&unit=c&aqi=city&alarm=1&key=78928e706123c1a8f1766f062bc8676b<br/>
-     * http://www.weather.com.cn/data/cityinfo/101190408.html
-     * 感谢<中央天气预报>
+     * 获得大厅Banner数据
+     * @return
      */
-    public static OkHttpRequest getWeatherForecast() {
-        UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
-        format.addQuery("city", "CHSH000000");
+    public static OkHttpRequest getHallBanner() {
+        UrlFormat format = new UrlFormat("http://www.wanandroid.com/tools/mockapi/6616/hallBanner");
         return new OkHttpRequest(format.toUrl());
     }
 
-    public static com.lfp.ardf.module.net.OkHttpRequest getNewRequest(){
-        UrlFormat format = new UrlFormat("http://www.weather.com.cn/data/cityinfo/101190408.html");
-        return new com.lfp.ardf.module.net.OkHttpRequest(format.toUrl());
+    public static OkHttpRequest getNewRequest() {
+        UrlFormat format = new UrlFormat("http://www.wanandroid.com/tools/mockapi/6616/test");
+        return new OkHttpRequest(format.toUrl());
     }
 }

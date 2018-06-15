@@ -37,8 +37,9 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-        test();
 
+
+//        if(true)return  ;
         try {
             StatConfig.setDebugEnable(false);
             StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
@@ -105,18 +106,5 @@ public class LoadingActivity extends BaseActivity {
     }
 
 
-    void test() {
-//        for (int i = 0; i < 10; i++) {
-//            Observable.just(i)
-//                    .observeOn(Schedulers.io())
-//                    .subscribeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<Integer>() {
-//                        @Override
-//                        public void accept(Integer integer) throws Exception {
-//                            LogUtil.e(MessageFormat.format("Integer:{0}", integer));
-//                        }
-//                    });
-//        }
-    }
 
 }

@@ -2,6 +2,7 @@ package com.lfp.ardf.module.net.imp;
 
 import com.lfp.ardf.module.net.i.RequestListener;
 import com.lfp.ardf.module.net.i.RequestNode;
+import com.lfp.ardf.module.net.util.IndexDistributor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,91 +17,98 @@ import java.util.List;
  */
 public final class RequestChain extends RequestNode implements RequestListener {
 
-    private static final long FLAG_PREPARE = 0x1 << 32;
-    private static final long FLAG_START = 0x1 << 33;
-    private static final long FLAG_END = 0x1 << 34;
-    private static final long FLAG_SHUTDOWN = 0x1 << 35;
-    /*状态标记*/
-    private static final long FLAG_STATE_MASK = 0xFF << 32;
-    /*状态标记*/
-    private static final long FLAG_REQUEST_ID_MASK = 0xFFFFFFFF;
+    private static final long FLAG_PREPARE = 1;
+    private static final long FLAG_STARTED = 3;
+    private static final long FLAG_END = 7;
+    private static final long FLAG_CALL_MASK = 0xF;
 
+    private static final long FLAG_SHUTDOWN = 0x10;
+
+    List<RequestNode> chain_array;
     RequestNode mRequestHead;
 
     long mFlag;
 
-    private RequestChain(RequestNode reqeust_head) {
+    private RequestChain(List<RequestNode> reqeust_array, RequestNode reqeust_head) {
+        chain_array = reqeust_array;
         mRequestHead = reqeust_head;
-    }
-
-    private void setFlag(long flag) {
-        mFlag |= flag;
     }
 
 
     public static RequestChain request(RequestNode... reqeust_array) {
-        if (reqeust_array == null) return null;
         List<RequestNode> array = new ArrayList<>();
-        int id = 0;
-        for (RequestNode reqeuset : reqeust_array) {
-            if (reqeuset == null) {
-                id++;
-            } else {
+        if (reqeust_array != null && reqeust_array.length > 0) {
+            for (RequestNode reqeuset : reqeust_array) {
                 array.add(reqeuset);
-                reqeuset.indexId(id);
-                id += reqeuset.length();
             }
         }
         return build(array);
     }
 
     public static RequestChain request(Iterable<RequestNode> reqeust_array) {
-        if (reqeust_array == null) return null;
         List<RequestNode> array = new ArrayList<>();
-        Iterator<RequestNode> iterator = reqeust_array.iterator();
-        int id = -1;
-        while (iterator.hasNext()) {
-            RequestNode request = iterator.next();
-            if (request == null) {
-                id++;
-            } else {
-                array.add(request);
-                request.indexId(id);
-                id += request.length();
+        if (reqeust_array != null) {
+            Iterator<RequestNode> iterator = reqeust_array.iterator();
+            while (iterator.hasNext()) {
+                array.add(iterator.next());
             }
         }
         return build(array);
     }
 
     protected static RequestChain build(List<RequestNode> reqeust_array) {
-        if (reqeust_array == null || reqeust_array.isEmpty()) return null;
-        for (int i = 0; i < reqeust_array.size() - 1; i++) {
-            reqeust_array.get(i).setNext(reqeust_array.get(i + 1));
+        RequestNode head = null;
+        if (reqeust_array != null) {
+            IndexDistributor.distribution(reqeust_array, 0);
+            List<RequestNode> chain_array = new ArrayList<>();
+            for (RequestNode request : reqeust_array) {
+                if (request != null) chain_array.add(request);
+            }
+            for (int i = 0; i < chain_array.size() - 1; i++) {
+                chain_array.get(i).setNext(chain_array.get(i + 1));
+            }
+            if (chain_array.size() > 1) head = chain_array.get(0);
         }
-        return new RequestChain(reqeust_array.get(0));
+        return new RequestChain(reqeust_array, head);
+    }
+
+
+    @Override
+    public void setIndex(int index) {
+        super.setIndex(index);
+        IndexDistributor.distribution(chain_array, index);
+    }
+
+    @Override
+    public int length() {
+        return IndexDistributor.nodeLenth(chain_array);
+    }
+
+    private void setFlag(long flag) {
+        mFlag |= flag;
     }
 
     @Override
     public void start() {
-        if (isRuning()) {
-            throw new IllegalStateException("无法启动一个已经启动的请求链!");
+        if (isShutdown()) return;
+        if (!isCalled()) {
+            setFlag(FLAG_PREPARE);
+            mRequestHead.setRequestListener(this);
+            mRequestHead.start();
         }
-        mRequestHead.setRequestListener(this);
-        mRequestHead.start();
-        setFlag(FLAG_PREPARE);
     }
 
     /*关闭请求链*/
     @Override
     public void shutdown() {
-        if (isShutdown()) return;
         setFlag(FLAG_SHUTDOWN);
-        if (isRuning()) {
+        if (isCalled() && !isEnd()) {
             RequestNode request = mRequestHead;
             while (request != null) {
                 request.shutdown();
                 request = request.getNext();
             }
+            if ((mFlag & FLAG_CALL_MASK) == FLAG_STARTED) notifyEnd(this);
         }
     }
 
@@ -109,27 +117,25 @@ public final class RequestChain extends RequestNode implements RequestListener {
         return (mFlag & FLAG_SHUTDOWN) != 0;
     }
 
-    public boolean isRuning() {
-        return (mFlag & FLAG_STATE_MASK) != 0;
+    public boolean isCalled() {
+        return (mFlag & FLAG_CALL_MASK) != 0;
     }
 
-    public int getRequestId() {
-        return (int) (mFlag & FLAG_REQUEST_ID_MASK);
+    public boolean isEnd() {
+        return (mFlag & FLAG_CALL_MASK) != FLAG_END;
     }
 
     @Override
     public void onStart(RequestNode request) {
-        if ((mFlag & FLAG_START) == 0) {
-            setFlag(FLAG_START);
+        if ((mFlag & FLAG_STARTED) != FLAG_STARTED) {
+            setFlag(FLAG_STARTED);
             notifyStart(this);
         }
-        mFlag |= request.getId();
     }
 
     @Override
     public void onError(RequestNode request, Throwable e) {
         notifyError(request, e);
-        endReqeuestChain(request);
     }
 
     @Override
@@ -145,20 +151,20 @@ public final class RequestChain extends RequestNode implements RequestListener {
     @Override
     public void onEnd(RequestNode request) {
         if (isShutdown() && request.isShutdown()) {
-            endReqeuestChain(request);
+            endReqeuestChain();
         } else {
             if (request.hasNext()) {
                 RequestNode requet = request.getNext();
                 requet.setRequestListener(this);
                 requet.start();
             } else {
-                endReqeuestChain(request);
+                endReqeuestChain();
             }
         }
     }
 
 
-    void endReqeuestChain(RequestNode request) {
+    void endReqeuestChain() {
         setFlag(FLAG_END | FLAG_SHUTDOWN);
         notifyEnd(this);
     }

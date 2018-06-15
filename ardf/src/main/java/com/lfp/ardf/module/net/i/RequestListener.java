@@ -6,7 +6,7 @@ package com.lfp.ardf.module.net.i;
  * <p>
  * Created by LiFuPing on 2018/6/8.
  */
-public interface RequestListener {
+public interface RequestListener<R extends RequestNode> {
 
     /**
      * 当请求开始当时候回调,它只会被回调一次
@@ -24,7 +24,7 @@ public interface RequestListener {
      * @param request 发生异常的请求
      * @param e       异常信息
      */
-    void onError(RequestNode request, Throwable e);
+    void onError(R request, Throwable e);
 
     /**
      * 当请求成功之后会在请求发生线程中回调此方法
@@ -33,7 +33,7 @@ public interface RequestListener {
      *
      * @param request 完成当请求
      */
-    void onResponse(RequestNode request);
+    void onResponse(R request);
 
     /**
      * 当请求完成之后在UI线程回调此方法.
@@ -43,7 +43,7 @@ public interface RequestListener {
      *
      * @param request
      */
-    void onComplete(RequestNode request);
+    void onComplete(R request);
 
     /**
      * 当请求结束当时候回调,它只会被回调一次

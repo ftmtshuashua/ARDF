@@ -55,6 +55,7 @@
         <activity android:name=".demo.Demo_BaseRecyclerViewAdapter" />
         <activity android:name=".demo.Demo_NetRequest" />
         <activity android:name=".demo.Demo_RadioGroupControl" />
+        <activity android:name=".demo.Demo_WebActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.lfp.ardf.module.net.i;
 
-import com.lfp.ardf.exception.MsgException;
 import com.lfp.ardf.module.net.imp.RequestCall;
 import com.lfp.ardf.module.net.imp.RequestChain;
 import com.lfp.ardf.module.net.imp.RequestMerge;
@@ -20,8 +19,6 @@ import com.lfp.ardf.module.net.imp.RequestMerge;
  */
 public abstract class RequestNode {
 
-    /*用户自己分配当ID*/
-    private static final int FLAG_USERS_ASSIGNED_ID = 0x1;
 
     /**
      * 请求节点监听器.
@@ -43,7 +40,7 @@ public abstract class RequestNode {
      * 空节点也应该消耗一个ID,来保证ID不会随着节点边空而改变
      */
     private int id;
-    private int myflag;
+    private int index;
 
     /**
      * 设置这个节点当监听器,它用来获取节点节点状态
@@ -55,27 +52,24 @@ public abstract class RequestNode {
     }
 
     /**
-     * 分配唯一的ID给节点,通过节点ID来区分回复节点
+     * 设置节点ID
      * <p>
-     * 注意默认情况下系统分配 ID 是从 0 开始 +1 递增,所以手动设置当时候尽量使用一个比较大大值
+     * 节点ID在同一条请求链里面应该是相对唯一的
      *
      * @param id
      */
     public void setId(int id) {
-        if (id < 0) throw new MsgException("ID不满足条件 ID >= 0 !");
-        myflag |= FLAG_USERS_ASSIGNED_ID;
         this.id = id;
     }
 
     /**
-     * 在用户没有手动分配ID当情况下,请求链会自动为节点分配一个与执行顺序相同当ID
+     * 设置请求在链中的位置
+     * 请求链会自动为节点分配一个与执行顺序相同当ID
      *
      * @param index
      */
-    public void indexId(int index) {
-        if ((myflag & FLAG_USERS_ASSIGNED_ID) != 0) return;
-        if (index < 0) throw new MsgException("ID不满足条件 ID >= 0 !");
-        this.id = index;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     /**
@@ -85,6 +79,13 @@ public abstract class RequestNode {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * @return 请求在请求链中的位置
+     */
+    public int getIndex() {
+        return index;
     }
 
     /**

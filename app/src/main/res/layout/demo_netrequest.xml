@@ -10,22 +10,39 @@
         layout="@layout/layout_actionbar" />
 
     <com.lfp.widget.springview.SpringView
-        android:layout_width="match_parent"
+        android:id="@+id/layout_Menu"
+        android:layout_width="90dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_Control"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_ReyclerViewMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.lfp.widget.springview.SpringView>
+
+    <com.lfp.widget.springview.SpringView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="1dp"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/layout_Menu"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/view_Info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="点击下面功能开始测试"
-                android:padding="@dimen/Unified_Margin_LeftAndRight"
+                android:padding="@dimen/Unified_Margin_Basic"
                 android:textColor="@color/colorBlack_Content"
                 android:textSize="@dimen/TextSize_Content" />
         </ScrollView>
@@ -33,46 +50,4 @@
     </com.lfp.widget.springview.SpringView>
 
 
-    <LinearLayout
-        android:id="@+id/layout_Control"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorWhite"
-        android:divider="@drawable/divider_t_margin_basic"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/Unified_Margin_Basic"
-        android:paddingLeft="@dimen/Unified_Margin_LeftAndRight"
-        android:paddingRight="@dimen/Unified_Margin_LeftAndRight"
-        android:paddingTop="@dimen/Unified_Margin_Basic"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <TextView
-            android:id="@+id/view_ParallelRequest"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="并发请求"
-            android:textSize="@dimen/TextSize_Subtitle" />
-
-        <TextView
-            android:id="@+id/view_ChainRequest"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="链式请求"
-            android:textSize="@dimen/TextSize_Subtitle" />
-
-        <TextView
-            android:id="@+id/view_ClearRequest"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="取消请求"
-            android:textSize="@dimen/TextSize_Subtitle" />
-
-
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

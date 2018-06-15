@@ -2,6 +2,7 @@ package com.lfp.ardf.module.net;
 
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.exception.NetStateException;
+import com.lfp.ardf.module.net.i.RequestNode;
 import com.lfp.ardf.module.net.imp.RequestCall;
 import com.lfp.ardf.module.net.util.UrlFormat;
 
@@ -39,11 +40,9 @@ public class OkHttpRequest extends RequestCall {
         return api;
     }
 
-
     public String body() {
         return body;
     }
-
 
     @Override
     protected synchronized void call() throws Exception {
@@ -100,4 +99,9 @@ public class OkHttpRequest extends RequestCall {
     }
 
 
+    @Override
+    protected void notifyComplete(RequestNode request) {
+        if (isIgnoreComplete() && request == this) return;
+        super.notifyComplete(request);
+    }
 }

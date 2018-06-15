@@ -1,6 +1,5 @@
 package com.lfp.ardf.module.net.util;
 
-import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.exception.MsgException;
 import com.lfp.ardf.exception.NetStateException;
 import com.lfp.ardf.util.ToastUtil;
@@ -66,10 +65,10 @@ public class ExceptionTotalUtil {
      *
      * @param e 错误信息
      */
-    public static void handle(Throwable e) {
+    public static void show(Throwable e) {
         try {
+            e.printStackTrace();
             String excptin_info = getThrowableToastInfo(e);
-            LogUtil.e(MessageFormat.format("错误日志：{0}", excptin_info));
             if (isShowThrowableToast(e)) ToastUtil.show(excptin_info);
         } catch (Exception e2) {
             e2.printStackTrace();

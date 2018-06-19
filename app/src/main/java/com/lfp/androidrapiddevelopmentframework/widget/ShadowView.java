@@ -35,8 +35,9 @@ public class ShadowView extends FrameLayout {
 
         distance = getPaddingBottom();
 
-        paint.setColor(Color.TRANSPARENT);
-        paint.setShadowLayer(distance * 0.5f, 0, distance * 0.45f, shadowColor);
+//        paint.setColor(Color.TRANSPARENT);
+//        paint.setShadowLayer(distance * 0.5f, 0, distance * 0.45f, shadowColor);
+        paint.setShadowLayer(distance, 0, 0, shadowColor);
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.setWillNotDraw(false);
@@ -50,10 +51,37 @@ public class ShadowView extends FrameLayout {
         viewRect.set(distance * 0.6f, distance, getWidth() - distance * 0.6f, getHeight() - getPaddingRight() - distance);
     }
 
+
+    Paint mPaint;
+
     @Override
     protected void onDraw(Canvas canvas) {
+        if (mPaint == null) {
+            mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mPaint.setStrokeWidth(1);
+            mPaint.setStyle(Paint.Style.STROKE);
+        }
         super.onDraw(canvas);
-        canvas.drawRoundRect(viewRect, radius, radius, paint);
+
+        canvas.save();
+        /*范围*/
+        mPaint.setColor(Color.RED);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
+
+        mPaint.setColor(Color.GREEN);
+        /*阴影范围*/
+        canvas.drawRect(viewRect, mPaint);
+
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setTextSize(120);
+        /*阴影*/
+        canvas.drawText("啊哈", viewRect.left, viewRect.bottom, paint);
+//        canvas.drawPaint(paint);
+//        canvas.drawRoundRect(viewRect, radius, radius, paint);
+
+
+        canvas.restore();
     }
 
 }

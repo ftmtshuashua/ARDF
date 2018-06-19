@@ -17,28 +17,29 @@
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:paddingBottom="@dimen/Unified_Margin_Basic">
+            android:padding="15dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"
-                tools:visibility="visible"
                 android:layout_gravity="center"
-                android:background="@drawable/drawable_shadow"
+                android:background="@mipmap/ic_launcher"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/Unified_Margin_LeftAndRight"
                 android:text="库存量"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/TextSize_Title" />
+                android:textSize="@dimen/TextSize_Title"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
         </com.lfp.androidrapiddevelopmentframework.widget.ShadowView>
 
     </FrameLayout>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:elevation="100dp"
         android:gravity="center"
         android:text="成长快乐\n乐于分享才会收获快乐"
         android:textColor="@color/colorBlack_Explain"

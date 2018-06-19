@@ -13,6 +13,7 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar;
+import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.util.UrlFormat;
 import com.lfp.ardf.util.Utils;
@@ -20,6 +21,7 @@ import com.lfp.ardf.util.ViewUtil;
 import com.lfp.ardf.widget.WebViewFk;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 
 /**
  * Web浏览器<br/>
@@ -52,15 +54,7 @@ public class Demo_WebActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mConfig = (Config) getIntent().getSerializableExtra(KEY_DATA);
         setContentView(R.layout.activity_web);
-        mActionBarControl = new ActionBarControl(getActivity()).setfitsSystemWindows();
-        if (!Utils.isEmpty(mConfig.getTitle())) mActionBarControl.setTitle(mConfig.getTitle());
-        else mActionBarControl.setTitle(mConfig.getUrl());
-        mActionBarControl.setBackOnClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mWebViewFx.canGoBack()) mWebViewFx.goBack();
-            }
-        });
+        initActionBar(mConfig);
 
         mWebProgressBar = findViewById(R.id.view_WebProgressBar);
         mWebProgressBar.setMaxProgress(100);
@@ -87,9 +81,7 @@ public class Demo_WebActivity extends BaseActivity {
         @Override
         public void onWebFinish(WebView view, String url) {
             ViewUtil.setVisibility(mWebProgressBar, View.GONE);
-
-            if (view.canGoBack()) mActionBarControl.showBack();
-            else mActionBarControl.hiddenBack();
+            if (view.canGoBack()) mActionBarControl.showFinish();
         }
     };
     WebViewFk.OnTitleChange mOnTitleChange = new WebViewFk.OnTitleChange() {
@@ -98,6 +90,29 @@ public class Demo_WebActivity extends BaseActivity {
             mActionBarControl.setTitle(title);
         }
     };
+
+    void initActionBar(Config config) {
+        mActionBarControl = new ActionBarControl(getActivity());
+        mActionBarControl.setTitle(!Utils.isEmpty(config.getTitle()) ? config.getTitle() : config.getUrl());
+        mActionBarControl.showBack();
+        mActionBarControl.setBackOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtil.e(MessageFormat.format("mWebViewFx.canGoBack():{0}", mWebViewFx.canGoBack()));
+                if (mWebViewFx.canGoBack()) {
+                    mWebViewFx.goBack();
+                } else {
+                    finish();
+                }
+            }
+        });
+        mActionBarControl.setFinishOnClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
 
     public static final class Config implements Serializable {
         /*禁用自动标题,禁用之后标题不会随着页面跳转而变化*/
@@ -114,7 +129,7 @@ public class Demo_WebActivity extends BaseActivity {
         }
 
         public String getUrl() {
-            if ((flag & FLAG_DISABLED_URL_FIX) == 0) return url;
+            if ((flag & FLAG_DISABLED_URL_FIX) != 0) return url;
             return UrlFormat.fixUrl(url);
         }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ShadowView">
+        <attr name="shadow_style" format="integer">
+            <flag name="left" value="1" />
+            <flag name="top" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+        <attr name="shadow_distance" format="dimension" />
+        <attr name="shadow_radius" format="dimension" />
+        <attr name="shadow_dx" format="dimension" />
+        <attr name="shadow_dy" format="dimension" />
+        <attr name="shadow_color" format="color|reference">
+            <enum name="black" value="0x88000000" />
+        </attr>
+
+    </declare-styleable>
+
+
+</resources>

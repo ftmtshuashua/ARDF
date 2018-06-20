@@ -52,7 +52,7 @@ public class Demo_NetRequest extends BaseActivity {
         setContentView(R.layout.demo_netrequest);
         new ActionBarControl(getActivity())
                 .setTitle("网络请求 Demo")
-                .setSubTitle("并发请求/链式请求")
+                .setSubTitle("并发请求/链式请求(请求500ms延时)")
                 .showBack()
                 .setBackFinishActivity(getActivity());
 
@@ -154,7 +154,6 @@ public class Demo_NetRequest extends BaseActivity {
         mMenuAdapter.addData(new ChainRequestEvent(mRequestListener));
         mMenuAdapter.addData(new HHRequestEvent(mRequestListener));
     }
-
 
     public static String getThreadName() {
         return "Thread:" + Thread.currentThread().getName();
@@ -265,8 +264,7 @@ public class Demo_NetRequest extends BaseActivity {
     public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super(appfk, "网络请求");
-            setInfo("并发请求/链式请求解决方案");
+            super(appfk, "网络请求", "并发请求/链式请求解决方案");
         }
 
         @Override

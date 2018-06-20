@@ -3,8 +3,6 @@
     <!--标题栏高度-->
     <dimen name="ActionBar_Height">58dp</dimen>
 
-
-
     <!--         字体大小            -->
     <!--超大标题-->
     <dimen name="TextSize_SuperTitle">20sp</dimen>

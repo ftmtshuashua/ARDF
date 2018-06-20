@@ -1,6 +1,7 @@
 package com.lfp.ardf.dialog;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -27,6 +28,14 @@ public class BaseDialog extends Dialog {
      * 默认边距
      */
     public static final int DEFUALT_MARGIN = 30;
+
+    public BaseDialog(@NonNull Context c) {
+        super(c, R.style.BaseDialogStyle);
+
+        if (c instanceof IAppFramework) {
+            attachAppFk((IAppFramework) c);
+        }
+    }
 
     public BaseDialog(@NonNull IAppFramework appfk) {
         super(appfk.getContext(), R.style.BaseDialogStyle);

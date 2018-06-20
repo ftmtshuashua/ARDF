@@ -21,11 +21,6 @@ import com.yanzhenjie.permission.Permission;
 import java.text.MessageFormat;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-
 /**
  * 开屏页面<br/>
  * Created by LiFuPing on 2018/5/31.
@@ -104,7 +99,6 @@ public class LoadingActivity extends BaseActivity {
         HomeActivity.start(getActivity());
         finish();
     }
-
 
 
 }

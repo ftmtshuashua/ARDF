@@ -27,6 +27,10 @@ public class BaseDelayDialog extends BaseDialog {
     Disposable mDisposable;
     long delay_time = DEFUALT_DELAY_TIME;
 
+    public BaseDelayDialog(@NonNull Context c) {
+        super(c);
+    }
+
     public BaseDelayDialog(@NonNull IAppFramework appfk) {
         super(appfk);
     }

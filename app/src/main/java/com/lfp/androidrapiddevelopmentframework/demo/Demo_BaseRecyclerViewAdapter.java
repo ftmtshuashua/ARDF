@@ -221,7 +221,7 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity {
     public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super(appfk, "BaseRecyclerViewAdapter");
+            super(appfk, "BaseRecyclerViewAdapter" ,null);
         }
 
         @Override

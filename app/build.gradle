@@ -107,6 +107,8 @@ dependencies {
     implementation files('src/main/libs/GDTUnionSDK.TBS.4.16.564.min.jar')
 
     implementation 'com.yanzhenjie:permission:2.0.0-rc8'
+
+//    implementation 'com.dingmouren.paletteimageview:paletteimageview:1.0.7'
 }
 
 //获取当前时间

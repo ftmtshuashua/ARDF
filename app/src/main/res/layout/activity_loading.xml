@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,26 +14,31 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.lfp.androidrapiddevelopmentframework.widget.ShadowView
+        <com.lfp.ardf.widget.ShadowView
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:padding="15dp">
+            app:shadow_color="#9E2F66DE"
+            app:shadow_distance="8dp"
+            app:shadow_dx="0dp"
+            app:shadow_dy="2dp"
+            app:shadow_radius="20dp"
+            app:shadow_style="left|top|right|bottom">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@mipmap/ic_launcher"
+                android:background="@drawable/drawable_shadow"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/Unified_Margin_LeftAndRight"
                 android:text="库存量"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/TextSize_Title"
-                android:visibility="invisible"
+                android:visibility="visible"
                 tools:visibility="visible" />
 
-        </com.lfp.androidrapiddevelopmentframework.widget.ShadowView>
+        </com.lfp.ardf.widget.ShadowView>
 
     </FrameLayout>
 

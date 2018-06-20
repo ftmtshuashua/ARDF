@@ -10,9 +10,10 @@ public abstract class DemoEvent extends InfoEvent {
     IAppFramework mAppFk;
     String str_info;
 
-    public DemoEvent(IAppFramework appfk, String title) {
+    public DemoEvent(IAppFramework appfk, String title,String info) {
         super(title);
         mAppFk = appfk;
+        setInfo(info);
     }
 
     public IAppFramework getAppFk() {

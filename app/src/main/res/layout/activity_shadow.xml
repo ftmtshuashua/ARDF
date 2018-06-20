@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/layout_ActionBar"
+        layout="@layout/layout_actionbar" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/Unified_Margin_LeftAndRight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
+
+        <com.lfp.ardf.widget.ShadowView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shadow_color="#AE2F66DE"
+            app:shadow_distance="8dp"
+            app:shadow_dx="0dp"
+            app:shadow_dy="2dp"
+            app:shadow_radius="10dp"
+            app:shadow_style="bottom">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@drawable/drawable_shadow"
+                android:gravity="center"
+                android:padding="@dimen/Unified_Margin_LeftAndRight"
+                android:text="Style 1"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/TextSize_Title"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+        </com.lfp.ardf.widget.ShadowView>
+
+
+        <com.lfp.ardf.widget.ShadowView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            app:shadow_color="black"
+            app:shadow_distance="8dp"
+            app:shadow_dx="3dp"
+            app:shadow_dy="5dp"
+            app:shadow_radius="5dp"
+            app:shadow_style="bottom|right">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher" />
+
+        </com.lfp.ardf.widget.ShadowView>
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

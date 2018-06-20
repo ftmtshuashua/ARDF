@@ -148,8 +148,7 @@ public class Demo_WebActivity extends BaseActivity {
     public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super(appfk, "WebViewFk");
-            setInfo("Web浏览器");
+            super(appfk, "WebViewFk","Web浏览器");
         }
 
         @Override

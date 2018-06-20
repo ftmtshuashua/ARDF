@@ -163,8 +163,7 @@ public class Demo_RadioGroupControl extends BaseActivity {
     public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super(appfk, "RadioGroupControl");
-            setInfo("让任何布局实现RadioGroup效果");
+            super(appfk, "RadioGroupControl","让任何布局实现RadioGroup效果");
         }
 
         @Override

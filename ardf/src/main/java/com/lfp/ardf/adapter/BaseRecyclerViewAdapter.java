@@ -94,7 +94,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public void setAndUpdata(List<D> data) {
+    public <T extends D> void setAndUpdata(List<T> data) {
         int old_count = getItemCount();
         setData(data);
         int new_count = getItemCount();
@@ -111,7 +111,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public void setData(List<D> data) {
+    public <T extends D>  void setData(List<T> data) {
         mArrayModel.clear();
         addData(data);
     }
@@ -148,7 +148,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public void addAndUpdata(List<D> data) {
+    public  <T extends D>  void addAndUpdata(List<T> data) {
         int old_count = getItemCount();
         addData(data);
         if ((mFlag & FLAG_DISABLE_ITEM_ANIMATOR_ADD) != 0) {
@@ -163,7 +163,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public void addData(List<D> data) {
+    public  <T extends D> void addData(List<T> data) {
         mArrayModel.addAll(data);
         broadcastDataChange();
     }
@@ -199,7 +199,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * @param index 插入位置
      * @param data  数据
      */
-    public void insertAndUpdata(int index, List<D> data) {
+    public  <T extends D> void insertAndUpdata(int index, List<T> data) {
         mArrayModel.addAll(index, data);
         broadcastDataChange();
         if ((mFlag & FLAG_DISABLE_ITEM_ANIMATOR_INSERT) != 0) {

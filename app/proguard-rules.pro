@@ -28,3 +28,9 @@
 #腾讯统计
 -keep class com.tencent.stat.*{*;}
 -keep class com.tencent.mid.*{*;}
+#XGPush
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {* ;}
+-keep class com.tencent.mid.** {* ;}
+-keep class com.qq.taf.jce.** {*;}

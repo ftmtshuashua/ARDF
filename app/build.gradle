@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -19,8 +17,16 @@ android {
             }
         }
 
-        manifestPlaceholders = [MTA_CHANNEL: "智者",
-                                MTA_APPKEY : "AUFW43Z4G4VN"]
+        manifestPlaceholders = [
+                MTA_CHANNEL  : "智者",
+                MTA_APPKEY   : "AUFW43Z4G4VN",
+                XG_ACCESS_ID : "2100296792",
+                XG_ACCESS_KEY: "A2DQNYG4137N"
+        ]
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
     }
 
     buildTypes {
@@ -38,7 +44,6 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro'
-
 
             /*包文件命名*/
             android.applicationVariants.all { variant ->
@@ -63,23 +68,38 @@ android {
     /*批量打包配置*/
     flavorDimensions "market"
     productFlavors {
-        ARDF {
+        LiQu {
             dimension "market"
-            manifestPlaceholders=[
-                    MTA_CHANNEL:"智者"
+            manifestPlaceholders = [
+                    MTA_CHANNEL: "厉趣"
             ]
         }
-        HuaWei {
-            dimension "market"
-            manifestPlaceholders=[
-                    MTA_CHANNEL:"华为"
-            ]
-        }
-        _360 {
-            dimension "market"
-            manifestPlaceholders=[
-                    MTA_CHANNEL:"360"
-            ]
+
+        if (isMultiChannel.toBoolean()) {
+            ARDF { //官方包
+                dimension "market"
+                manifestPlaceholders = [
+                        MTA_CHANNEL: "智者"
+                ]
+            }
+            HuaWei {
+                dimension "market"
+                manifestPlaceholders = [
+                        MTA_CHANNEL: "华为"
+                ]
+            }
+            _360 {
+                dimension "market"
+                manifestPlaceholders = [
+                        MTA_CHANNEL: "360"
+                ]
+            }
+            LiQu {
+                dimension "market"
+                manifestPlaceholders = [
+                        MTA_CHANNEL: "厉趣"
+                ]
+            }
         }
     }
 }
@@ -102,8 +122,13 @@ dependencies {
     /*腾讯统计相关*/
     implementation 'com.tencent.mid:mid:3.73-release'
     implementation 'com.qq.mta:mta:3.3.1-release'
+    /*推送*/
+    implementation 'com.tencent.xinge:xinge:3.2.3-release' //信鸽jar
+    implementation 'com.tencent.wup:wup:1.0.0.E-release' //wup包
+    implementation 'com.tencent.mid:mid:4.0.6-release'  //mid包
+
     //    implementation 'com.qq.visual:visual:3.3.1-release' 高级功能：可视化埋点
-    implementation 'com.orhanobut:logger:2.2.0'
+//    implementation 'com.orhanobut:logger:2.2.0'
     implementation files('src/main/libs/GDTUnionSDK.TBS.4.16.564.min.jar')
 
     implementation 'com.yanzhenjie:permission:2.0.0-rc8'

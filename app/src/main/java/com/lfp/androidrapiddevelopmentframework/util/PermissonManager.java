@@ -32,7 +32,7 @@ public abstract class PermissonManager {
                 .onGranted(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                        LogUtil.e_Pretty("onGranted: %s", data);
+                        LogUtil.e("onGranted: %s", data);
                         PermissonManager.this.onGranted(data);
                         onFinish(data);
                     }
@@ -40,7 +40,7 @@ public abstract class PermissonManager {
                 .onDenied(new Action<List<String>>() {
                     @Override
                     public void onAction(List<String> data) {
-                        LogUtil.e_Pretty("onDenied: %s", data);
+                        LogUtil.e("onDenied: %s", data);
                         PermissonManager.this.onDenied(data);
                         onFinish(data);
                     }

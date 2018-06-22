@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +112,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public <T extends D>  void setData(List<T> data) {
+    public <T extends D> void setData(List<T> data) {
         mArrayModel.clear();
         addData(data);
     }
@@ -148,7 +149,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public  <T extends D>  void addAndUpdata(List<T> data) {
+    public <T extends D> void addAndUpdata(List<T> data) {
         int old_count = getItemCount();
         addData(data);
         if ((mFlag & FLAG_DISABLE_ITEM_ANIMATOR_ADD) != 0) {
@@ -163,7 +164,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param data 数据
      */
-    public  <T extends D> void addData(List<T> data) {
+    public <T extends D> void addData(List<T> data) {
         mArrayModel.addAll(data);
         broadcastDataChange();
     }
@@ -199,7 +200,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * @param index 插入位置
      * @param data  数据
      */
-    public  <T extends D> void insertAndUpdata(int index, List<T> data) {
+    public <T extends D> void insertAndUpdata(int index, List<T> data) {
         mArrayModel.addAll(index, data);
         broadcastDataChange();
         if ((mFlag & FLAG_DISABLE_ITEM_ANIMATOR_INSERT) != 0) {

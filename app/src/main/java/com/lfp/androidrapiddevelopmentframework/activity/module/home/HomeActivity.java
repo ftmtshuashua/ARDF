@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.lfp.androidrapiddevelopmentframework.R;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.AboutUsFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DiscoverFragment;
-import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.InfoFragment;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.IntegrationFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.control.FragmentControl;
@@ -37,7 +38,9 @@ public class HomeActivity extends BaseActivity {
                 case R.id.tab_2:
                     return DemoFragment.newInstance();
                 case R.id.tab_3:
-                    return InfoFragment.newInstance();
+                    return IntegrationFragment.newInstance();
+                case R.id.tab_4:
+                    return AboutUsFragment.newInstance();
             }
             return null;
         }
@@ -60,6 +63,7 @@ public class HomeActivity extends BaseActivity {
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_1)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_2)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_3)));
+        mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_4)));
         mRadioGroupControl.check(R.id.tab_1);
 
         new PermissonManager(getContext()) {

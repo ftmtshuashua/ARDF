@@ -144,7 +144,7 @@ public class ActionBarControl {
 
     public ActionBarControl setFinishOnClick(View.OnClickListener onClick) {
         if (!hasActionBar()) return this;
-        mV_Back.setOnClickListener(onClick);
+        mTV_Finish.setOnClickListener(onClick);
         return this;
     }
 

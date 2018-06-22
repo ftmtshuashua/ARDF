@@ -49,12 +49,12 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity {
                 .showBack().setBackFinishActivity(getActivity())
                 .setTitle("RecyclerViewAdapter Demo");
 
-        RecyclerView MenuView = findViewById(R.id.view_ReyclerViewMenu);
+        RecyclerView MenuView = findViewById(R.id.view_RecyclerViewMenu);
         MenuView.setLayoutManager(new LinearLayoutManager(getActivity()));
         MenuView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         MenuView.setAdapter(mMenuAdapter = new SimpleRecyclerViewAdapter<>(MenuViewHolder.class, R.layout.layout_simpler_textview));
 
-        RecyclerView mRecyclerView = findViewById(R.id.view_ReyclerView);
+        RecyclerView mRecyclerView = findViewById(R.id.view_RecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerView.setItemAnimator(new SlideInLeftAnimator());

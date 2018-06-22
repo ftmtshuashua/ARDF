@@ -70,7 +70,11 @@ public abstract class RequestCall extends RequestNode {
                         @Override
                         public void onNext(RequestNode request) {
                             setFlag(CALL_END | FLAG_COMPLETE_SUCCESSFUL);
-                            notifyComplete();
+                            try {
+                                notifyComplete();
+                            } catch (Exception e) {
+                                notifyError(e);
+                            }
                             notifyEnd();
                         }
 

@@ -31,6 +31,7 @@ public class Apiserver {
 
     /**
      * 获得大厅Banner数据
+     *
      * @return
      */
     public static OkHttpRequest getHallBanner() {
@@ -40,6 +41,11 @@ public class Apiserver {
 
     public static OkHttpRequest getNewRequest() {
         UrlFormat format = new UrlFormat("http://www.wanandroid.com/tools/mockapi/6616/test");
+        return new OkHttpRequest(format.toUrl());
+    }
+
+    public static OkHttpRequest getVersion() {
+        UrlFormat format = new UrlFormat("http://www.wanandroid.com/tools/mockapi/6768/version_android");
         return new OkHttpRequest(format.toUrl());
     }
 }

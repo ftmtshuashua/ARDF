@@ -46,13 +46,6 @@
 
 
         <!-- 声明SDK所需要的组件 -->
-        <service
-            android:name="com.qq.e.comm.DownloadService"
-            android:exported="false" />
-        <activity
-            android:name="com.qq.e.ads.ADActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
-
         <receiver android:name=".app.XGPushReceiver">
             <intent-filter>
                 <!-- 接收消息透传 -->

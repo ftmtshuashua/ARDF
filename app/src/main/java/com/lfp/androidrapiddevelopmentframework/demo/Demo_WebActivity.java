@@ -13,7 +13,6 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar;
-import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.util.UrlFormat;
 import com.lfp.ardf.util.Utils;
@@ -21,7 +20,6 @@ import com.lfp.ardf.util.ViewUtil;
 import com.lfp.ardf.widget.WebViewFk;
 
 import java.io.Serializable;
-import java.text.MessageFormat;
 
 /**
  * Web浏览器<br/>
@@ -98,7 +96,6 @@ public class Demo_WebActivity extends BaseActivity {
         mActionBarControl.setBackOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogUtil.e(MessageFormat.format("mWebViewFx.canGoBack():{0}", mWebViewFx.canGoBack()));
                 if (mWebViewFx.canGoBack()) {
                     mWebViewFx.goBack();
                 } else {
@@ -128,6 +125,10 @@ public class Demo_WebActivity extends BaseActivity {
             this.url = url;
         }
 
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
         public String getUrl() {
             if ((flag & FLAG_DISABLED_URL_FIX) != 0) return url;
             return UrlFormat.fixUrl(url);
@@ -148,7 +149,7 @@ public class Demo_WebActivity extends BaseActivity {
     public static final class Demo extends DemoEvent {
 
         public Demo(IAppFramework appfk) {
-            super(appfk, "WebViewFk","Web浏览器");
+            super(appfk, "WebViewFk", "Web浏览器");
         }
 
         @Override

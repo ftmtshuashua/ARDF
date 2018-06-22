@@ -45,7 +45,7 @@ public class DemoFragment extends BaseFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return LayoutInflater.from(getContext()).inflate(R.layout.activity_main, null);
+        return LayoutInflater.from(getContext()).inflate(R.layout.activity_recycerview, null);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DemoFragment extends BaseFragment {
                 .setSubTitle("Demo 列表");
 
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.view_ReyclerView);
+        RecyclerView mRecyclerView = view.findViewById(R.id.view_RecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter = new SimpleRecyclerViewAdapter(DemoEntranceHolder.class, R.layout.layout_tvtitle_tvinfo));

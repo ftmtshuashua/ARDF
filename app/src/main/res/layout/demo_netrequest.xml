@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/view_ReyclerViewMenu"
+            android:id="@+id/view_RecyclerViewMenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

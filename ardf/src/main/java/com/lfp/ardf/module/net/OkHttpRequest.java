@@ -17,7 +17,6 @@ import okhttp3.Response;
  * Created by LiFuPing on 2018/6/11.
  */
 public class OkHttpRequest extends RequestCall {
-
     /*忽略请求结果*/
     static final int FLAG_IGNORE_RESPONSE = 0x1;
 
@@ -44,6 +43,15 @@ public class OkHttpRequest extends RequestCall {
         return body;
     }
 
+    /**
+     * 当请求完成,回调此接口
+     *
+     * @param response 请求回复数据
+     * @throws Exception 数据处理时的异常信息
+     */
+    protected void onResponse(Response response) throws Exception {
+    }
+
     @Override
     protected synchronized void call() throws Exception {
         Request request = new Request.Builder().url(new UrlFormat(api).toEncodeUrl()).build();
@@ -54,6 +62,7 @@ public class OkHttpRequest extends RequestCall {
         mCall = OkHttpRequestClient.getInstance().mHttpClient.newCall(request);
         Response response = mCall.execute();
         body = response.body().string();
+        onResponse(response);
 
         showLog(request, response);
 
@@ -70,6 +79,12 @@ public class OkHttpRequest extends RequestCall {
         return (flag & FLAG_IGNORE_RESPONSE) != 0;
     }
 
+    /**
+     * 设置忽略请求回复
+     *
+     * @param ignore 为true的时候将不会回调onComplete方法
+     * @return
+     */
     public OkHttpRequest setIgnoreComplete(boolean ignore) {
         if (ignore) flag |= FLAG_IGNORE_RESPONSE;
         else flag &= ~FLAG_IGNORE_RESPONSE;
@@ -97,7 +112,6 @@ public class OkHttpRequest extends RequestCall {
         if (isSuccessful()) LogUtil.i_Pretty(msg);
         else LogUtil.e_Pretty(msg);
     }
-
 
     @Override
     protected void notifyComplete(RequestNode request) {

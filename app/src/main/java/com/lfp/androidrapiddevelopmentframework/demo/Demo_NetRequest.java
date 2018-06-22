@@ -58,7 +58,7 @@ public class Demo_NetRequest extends BaseActivity {
 
         mTV_Info = findViewById(R.id.view_Info);
 
-        RecyclerView MenuView = findViewById(R.id.view_ReyclerViewMenu);
+        RecyclerView MenuView = findViewById(R.id.view_RecyclerViewMenu);
         MenuView.setLayoutManager(new LinearLayoutManager(getContext()));
         MenuView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         MenuView.setAdapter(mMenuAdapter = new SimpleRecyclerViewAdapter(MenuHolder.class, R.layout.layout_simpler_textview));

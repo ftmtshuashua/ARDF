@@ -34,6 +34,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@drawable/home_tab_1"
+            android:gravity="center"
             android:text="发现"
             android:textColor="@drawable/home_textcolor_tab"
             android:textSize="@dimen/TextSize_Hint" />
@@ -45,6 +46,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@drawable/home_tab_2"
+            android:gravity="center"
             android:text="Demo"
             android:textColor="@drawable/home_textcolor_tab"
             android:textSize="@dimen/TextSize_Hint" />
@@ -56,10 +58,22 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/Unified_Margin_Middle"
             android:drawableTop="@drawable/home_tab_3"
+            android:gravity="center"
             android:text="集成"
             android:textColor="@drawable/home_textcolor_tab"
             android:textSize="@dimen/TextSize_Hint" />
 
+        <com.lfp.ardf.widget.DrawableCenterTextView
+            android:id="@+id/tab_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/Unified_Margin_Middle"
+            android:drawableTop="@drawable/home_tab_4"
+            android:gravity="center"
+            android:text="关于我们"
+            android:textColor="@drawable/home_textcolor_tab"
+            android:textSize="@dimen/TextSize_Hint" />
     </LinearLayout>
 
 </LinearLayout>

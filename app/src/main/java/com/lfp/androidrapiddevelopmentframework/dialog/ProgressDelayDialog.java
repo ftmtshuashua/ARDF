@@ -14,6 +14,9 @@ import com.lfp.ardf.framework.I.IAppFramework;
  */
 public class ProgressDelayDialog extends BaseDelayDialog {
 
+    public ProgressDelayDialog(@NonNull Context c) {
+        super(c);
+    }
 
     public ProgressDelayDialog(@NonNull IAppFramework appfk) {
         super(appfk);

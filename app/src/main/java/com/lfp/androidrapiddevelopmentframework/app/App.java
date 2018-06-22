@@ -3,22 +3,28 @@ package com.lfp.androidrapiddevelopmentframework.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.lfp.androidrapiddevelopmentframework.Constants;
 import com.lfp.ardf.AppFrameworkHolper;
 import com.lfp.ardf.config.FileCacheConfig;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.CpuUtile;
 import com.lfp.ardf.util.PhoneUtil;
 import com.lfp.ardf.util.ScreenUtil;
-import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 import java.text.MessageFormat;
 
+import lib.gg.y.Y_AdHolper;
+
 /**
  * Created by LiFuPing on 2018/5/9.
  */
 public class App extends Application {
+    static {
+        System.loadLibrary("base");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,8 +32,10 @@ public class App extends Application {
         FileCacheConfig.init(getApplicationContext(), "ARDF");
         LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtil.getPhoneInfo(), ScreenUtil.getScreenInfo(), CpuUtile.getCupInfo()));
 
+        LogUtil.e(MessageFormat.format("动态注册数据获取:{0}", Constants.JniLoadding("获取NDK数据 ")));
 
         xgPush(this);
+        Y_AdHolper.init(this, true);
     }
 
 
@@ -53,5 +61,16 @@ public class App extends Application {
 
 //        XGPushManager.bindAccount(context, "XINGE"); //设置账号
 //        XGPushManager.setTag(context,"XINGE");//设置标签
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Y_AdHolper.onExit(this);
     }
 }

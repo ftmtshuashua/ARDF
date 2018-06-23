@@ -11,7 +11,7 @@ import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.framework.I.IAppFramework;
 
 /**
- * 阴影<br/>
+ * 阴影<br>
  * Created by LiFuPing on 2018/6/20.
  */
 public class Demo_Shadow extends BaseActivity {

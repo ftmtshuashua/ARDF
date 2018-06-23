@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Url格式化<br/>
+ * Url格式化<br>
  * protocol     host        port      path                      file               query
  * http://   www.xxx.com    :80     /path.path_path    /   demo_file.html    ?   key=value
  * <p>
@@ -61,8 +61,8 @@ public class UrlFormat {
     /**
      * 修复
      *
-     * @param url
-     * @return
+     * @param url String : baidu
+     * @return fixUrl : www.baidu.com
      */
     public static String fixUrl(String url) {
         return URLUtil.guessUrl(url);
@@ -70,6 +70,9 @@ public class UrlFormat {
 
     /**
      * 不覆盖添加URL Query
+     * @param key String
+     * @param value Object
+     * @return UrlFormat
      */
     public UrlFormat addQuery(String key, Object value) {
         if (!TextUtils.isEmpty(query.get(key))) return this;
@@ -89,6 +92,7 @@ public class UrlFormat {
 
     /**
      * 移除URL Query
+     * @param key String
      */
     public void removeQuery(String key) {
         query.remove(key);
@@ -96,6 +100,10 @@ public class UrlFormat {
 
     /**
      * 覆盖添加URL Query
+     *
+     * @param key String
+     * @param value Object
+     * @return UrlFormat
      */
     public UrlFormat setQuery(String key, Object value) {
         if (!TextUtils.isEmpty(query.get(key))) removeQuery(key);
@@ -105,6 +113,7 @@ public class UrlFormat {
 
     /**
      * 获得URL Query
+     * @return HashMap&lt;String, String&gt;
      */
     public HashMap<String, String> getQueryMap() {
         return query;
@@ -112,6 +121,7 @@ public class UrlFormat {
 
     /**
      * 获得参数
+     * @return String
      */
     public String getQuery() {
         return query.isEmpty() ? "" : ArrayUtil.join(getQueryMap(), "&", "=");
@@ -119,6 +129,7 @@ public class UrlFormat {
 
     /**
      * 获得Url编码之后的参数
+     * @return String
      */
     public String getEncodeQuery() {
         if (query.isEmpty()) return "";
@@ -136,6 +147,7 @@ public class UrlFormat {
 
     /**
      * 获得原始URL
+     * @return String
      */
     public String getOriginalUrl() {
         return originalUrl;
@@ -143,6 +155,7 @@ public class UrlFormat {
 
     /**
      * 生成URL
+     * @return String
      */
     public String toUrl() {
         if (query.isEmpty()) return path;
@@ -151,6 +164,7 @@ public class UrlFormat {
 
     /**
      * 生成URL并且将query中value值进行编码
+     * @return String
      */
     public String toEncodeUrl() {
         if (query.isEmpty()) return path;
@@ -165,6 +179,8 @@ public class UrlFormat {
 
     /**
      * 获得Url中的Query
+     * @param url String
+     * @return HashMap&lt;String, String&gt;
      */
     public static HashMap<String, String> parseQuery(String url) {
         HashMap<String, String> data = new HashMap<>();

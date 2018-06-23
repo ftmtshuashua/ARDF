@@ -24,6 +24,8 @@ public class ScreenUtil {
 
     /**
      * PX 转 DP
+     * @param value px
+     * @return int
      */
     public static int px2dip(float value) {
         final float sale = mContext.getResources().getDisplayMetrics().density;
@@ -32,6 +34,8 @@ public class ScreenUtil {
 
     /**
      * DP 转 PX
+     * @param value dp
+     * @return int
      */
     public static int dip2px(float value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, mContext.getResources().getDisplayMetrics());
@@ -39,6 +43,8 @@ public class ScreenUtil {
 
     /**
      * SP 转 PX
+     * @param value sp
+     * @return int
      */
     public static int sp2px(float value) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, mContext.getResources().getDisplayMetrics());
@@ -47,7 +53,7 @@ public class ScreenUtil {
     /**
      * 获得屏幕的宽度
      *
-     * @return
+     * @return int
      */
     public static int getScreenWidth() {
         return mContext.getResources().getDisplayMetrics().widthPixels;
@@ -56,7 +62,7 @@ public class ScreenUtil {
     /**
      * 获得屏幕的高度
      *
-     * @return
+     * @return int
      */
     public static int getScreenHeight() {
         return mContext.getResources().getDisplayMetrics().heightPixels;
@@ -64,6 +70,7 @@ public class ScreenUtil {
 
     /**
      * 获得屏幕信息
+     * @return String
      */
     public static String getScreenInfo() {
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();

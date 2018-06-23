@@ -9,10 +9,10 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 文件缓存配置<br/>
- * 如果SD卡可用，缓存目录为SD卡下{@code PATH_SD_ROOT}<br/>
- * 如果SKD卡不可用，缓存目录为/data/data/包/{@code PATH_SD_ROOT}<br/>
- * 自定义目录除外<br/>
+ * 文件缓存配置<br>
+ * 如果SD卡可用，缓存目录为SD卡下{@code PATH_SD_ROOT}<br>
+ * 如果SKD卡不可用，缓存目录为/data/data/包/{@code PATH_SD_ROOT}<br>
+ * 自定义目录除外<br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class FileCacheConfig {
@@ -102,7 +102,7 @@ public class FileCacheConfig {
 
 
     /**
-     * 创建文件或文件夹<br/>
+     * 创建文件或文件夹<br>
      * 如果目标文件夹不存在会根据配置创建默认文件夹
      *
      * @param files 文件或文件夹

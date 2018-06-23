@@ -17,6 +17,8 @@ import com.lfp.ardf.util.Utils;
 public class AppFrameworkHolper {
     /**
      * 框架初始化
+     *
+     * @param c context
      */
     public static final void init(Context c) {
         Utils.checkNotNull(c);

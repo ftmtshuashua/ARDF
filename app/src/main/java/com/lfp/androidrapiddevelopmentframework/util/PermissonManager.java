@@ -11,7 +11,7 @@ import com.yanzhenjie.permission.runtime.Runtime;
 import java.util.List;
 
 /**
- * 权限管理<br/>
+ * 权限管理<br>
  * Created by LiFuPing on 2018/6/5.
  */
 public abstract class PermissonManager {

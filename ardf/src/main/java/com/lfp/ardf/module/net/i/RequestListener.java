@@ -1,7 +1,7 @@
 package com.lfp.ardf.module.net.i;
 
 /**
- * 请求监听器<br/>
+ * 请求监听器<br>
  * 用于监控请求节点的状态
  * <p>
  * Created by LiFuPing on 2018/6/8.
@@ -41,7 +41,7 @@ public interface RequestListener<R extends RequestNode> {
      * 经过onResponse()方法对耗时操作的处理之后,将数据展示在UI上.
      * 这样做当好处是使得用户不会感觉到任何卡顿
      *
-     * @param request
+     * @param request request
      */
     void onComplete(R request);
 

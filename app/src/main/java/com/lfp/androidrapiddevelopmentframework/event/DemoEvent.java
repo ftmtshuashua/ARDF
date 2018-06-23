@@ -3,7 +3,7 @@ package com.lfp.androidrapiddevelopmentframework.event;
 import com.lfp.ardf.framework.I.IAppFramework;
 
 /**
- * Demo事件<br/>
+ * Demo事件<br>
  * Created by LiFuPing on 2018/6/6.
  */
 public abstract class DemoEvent extends InfoEvent {

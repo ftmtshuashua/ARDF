@@ -20,7 +20,7 @@ import java.util.List;
 import lib.gg.y.Y_AdShow;
 
 /**
- * 开屏页面<br/>
+ * 开屏页面<br>
  * Created by LiFuPing on 2018/5/31.
  */
 public class LoadingActivity extends BaseActivity {

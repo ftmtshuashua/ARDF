@@ -44,7 +44,7 @@ public class SimpleRecyclerViewAdapter<D> extends BaseRecyclerViewAdapter<D> {
      * 使用反射创建ViewHolder必须保证它不被混淆
      * 推荐使用 BaseRecyclerViewAdapter自己实现
      *
-     * @param <T>
+     * @param <T> object
      */
     public static abstract class NotProguardViewHolder<T> extends BaseRecyclerViewAdapter.BaseViewHolder<T> implements NotProguard {
 

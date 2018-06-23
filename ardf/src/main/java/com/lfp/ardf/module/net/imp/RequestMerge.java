@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 合并请求,并发调用<br/>
+ * 合并请求,并发调用<br>
  * Created by LiFuPing on 2018/6/12.
  */
 public final class RequestMerge extends RequestNode implements RequestListener {

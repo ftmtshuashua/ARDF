@@ -15,7 +15,7 @@ import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
 import com.lfp.ardf.util.ScreenUtil;
 
 /**
- * <br/>
+ * <br>
  * Created by LiFuPing on 2018/5/31.
  */
 public class BaseDialog extends Dialog {
@@ -45,6 +45,7 @@ public class BaseDialog extends Dialog {
 
     /**
      * 如果这个Dialog是在框架中调用的，这监听框架生命周期
+     * @param appfk IAppFramework
      */
     protected void attachAppFk(IAppFramework appfk) {
         appfk.registeredObserve(new SimpleLifeCycleObserve() {
@@ -72,7 +73,7 @@ public class BaseDialog extends Dialog {
     }
 
     /**
-     * 为这个Dialog设置一个内容布局,可以设置他的最小宽度和边距<br/>
+     * 为这个Dialog设置一个内容布局,可以设置他的最小宽度和边距<br>
      *
      * @param view      内容布局
      * @param min_width 当布局宽度小于这个至的时候，使用这个值来作为布局的宽度

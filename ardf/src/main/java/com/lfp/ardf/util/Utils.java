@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 
 /**
- * 常用工具方法集合 <br/>
+ * 常用工具方法集合 <br>
  * Created by LiFuPing on 2018/5/30.
  */
 public class Utils {
@@ -35,6 +35,7 @@ public class Utils {
      * 如果这个对象为空这抛出 {@code NullPointerException},否则返回这个对象
      *
      * @param obj 被检测的对象
+     * @param <T> object
      * @return 如果对象不为空则返回这个对象
      */
     public static <T> T checkNotNull(@Nullable final T obj) {
@@ -46,6 +47,7 @@ public class Utils {
      *  如果这个对象为空这抛出 {@code NullPointerException},否则返回这个对象
      * @param obj 被检测的对象
      * @param msg 对象为空时候显示的消息
+     * @param <T> object
      * @return 如果对象不为空则返回这个对象
      */
     public static <T> T checkNotNull(@Nullable final T obj,String msg){

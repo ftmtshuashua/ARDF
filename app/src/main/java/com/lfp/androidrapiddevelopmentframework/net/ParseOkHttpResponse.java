@@ -9,7 +9,7 @@ import com.lfp.ardf.util.ToastUtil;
 import org.json.JSONObject;
 
 /**
- * 解析请求回复<br/>
+ * 解析请求回复<br>
  * Created by LiFuPing on 2018/6/22.
  */
 public class ParseOkHttpResponse {

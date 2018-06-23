@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 手机设备信息<br/>
+ * 手机设备信息<br>
  * Created by LiFuPing on 2018/6/1.
  */
 public class PhoneUtil {
@@ -33,7 +33,7 @@ public class PhoneUtil {
     /**
      * 设备厂商
      *
-     * @return
+     * @return String
      */
     public static String getPhoneBrand() {
         return Build.BOARD + "  " + Build.MANUFACTURER;
@@ -42,7 +42,7 @@ public class PhoneUtil {
     /**
      * 设备名称
      *
-     * @return
+     * @return String
      */
     public static String getPhoneModel() {
         return Build.MODEL;
@@ -61,8 +61,8 @@ public class PhoneUtil {
     /**
      * 判断微信是否可用
      *
-     * @param context
-     * @return
+     * @param context Context
+     * @return boolean
      */
     public static boolean isWeixinAvilible(Context context) {
         final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
@@ -81,8 +81,8 @@ public class PhoneUtil {
     /**
      * 判断qq是否可用
      *
-     * @param context
-     * @return
+     * @param context Context
+     * @return boolean
      */
     public static boolean isQQClientAvailable(Context context) {
         final PackageManager packageManager = context.getPackageManager();
@@ -98,7 +98,11 @@ public class PhoneUtil {
         return false;
     }
 
-    //获得手机唯一标记
+
+    /**
+     *  获得手机唯一标记
+     * @return String
+     */
     public static String getPhoneOnlyTag() {
         ArrayList<String> data = new ArrayList<>();
         data.add(Build.BOARD);
@@ -120,7 +124,7 @@ public class PhoneUtil {
     /**
      * 获得设备信息
      *
-     * @return
+     * @return String
      */
     public static String getPhoneInfo() {
         return MessageFormat.format("设备厂商:{0}\n设备名称:{1}\nAPI:{2} {3}", getPhoneBrand(), getPhoneModel(), SdkUtile.getSdkVersion(),SdkUtile.getSdkVersionName());

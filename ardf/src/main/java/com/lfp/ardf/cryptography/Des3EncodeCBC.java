@@ -18,11 +18,11 @@ public class Des3EncodeCBC {
     /**
      * 编码
      *
-     * @param key_str
-     * @param keyiv_str
-     * @param data_str
-     * @return
-     * @throws Exception
+     * @param key_str String
+     * @param keyiv_str String
+     * @param data_str String
+     * @return String
+     * @throws Exception exception
      */
     public static String encodeCBC(String key_str, String keyiv_str, String data_str) throws Exception {
         Charset DEFAULT_CHARSET = Charset.forName("UTF-8");

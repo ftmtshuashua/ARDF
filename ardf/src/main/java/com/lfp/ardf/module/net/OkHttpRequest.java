@@ -13,7 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * <br/>
+ * <br>
  * Created by LiFuPing on 2018/6/11.
  */
 public class OkHttpRequest extends RequestCall {
@@ -83,7 +83,7 @@ public class OkHttpRequest extends RequestCall {
      * 设置忽略请求回复
      *
      * @param ignore 为true的时候将不会回调onComplete方法
-     * @return
+     * @return  OkHttpRequest
      */
     public OkHttpRequest setIgnoreComplete(boolean ignore) {
         if (ignore) flag |= FLAG_IGNORE_RESPONSE;

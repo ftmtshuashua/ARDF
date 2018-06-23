@@ -46,6 +46,8 @@ public class StatusBarUtil {
 
     /**
      * 获得状态栏高度
+     * @param context Context
+     * @return int
      */
     public static int getStatusBarHeight(Context context) {
         int result = 0;
@@ -83,9 +85,9 @@ public class StatusBarUtil {
     /**
      * 小米MIUI系统 亲测好用
      *
-     * @param window
-     * @param dark
-     * @return
+     * @param window Window
+     * @param dark boolean
+     * @return boolean
      */
     public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
         boolean result = false;
@@ -148,6 +150,7 @@ public class StatusBarUtil {
 
     /**
      * Android 6.0以上系统 修改状态栏字体颜色
+     * @param window Window
      */
     public static void android6_SetStatusBarLightMode(Window window) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -3,7 +3,7 @@ package com.lfp.ardf.util;
 import android.graphics.Bitmap;
 
 /**
- * 图片工具<br/>
+ * 图片工具<br>
  * 图片压缩
  * <p>
  * Created by LiFuPing on 2018/6/20.

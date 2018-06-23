@@ -13,10 +13,10 @@ import com.lfp.ardf.util.Utils;
 import java.util.List;
 
 /**
- * Fragment控制器，帮助实现性能优化和防止内存泄漏<br/>
+ * Fragment控制器，帮助实现性能优化和防止内存泄漏<br>
  * <p>
- * 延时加载：准备即用即加载的原则，在显示的时候才会初始化对应Fragment<br/>
- * 缓存：加载过的Fragment不会被重复加载<br/>
+ * 延时加载：准备即用即加载的原则，在显示的时候才会初始化对应Fragment<br>
+ * 缓存：加载过的Fragment不会被重复加载<br>
  * </p>
  * Created by LiFuPing on 2018/6/1.
  */
@@ -62,6 +62,7 @@ public abstract class FragmentControl<T> {
 
     /**
      * 初始化
+     * @param appFk IAppFramework
      */
     public void init(@NonNull IAppFramework appFk) {
         mFragmentManager = appFk.getSmartFragmentManager();
@@ -70,6 +71,7 @@ public abstract class FragmentControl<T> {
 
     /**
      * 初始化
+     * @param activity FragmentActivity
      */
     public void init(@NonNull FragmentActivity activity) {
         mFragmentManager = activity.getSupportFragmentManager();
@@ -78,6 +80,7 @@ public abstract class FragmentControl<T> {
 
     /**
      * 初始化
+     * @param fragment Fragment
      */
     public void init(@NonNull Fragment fragment) {
         mFragmentManager = fragment.getChildFragmentManager();
@@ -219,7 +222,7 @@ public abstract class FragmentControl<T> {
     /**
      * 在切换的时候回调用FragmentTransaction，根据需求更改它的Style
      *
-     * @param ft change ->　FragmentTransaction
+     * @param ft change -&gt;　FragmentTransaction
      */
     protected void onFragmentTransactionConfig(FragmentTransaction ft) {
 
@@ -227,6 +230,8 @@ public abstract class FragmentControl<T> {
 
     /**
      * 通过tag创建，tag所对应的Fragment。这个tag是唯一指向这个Fragment的比标记
+     * @param tag T
+     * @return Fragment
      */
     public abstract Fragment onInit(T tag);
 
@@ -241,7 +246,7 @@ public abstract class FragmentControl<T> {
     }
 
     /**
-     * 当调用{@code change(T tag)}的时候如果切换到Fragment已创建将会回调{@code onFragmentShow())方法。
+     * 当调用 change(T tag) 的时候如果切换到Fragment已创建将会回调 onFragmentShow() 方法。
      * 使用onFragmentShow来表示从其他地方回到该Fragment的时机
      */
     public interface OnFragmentControlProcessor {

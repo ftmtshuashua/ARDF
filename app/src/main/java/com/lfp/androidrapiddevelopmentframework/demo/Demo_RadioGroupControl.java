@@ -18,7 +18,7 @@ import com.lfp.ardf.util.ToastUtil;
 import java.text.MessageFormat;
 
 /**
- * RadioGroupControl demo<br/>
+ * RadioGroupControl demo<br>
  * Created by LiFuPing on 2018/6/6.
  */
 public class Demo_RadioGroupControl extends BaseActivity {

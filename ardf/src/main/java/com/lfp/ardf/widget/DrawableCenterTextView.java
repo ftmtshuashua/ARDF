@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 
 /**
- * 将drawable元素与文本剧中显示,暂时只支持一张图<br/>
+ * 将drawable元素与文本剧中显示,暂时只支持一张图<br>
  * Created by LiFuPing on 2018/6/1.
  */
 public class DrawableCenterTextView extends CornerMarkTextView {

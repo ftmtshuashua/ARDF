@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Demo 展示列表 <br/>
+ * Demo 展示列表 <br>
  * Created by LiFuPing on 2018/6/1.
  */
 public class DemoFragment extends BaseFragment {

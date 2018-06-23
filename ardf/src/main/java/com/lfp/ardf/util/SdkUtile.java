@@ -9,6 +9,9 @@ public class SdkUtile {
 
     /**
      * 这个方法判断当前SDK版本 是否大于等于传入的版本等级 <br>
+     *
+     * @param lv leve
+     * @return boolean
      */
     public static boolean has(int lv) {
         return Build.VERSION.SDK_INT >= lv;
@@ -16,6 +19,7 @@ public class SdkUtile {
 
     /**
      * 获取当前SDK的版本号
+     * @return int
      */
     public static int getSdkVersion() {
         return Build.VERSION.SDK_INT;
@@ -148,7 +152,10 @@ public class SdkUtile {
      */
     public static final int N = 24;
 
-    public static Object getSdkVersionName() {
+    /**
+     * @return 获得SDK版本名称
+     */
+    public static String getSdkVersionName() {
         switch (getSdkVersion()) {
             case BASE:
                 return "Android_1.0";

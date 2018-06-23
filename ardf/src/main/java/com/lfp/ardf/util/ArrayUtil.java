@@ -23,6 +23,8 @@ public class ArrayUtil {
      * @param tokens          数据源
      * @param delimiter_key   两个key数据之间的分隔符
      * @param delimiter_value key与value之间的分隔符
+     * @param <K> extends Object
+     * @param <V> extends Object
      * @return 拼接之后的字符串
      */
     public static <K extends Object, V extends Object> String join(Map<K, V> tokens, CharSequence delimiter_key, CharSequence delimiter_value) {

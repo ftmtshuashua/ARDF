@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 请求链条<br/>
+ * 请求链条<br>
  * 将多个请求节点进行串联,按顺序执行
  * 如果某个节点异常中断则链条断裂抛出错误信息并结束这条请求链
  * <p>

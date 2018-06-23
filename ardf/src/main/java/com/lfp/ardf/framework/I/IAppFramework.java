@@ -8,7 +8,7 @@ package com.lfp.ardf.framework.I;
 public interface IAppFramework extends I1AppContextTransmit, ILifeCycleObserved, INetRequest {
 
     /**
-     * 获得框架接口
+     * @return 获得框架接口
      */
     IAppFramework getAppFk();
 }

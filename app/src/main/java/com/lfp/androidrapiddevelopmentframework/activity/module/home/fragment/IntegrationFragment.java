@@ -15,7 +15,7 @@ import com.lfp.ardf.util.AssetsUtil;
 import com.lfp.ardf.util.StatusBarUtil;
 
 /**
- * 集成<br/>
+ * 集成<br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class IntegrationFragment extends BaseFragment {

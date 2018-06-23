@@ -15,8 +15,8 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * 延时Dialog <br/>
- * 调用show()方法不会立即显示这个Dialog,它会等到一定时间并且未调用dismiss()才会显示<br/>
+ * 延时Dialog <br>
+ * 调用show()方法不会立即显示这个Dialog,它会等到一定时间并且未调用dismiss()才会显示<br>
  * Created by LiFuPing on 2018/5/31.
  */
 public class BaseDelayDialog extends BaseDialog {
@@ -38,7 +38,7 @@ public class BaseDelayDialog extends BaseDialog {
     /**
      * 设置延时时间
      *
-     * @param time
+     * @param time long
      */
     public void setDelayTime(long time) {
         delay_time = time;

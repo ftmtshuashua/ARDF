@@ -1,7 +1,7 @@
 package com.lfp.androidrapiddevelopmentframework;
 
 /**
- * <br/>
+ * <br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class TODO {

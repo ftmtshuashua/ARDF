@@ -30,12 +30,12 @@ WebViewFk - 基于WebView的浏览器实现
 --------
 设置依赖项
 ```
-implementation "暂不提供"
+implementation 'com.lfp:ardf:0.0.3'
 ```
 如果想使用默认okhttp发起请求:
 ```
-implementation "com.squareup.okhttp3:okhttp:3.2.0"
-implementation "com.squareup.okio:okio:1.7.0"
+implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+implementation 'com.squareup.okio:okio:1.7.0'
 ```
 
 在proguard-rules中添加以下代码

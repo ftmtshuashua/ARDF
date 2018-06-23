@@ -13,29 +13,49 @@ import android.support.v4.app.FragmentManager;
  */
 public interface I1AppContextTransmit {
 
+    /**
+     * startActivity
+     * @param intent Intent
+     */
     void startActivity(Intent intent);
 
+    /**
+     * startActivity
+     * @param intent Intent
+     * @param options Bundle
+     */
     void startActivity(Intent intent, @Nullable Bundle options);
 
+    /**
+     * startActivityForResult
+     * @param intent Intent
+     * @param requestCode int
+     */
     void startActivityForResult(Intent intent, int requestCode);
 
+    /**
+     * startActivityForResult
+     * @param intent Intent
+     * @param requestCode int
+     * @param options Bundle
+     */
     void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options);
 
     /**
      * 在Activity中等同与getSupportFragmentManager()
-     * <br/>
+     * <br>
      * 在Fragment中等同与getChildFragmentManager()
-     * * @return FragmentManager
+     * @return FragmentManager
      */
     FragmentManager getSmartFragmentManager();
 
     /**
-     * 获得上下文
+     * @return 获得Context
      */
     Context getContext();
 
     /**
-     * 获得Activity
+     * @return 获得Activity
      */
     Activity getActivity();
 

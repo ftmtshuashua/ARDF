@@ -9,11 +9,11 @@ import com.lfp.ardf.module.net.imp.RequestMerge;
  * <p>
  * 单纯的节点数据结构,它的具体逻辑需要子类来完成,参考
  * <p>
- * {@link ( RequestCall )} 请求发起者 - 发起请求并回复请求结果
+ * {@link com.lfp.ardf.module.net.imp.RequestCall} 请求发起者 - 发起请求并回复请求结果
  * <p>
- * {@link ( RequestChain )} 请求链条 - 将请求节点串成一个链条,顺序执行
+ * {@link com.lfp.ardf.module.net.imp.RequestChain} 请求链条 - 将请求节点串成一个链条,顺序执行
  * <p>
- * {@link ( RequestMerge )} 合并请求 - 将请求节点并行执行
+ * {@link com.lfp.ardf.module.net.imp.RequestMerge} 合并请求 - 将请求节点并行执行
  * <p>
  * Created by LiFuPing on 2018/6/8.
  */
@@ -56,7 +56,7 @@ public abstract class RequestNode {
      * <p>
      * 节点ID在同一条请求链里面应该是相对唯一的
      *
-     * @param id
+     * @param id 请求节点唯一标示
      */
     public void setId(int id) {
         this.id = id;
@@ -66,7 +66,7 @@ public abstract class RequestNode {
      * 设置请求在链中的位置
      * 请求链会自动为节点分配一个与执行顺序相同当ID
      *
-     * @param index
+     * @param index 请求节点对应下标
      */
     public void setIndex(int index) {
         this.index = index;

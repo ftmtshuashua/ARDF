@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * <br/>
+ * <br>
  * Created by LiFuPing on 2018/5/30.
  */
 public interface LogAdapter {

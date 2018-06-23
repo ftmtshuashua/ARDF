@@ -22,7 +22,7 @@ import com.lfp.ardf.widget.WebViewFk;
 import java.io.Serializable;
 
 /**
- * Web浏览器<br/>
+ * Web浏览器<br>
  * Created by LiFuPing on 2018/6/15.
  */
 public class Demo_WebActivity extends BaseActivity {

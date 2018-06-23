@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import com.lfp.ardf.R;
 
 /**
- * 布局阴影<br/>
+ * 布局阴影<br>
  * 为任何布局的四周添加阴影效果<p>
  * Created by LiFuPing on 2018/6/15.
  */

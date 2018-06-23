@@ -9,7 +9,7 @@ import com.lfp.ardf.util.StatusBarUtil;
 import com.lfp.ardf.util.ViewUtil;
 
 /**
- * 自定义ActionBar控制器<br/>
+ * 自定义ActionBar控制器<br>
  * 控制 R.layout.layout_actionbar 布局控制器
  * <p>
  * Created by LiFuPing on 2018/6/5.

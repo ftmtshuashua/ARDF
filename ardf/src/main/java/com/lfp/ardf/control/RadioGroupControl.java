@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * RadioGroup控制器<br/>
- * 可以将任何形式的布局实现RadioGroup的效果<br/>
+ * RadioGroup控制器<br>
+ * 可以将任何形式的布局实现RadioGroup的效果<br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
@@ -37,7 +37,7 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
     /**
      * 设置状态改变监听
      *
-     * @param l
+     * @param l OnRadioChangeListener
      */
     public void setOnRadioChangeListener(OnRadioChangeListener l) {
         mOnCheckedChangeListener = l;
@@ -81,7 +81,7 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
     /**
      * 遍历Radio View到ID,当找到对应View当时候选中这个View
      *
-     * @param id
+     * @param id int
      */
     public void check(@IdRes int id) {
         for (T radio : mRadioArray) {
@@ -160,7 +160,8 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
     /**
      * RadioItem 在任何View外套一个的壳。以实现类似RadioGroup的效果
      * <p>
-     * 简单实现可以使用{@Code SimpleRadioItem}
+     * 简单实现可以使用{@link SimpleRadioItem}
+     * @param <V> extends View
      */
     public static abstract class RadioItem<V extends View> implements View.OnClickListener {
         RadioGroupControl mControl;
@@ -180,7 +181,7 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
         /**
          * 被Radio包裹控制的View
          *
-         * @return
+         * @return V
          */
         public V getView() {
             return mView;
@@ -188,6 +189,8 @@ public class RadioGroupControl<T extends RadioGroupControl.RadioItem> {
 
         /**
          * 拦截点击事件，在一些特殊情况下通过拦截事件来阻止RadioGroup切换选中状态
+         * @param check boolean
+         * @return boolean
          */
         public boolean onInterceptCheck(boolean check) {
             return false;

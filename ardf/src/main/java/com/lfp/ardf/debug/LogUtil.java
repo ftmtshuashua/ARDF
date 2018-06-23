@@ -26,7 +26,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
- * 日志记录器 <br/><br/>
+ * 日志记录器 <br><br>
  * <p>PrettyFormatStrategy:</p>
  * <pre>
  *  ┌──────────────────────────
@@ -37,13 +37,13 @@ import javax.xml.transform.stream.StreamSource;
  *  │ Log message
  *  └──────────────────────────
  * </pre>
- * 获得更好的Log体验推荐配置：File -> Setting -> Console Font<br/>
- * 为Logcat新建一个Scheme：《LogScheme》 <br/>
- * Font:Fira Code<br/>
+ * 获得更好的Log体验推荐配置：File -&gt; Setting -&gt; Console Font<br>
+ * 为Logcat新建一个Scheme：《LogScheme》 <br>
+ * Font:Fira Code<br>
  * <p>
- * File -> Setting -> Android Logcat<br/>
+ * File -&gt; Setting -&gt; Android Logcat<br>
  * 使用配置 《LogScheme》
- * <p>
+ *
  * <p>LogcatLogStrategy:</p>
  * 普通日志输出模式
  */
@@ -69,6 +69,8 @@ public class LogUtil {
 
     /**
      * 初始化日志记录器，默认配置 - Debug包:日志开启 , Release包:日志关闭
+     *
+     * @param context Context
      */
     public static void init(Context context) {
         try {
@@ -78,14 +80,25 @@ public class LogUtil {
         }
     }
 
+    /**
+     * 设置tag
+     * @param tag String
+     */
     public void setTag(String tag) {
         TAG = tag;
     }
 
+    /**
+     * 开关debug模式
+     * @param is 为true时才会显示日志
+     */
     public static void setDebug(boolean is) {
         isDebug = is;
     }
 
+    /**
+     * @return 是否为debug模式
+     */
     public static boolean isDebug() {
         return isDebug;
     }

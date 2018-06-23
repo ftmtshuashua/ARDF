@@ -6,7 +6,7 @@ import android.content.res.AssetManager;
 import java.io.InputStream;
 
 /**
- * Assets信息获取工具<br/>
+ * Assets信息获取工具<br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class AssetsUtil {
@@ -22,8 +22,8 @@ public class AssetsUtil {
 
 
     /**
-     * 取得assets中文件的内容<br/>
-     * 例：文件名.txt<br/>
+     * 取得assets中文件的内容<br>
+     * 例：文件名.txt<br>
      * 例：文件目录/文件名.txt
      *
      * @param fileName 文件名

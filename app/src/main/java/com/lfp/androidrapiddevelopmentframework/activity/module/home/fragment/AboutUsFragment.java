@@ -36,7 +36,7 @@ import com.lfp.ardf.util.ToastUtil;
 import com.lfp.ardf.util.ViewUtil;
 
 /**
- * 关于<br/>
+ * 关于<br>
  * Created by LiFuPing on 2018/6/22.
  */
 public class AboutUsFragment extends BaseFragment {

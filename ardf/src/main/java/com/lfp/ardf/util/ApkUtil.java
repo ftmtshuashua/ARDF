@@ -12,7 +12,7 @@ import com.lfp.ardf.debug.LogUtil;
 import java.io.File;
 
 /**
- * 获得Apk信息<br/>
+ * 获得Apk信息<br>
  * Created by LiFuPing on 2016/1/18.
  */
 public class ApkUtil {
@@ -43,6 +43,7 @@ public class ApkUtil {
 
     /**
      * 获得App名称
+     * @return String
      */
     public static String getAppName() {
         PackageManager packageManager = null;
@@ -59,7 +60,7 @@ public class ApkUtil {
     /**
      * 获得版本信息
      *
-     * @return
+     * @return String
      */
     public static String getVersionName() {
         return getPackageInfo().versionName;
@@ -68,7 +69,7 @@ public class ApkUtil {
     /**
      * 获得版本号
      *
-     * @return
+     * @return int
      */
     public static int getVersionCode() {
         return getPackageInfo().versionCode;
@@ -77,7 +78,7 @@ public class ApkUtil {
     /**
      * 获得App ID
      *
-     * @return
+     * @return String
      */
     public static String getSharedUserId() {
         return getPackageInfo().sharedUserId;
@@ -86,7 +87,7 @@ public class ApkUtil {
     /**
      * 获得App包信息
      *
-     * @return
+     * @return PackageInfo
      */
     public static PackageInfo getAppPackageInfo() {
         return getPackageInfo();
@@ -103,6 +104,7 @@ public class ApkUtil {
 
     /**
      * 安装apk
+     * @param filePath Apk路径
      */
     public static void installApk(String filePath) {
         File apkfile = new File(filePath);

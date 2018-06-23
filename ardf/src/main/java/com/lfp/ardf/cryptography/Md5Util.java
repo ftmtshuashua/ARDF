@@ -3,13 +3,15 @@ package com.lfp.ardf.cryptography;
 import java.security.MessageDigest;
 
 /**
- * Md5 工具<br/>
+ * Md5 工具<br>
  * Created by LiFuPing on 2018/6/1.
  */
 public class Md5Util {
 
     /**
      * MD5 加密字符串
+     * @param str String
+     * @return String
      */
     public static String toMd5(String str) {
         try {
@@ -19,6 +21,11 @@ public class Md5Util {
         }
     }
 
+    /**
+     * 32位MD5
+     * @param data byte[]
+     * @return String
+     */
     public static String toMd5_32(byte[] data) {
         try {
             byte[] hash = MessageDigest.getInstance("MD5").digest(data);
@@ -33,6 +40,11 @@ public class Md5Util {
         }
     }
 
+    /**
+     * 64位MD5
+     * @param data byte[]
+     * @return String
+     */
     public static String toMd5_16(byte[] data) {
         return toMd5_32(data).substring(8, 24);
     }

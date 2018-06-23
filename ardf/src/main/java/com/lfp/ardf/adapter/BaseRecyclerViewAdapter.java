@@ -59,6 +59,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
 
     /**
      * 添加数据变化检查
+     * @param l OnAdapterDataChange
      */
     public void setOnAdapterDataChange(OnAdapterDataChange l) {
         mOnAdapterDataChange = l;
@@ -66,12 +67,12 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
 
     /**
      * ViewHolder变化监听
+     * @param l ViewHolderMessageHandler
      */
     public void setViewHolderMessageHandler(ViewHolderMessageHandler l) {
         mViewHolderMessageHandler = l;
     }
 
-    /**/
     public void setFlag(int flag) {
         mFlag |= flag;
     }
@@ -85,6 +86,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
 
     /**
      * 获得列表数据
+     * @return List
      */
     public List<D> getData() {
         return mArrayModel;
@@ -94,6 +96,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * 设置数据并且更新
      *
      * @param data 数据
+     * @param <T> object
      */
     public <T extends D> void setAndUpdata(List<T> data) {
         int old_count = getItemCount();
@@ -111,6 +114,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * 设置数据
      *
      * @param data 数据
+     * @param <T> object
      */
     public <T extends D> void setData(List<T> data) {
         mArrayModel.clear();
@@ -148,6 +152,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * 在末尾添加数据并更新
      *
      * @param data 数据
+     * @param <T> object
      */
     public <T extends D> void addAndUpdata(List<T> data) {
         int old_count = getItemCount();
@@ -163,6 +168,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      * 在末尾添加数据
      *
      * @param data 数据
+     * @param <T> object
      */
     public <T extends D> void addData(List<T> data) {
         mArrayModel.addAll(data);
@@ -199,6 +205,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
      *
      * @param index 插入位置
      * @param data  数据
+     * @param <T> object
      */
     public <T extends D> void insertAndUpdata(int index, List<T> data) {
         mArrayModel.addAll(index, data);
@@ -303,6 +310,7 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
 
         /**
          * 获取当前UI对应的数据
+         * @return  object
          */
         public D getSaveData() {
             return mSaveData;
@@ -310,6 +318,8 @@ public abstract class BaseRecyclerViewAdapter<D> extends RecyclerView.Adapter<Ba
 
         /**
          * 更新UI
+         *
+         * @param data object
          */
         public abstract void onUpdateUI(D data);
 

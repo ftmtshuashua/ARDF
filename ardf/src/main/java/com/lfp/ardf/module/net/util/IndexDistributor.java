@@ -5,7 +5,7 @@ import com.lfp.ardf.module.net.i.RequestNode;
 import java.util.Iterator;
 
 /**
- * Index分配器<br/>
+ * Index分配器<br>
  * <p>
  * 用来保证请求链中每个请求的位置是固定当
  * <p>

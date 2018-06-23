@@ -6,7 +6,7 @@ import android.graphics.RectF;
 import android.support.annotation.NonNull;
 
 /**
- * 画布工具 - 帮助处理一些计算问题<br/>
+ * 画布工具 - 帮助处理一些计算问题<br>
  * Created by LiFuPing on 2018/5/31.
  */
 public class CanvasUtil {

@@ -9,7 +9,7 @@ import com.lfp.ardf.module.net.i.RequestNode;
 import com.lfp.ardf.module.net.util.ExceptionTotalUtil;
 
 /**
- * 请求统一控制 <br/>
+ * 请求统一控制 <br>
  * Created by LiFuPing on 2018/6/15.
  */
 public abstract class UnifyRespond<R extends RequestNode> implements RequestListener<R> {

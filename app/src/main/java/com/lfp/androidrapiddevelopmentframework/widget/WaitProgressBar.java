@@ -11,7 +11,7 @@ import com.lfp.androidrapiddevelopmentframework.widget.style.CoolWaitLoadingRend
 import com.lfp.ardf.widget.BaseProgressBarView;
 
 /**
- * 等待动画<br/>
+ * 等待动画<br>
  * Created by LiFuPing on 2018/5/30.
  */
 public class WaitProgressBar extends BaseProgressBarView {

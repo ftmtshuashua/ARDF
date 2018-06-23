@@ -30,6 +30,7 @@ public final class CpuUtile {
 
     /**
      * 获得CPU核心数目
+     * @return int
      */
     public static int getNumCores() {
         try {
@@ -44,6 +45,7 @@ public final class CpuUtile {
 
     /**
      * 获取CPU最小频率（单位KHZ）
+     * @return String
      */
     public static String getMinCpuFrequence() {
         String result = "";
@@ -68,6 +70,7 @@ public final class CpuUtile {
 
     /**
      * 实时获取CPU当前频率（单位KHZ）
+     * @return String
      */
     public static String getCurCpuFreq() {
         String result = "N/A";
@@ -87,6 +90,7 @@ public final class CpuUtile {
 
     /**
      * 获取CPU名字
+     * @return String
      */
     public static String getCpuName() {
         try {
@@ -107,6 +111,7 @@ public final class CpuUtile {
 
     /**
      * 获得CPU信息
+     * @return String
      */
     public static String getCupInfo() {
         return MessageFormat.format("CPU_Info：\nName:{0}\n核心数:{1}核\n最小频率:{2}khz\n当前频率:{3}khz"
@@ -118,7 +123,7 @@ public final class CpuUtile {
     }
 
     /**
-     * 根据CPU核心数计算最优线程数<br/>
+     * 根据CPU核心数计算最优线程数<br>
      * CPU敏感的程序，线程数大于处理器个数是没有意义的
      *
      * @param blockingRate 阻塞率

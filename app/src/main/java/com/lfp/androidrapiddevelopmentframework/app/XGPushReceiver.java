@@ -12,7 +12,7 @@ import com.tencent.android.tpush.XGPushTextMessage;
 import java.text.MessageFormat;
 
 /**
- * <br/>
+ * <br>
  * Created by LiFuPing on 2018/6/21.
  */
 public class XGPushReceiver extends XGPushBaseReceiver {

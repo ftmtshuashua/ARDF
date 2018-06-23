@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 import static com.lfp.ardf.util.Utils.checkNotNull;
 
 /**
- * 感谢提供者:https://github.com/orhanobut/logger<br/>
+ * 感谢提供者:https://github.com/orhanobut/logger<br>
  * Draws borders around the given log message along with additional information such as :
- * <p>
+ *
  * <ul>
  * <li>Thread information</li>
  * <li>Method stack trace</li>
  * </ul>
- * <p>
+ *
  * <pre>
  *  ┌──────────────────────────
  *  │ Method stack history

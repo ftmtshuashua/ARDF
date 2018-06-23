@@ -12,10 +12,10 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 /**
- * 继承该类，方便快捷的实现ProgressBar类识功能<br/>
+ * 继承该类，方便快捷的实现ProgressBar类识功能<br>
  * <p>
- * - 当View能被看见,onDrawAnimation()方法会被自动回调.<br/>
- * - 当View隐藏的时候停止回调onDrawAnimation()<br/>
+ * - 当View能被看见,onDrawAnimation()方法会被自动回调.<br>
+ * - 当View隐藏的时候停止回调onDrawAnimation()<br>
  * - 回调间隔大约为16ms
  * </p>
  * Created by LiFuPing on 2018/5/30.

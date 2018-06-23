@@ -7,7 +7,7 @@ import com.lfp.ardf.framework.I.ILifeCycleObserve;
 
 
 /**
- * 将注意力集中到需要使用的方法中<br/>
+ * 将注意力集中到需要使用的方法中<br>
  * Created by LiFuPing on 2017/9/4.
  */
 public abstract class SimpleLifeCycleObserve implements ILifeCycleObserve {

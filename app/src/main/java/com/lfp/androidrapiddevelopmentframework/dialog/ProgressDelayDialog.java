@@ -9,7 +9,7 @@ import com.lfp.ardf.dialog.BaseDelayDialog;
 import com.lfp.ardf.framework.I.IAppFramework;
 
 /**
- * 自定义延时等待Dialog<br/>
+ * 自定义延时等待Dialog<br>
  * Created by LiFuPing on 2018/5/31.
  */
 public class ProgressDelayDialog extends BaseDelayDialog {

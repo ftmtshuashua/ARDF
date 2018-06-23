@@ -18,7 +18,7 @@ import com.lfp.ardf.util.ViewUtil;
 import com.lfp.ardf.widget.WebViewFk;
 
 /**
- * 发现<br/>
+ * 发现<br>
  * Created by LiFuPing on 2018/6/4.
  */
 public class DiscoverFragment extends BaseFragment {

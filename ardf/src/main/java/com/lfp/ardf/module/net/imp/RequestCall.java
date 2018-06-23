@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 请求执行者 <br/>
+ * 请求执行者 <br>
  * Created by LiFuPing on 2018/6/12.
  */
 public abstract class RequestCall extends RequestNode {
@@ -100,6 +100,8 @@ public abstract class RequestCall extends RequestNode {
      * 完成之后会发送一个onEnd信号
      * <p>
      * 所以call方法不应该是异步的,这会导致onEnd信号发送之后,请求实际上是未完成的
+     *
+     * @throws Exception 请求执行异常信息
      */
     protected abstract void call() throws Exception;
 

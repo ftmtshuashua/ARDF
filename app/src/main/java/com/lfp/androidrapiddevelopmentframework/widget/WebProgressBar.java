@@ -25,17 +25,18 @@ public class WebProgressBar extends BaseProgressBarView {
 
     public WebProgressBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mPaint = new Paint();
 
         Color_Progress = getResources().getColor(R.color.colorPrimaryDark);
         Color_Animation = 0xffF5F5F5;
+
+        setAnimationDuration(1000);
     }
 
     int Color_BG = 0x88eeeeee; /*背景色*/
     int Color_Progress; /*进度条颜色*/
     int Color_Animation; /*动画颜色*/
 
-    Paint mPaint;
+    Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     int mProgress;
     int mMaxProgress = 100;
 
@@ -54,20 +55,29 @@ public class WebProgressBar extends BaseProgressBarView {
         return mProgress;
     }
 
+    float real_progress_width;
+
     @Override
     protected void onDrawAnimation(Canvas canvas, float scale) {
         final int saveCount = canvas.save();
         canvas.drawColor(Color_BG);
 
-        int right = getWidth() * getProgress() / mMaxProgress;
+        float progressWidth = getWidth() * getProgress() / (float) mMaxProgress;
+        real_progress_width = progressWidth;
 
         mPaint.setColor(Color_Progress);
-        canvas.drawRect(0, 0, right, getHeight(), mPaint);
+        canvas.drawRect(0, 0, real_progress_width, getHeight(), mPaint);
 
-        right *= scale;
+
+        float animationWight = (float) (Math.sin(scale * Math.PI) * real_progress_width / 2);
+        canvas.translate((real_progress_width - animationWight) * scale, 0);
         mPaint.setColor(Color_Animation);
-        canvas.drawRect(right * 0.7f, 0, right, getHeight(), mPaint);
+        canvas.drawRect(0, 0, animationWight, getHeight(), mPaint);
 
         canvas.restoreToCount(saveCount);
     }
+
+
+
+
 }

@@ -58,7 +58,7 @@ FileCacheConfig.init(getApplicationContext(), "ARDF"); - 文件缓存配置
 
 **问题反馈**
 --------
-交流和建议(QQ群)：759081198
+交流和讨论(QQ群)：759081198
 
 如果遇到问题或者好的建议，请反馈到我的邮箱：ftmtshuashua@gmail.com 或者在我的博客留言
 

@@ -78,7 +78,7 @@ public class Demo_WebActivity extends BaseActivity {
 
         @Override
         public void onWebFinish(WebView view, String url) {
-            ViewUtil.setVisibility(mWebProgressBar, View.GONE);
+//            ViewUtil.setVisibility(mWebProgressBar, View.GONE);
             if (view.canGoBack()) mActionBarControl.showFinish();
         }
     };

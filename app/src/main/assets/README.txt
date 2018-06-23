@@ -3,7 +3,7 @@ ARDF是一个帮助开发者快速构建项目的基础框架,提供了丰富的
 
 GitHub：
 https://github.com/ftmtshuashua/ARDF
-欢迎加入交流和建议(QQ群)：759081198
+欢迎加入交流和讨论(QQ群)：759081198
 
 ----- 已提供的解决方案 -----
 FragmentControl

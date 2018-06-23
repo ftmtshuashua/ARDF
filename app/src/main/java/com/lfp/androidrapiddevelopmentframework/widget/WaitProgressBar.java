@@ -30,7 +30,7 @@ public class WaitProgressBar extends BaseProgressBarView {
 
         mCoolWaitLoadingRenderer = new CoolWaitLoadingRenderer();
 
-        setDuration(2000);
+        setAnimationDuration(2000);
     }
 
     int color_border = 0x88000000;

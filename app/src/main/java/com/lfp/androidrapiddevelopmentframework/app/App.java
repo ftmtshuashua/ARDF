@@ -21,6 +21,7 @@ import lib.gg.y.Y_AdHolper;
  * Created by LiFuPing on 2018/5/9.
  */
 public class App extends Application {
+
     static {
         System.loadLibrary("base");
     }
@@ -61,11 +62,6 @@ public class App extends Application {
 
 //        XGPushManager.bindAccount(context, "XINGE"); //设置账号
 //        XGPushManager.setTag(context,"XINGE");//设置标签
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
     }
 
     @Override

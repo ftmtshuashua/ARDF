@@ -41,4 +41,20 @@ public class TODO {
 
      */
 
+
+    public static final void main(String... arg) {
+
+        for (double i = 0; i <= 100; i++) {
+            double value = wight(i / 100, 100);
+//            double value = Math.sin(i * Math.PI / 180);
+            System.err.println(String.format("%s = %s", i, value));
+        }
+
+    }
+
+    private static final double wight(double bl, double maxwight) {
+        double jd = bl * Math.PI ;
+        return Math.sin(jd) * maxwight;
+    }
+
 }

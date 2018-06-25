@@ -30,7 +30,7 @@ public class WaitProgressBar extends BaseProgressBarView {
 
         mCoolWaitLoadingRenderer = new CoolWaitLoadingRenderer();
 
-        setAnimationDuration(2000);
+        setProgressDuration(2000);
     }
 
     int color_border = 0x88000000;
@@ -51,7 +51,7 @@ public class WaitProgressBar extends BaseProgressBarView {
     }
 
     @Override
-    protected void onDrawAnimation(Canvas canvas, float scale) {
+    protected void onDrawProgress(Canvas canvas, float scale) {
         int saveCount = canvas.save();
         canvas.drawRoundRect(border_rectf, radius_border, radius_border, mPaint);
 

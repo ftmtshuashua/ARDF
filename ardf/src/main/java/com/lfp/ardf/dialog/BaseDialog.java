@@ -30,7 +30,7 @@ public class BaseDialog extends Dialog {
     public static final int DEFUALT_MARGIN = 30;
 
     public BaseDialog(@NonNull Context c) {
-        super(c, R.style.BaseDialogStyle);
+        super(c, R.style.ARDF_BaseDialogStyle);
 
         if (c instanceof IAppFramework) {
             attachAppFk((IAppFramework) c);
@@ -38,7 +38,7 @@ public class BaseDialog extends Dialog {
     }
 
     public BaseDialog(@NonNull IAppFramework appfk) {
-        super(appfk.getContext(), R.style.BaseDialogStyle);
+        super(appfk.getContext(), R.style.ARDF_BaseDialogStyle);
         attachAppFk(appfk);
     }
 

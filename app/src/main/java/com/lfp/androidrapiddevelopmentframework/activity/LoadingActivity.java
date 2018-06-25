@@ -60,6 +60,11 @@ public class LoadingActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     void next() {
         HomeActivity.start(getActivity());
         finish();

@@ -78,7 +78,7 @@ public class Demo_WebActivity extends BaseActivity {
 
         @Override
         public void onWebFinish(WebView view, String url) {
-//            ViewUtil.setVisibility(mWebProgressBar, View.GONE);
+            ViewUtil.setVisibility(mWebProgressBar, View.GONE);
             if (view.canGoBack()) mActionBarControl.showFinish();
         }
     };
@@ -96,7 +96,7 @@ public class Demo_WebActivity extends BaseActivity {
         mActionBarControl.setBackOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mWebViewFx.canGoBack()) {
+                if (mWebViewFx!=null && mWebViewFx.canGoBack()) {
                     mWebViewFx.goBack();
                 } else {
                     finish();
@@ -156,5 +156,10 @@ public class Demo_WebActivity extends BaseActivity {
         public void call() {
             Demo_WebActivity.start(getAppFk(), "baidu");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

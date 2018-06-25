@@ -19,3 +19,5 @@ app/build/*
 gg_y/build/*
 ardf/local.properties
 ardf/project.properties
+app/src/main/java/com/lfp/androidrapiddevelopmentframework/activity/TestActivity2.java
+app/src/main/java/com/lfp/androidrapiddevelopmentframework/activity/TestMainActivity.java

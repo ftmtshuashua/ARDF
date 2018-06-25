@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.ardf.widget.BaseProgressBarView;
@@ -29,7 +32,7 @@ public class WebProgressBar extends BaseProgressBarView {
         Color_Progress = getResources().getColor(R.color.colorPrimaryDark);
         Color_Animation = 0xffF5F5F5;
 
-        setAnimationDuration(1000);
+        setProgressDuration(1000);
     }
 
     int Color_BG = 0x88eeeeee; /*背景色*/
@@ -40,6 +43,7 @@ public class WebProgressBar extends BaseProgressBarView {
     int mProgress;
     int mMaxProgress = 100;
 
+    ProgressAnimation mProgressAnimation; /*均匀的进度提升效果*/
 
     public void setMaxProgress(int progress) {
         mMaxProgress = progress;
@@ -47,37 +51,55 @@ public class WebProgressBar extends BaseProgressBarView {
 
     public void setProgress(int progress) {
         if (progress < 10) progress = 10;
-        if (progress > 100) progress = 100;
+        if (progress > mMaxProgress) progress = mMaxProgress;
         mProgress = progress;
+
+
+        if (mProgressAnimation == null) {
+            mProgressAnimation = new ProgressAnimation(0.0f, 1.0f);
+        } else {
+            mProgressAnimation.cancel();
+            mProgressAnimation.reset();
+        }
+        mProgressAnimation.setRepeatMode(AlphaAnimation.RESTART);
+        mProgressAnimation.setRepeatCount(1);
+        mProgressAnimation.setDuration(500);
+        mProgressAnimation.setInterpolator(new LinearInterpolator());
+        mProgressAnimation.setStartTime(Animation.START_ON_FIRST_FRAME);
+        put(mProgressAnimation);
     }
+
 
     public int getProgress() {
         return mProgress;
     }
 
-    float real_progress_width;
+
+    float dynamic_progress_width; /*动态进度*/
 
     @Override
-    protected void onDrawAnimation(Canvas canvas, float scale) {
+    protected void onDrawProgress(Canvas canvas, float scale) {
         final int saveCount = canvas.save();
         canvas.drawColor(Color_BG);
 
-        float progressWidth = getWidth() * getProgress() / (float) mMaxProgress;
-        real_progress_width = progressWidth;
+        float real_progress_width = getWidth() * mProgress / (float) mMaxProgress;
+        if (mProgressAnimation == null) {
+            dynamic_progress_width = real_progress_width;
+        } else {
+            dynamic_progress_width = (real_progress_width - dynamic_progress_width) * mProgressAnimation.getScale() + dynamic_progress_width;
+        }
 
         mPaint.setColor(Color_Progress);
-        canvas.drawRect(0, 0, real_progress_width, getHeight(), mPaint);
+        canvas.drawRect(0, 0, dynamic_progress_width, getHeight(), mPaint);
 
 
-        float animationWight = (float) (Math.sin(scale * Math.PI) * real_progress_width / 2);
-        canvas.translate((real_progress_width - animationWight) * scale, 0);
+        float animationWight = (float) (Math.sin(scale * Math.PI) * dynamic_progress_width / 2);
+        canvas.translate((dynamic_progress_width - animationWight) * scale, 0);
         mPaint.setColor(Color_Animation);
         canvas.drawRect(0, 0, animationWight, getHeight(), mPaint);
 
         canvas.restoreToCount(saveCount);
     }
-
-
 
 
 }

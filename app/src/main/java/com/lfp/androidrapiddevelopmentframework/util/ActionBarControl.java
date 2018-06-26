@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.ardf.util.StatusBarUtil;
-import com.lfp.ardf.util.ViewUtil;
+import com.lfp.ardf.util.StatusBarUtils;
+import com.lfp.ardf.util.ViewUtils;
 
 /**
  * 自定义ActionBar控制器<br>
@@ -71,17 +71,17 @@ public class ActionBarControl {
 
     public void notifyChange() {
         if (!hasActionBar()) return;
-        ViewUtil.setVisibility(mV_ActionBar, (flag & FLAG_SHOW_MASK) == 0 ? View.GONE : View.VISIBLE);
-        ViewUtil.setVisibility(mV_LeftControl, (flag & FLAG_SHOW_LEFT_CONTROL) == 0 ? View.GONE : View.VISIBLE);
-        ViewUtil.setVisibility(mV_Back, (flag & FLAG_SHOW_BACK) == 0 ? View.GONE : View.VISIBLE);
-        ViewUtil.setVisibility(mTV_Finish, (flag & FLAG_SHOW_FINISH) == 0 ? View.GONE : View.VISIBLE);
-        ViewUtil.setVisibility(mTV_Title, (flag & FLAG_SHOW_TITLE) == 0 ? View.GONE : View.VISIBLE);
-        ViewUtil.setVisibility(mTV_SubTitle, (flag & FLAG_SHOW_SUBTITLE) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mV_ActionBar, (flag & FLAG_SHOW_MASK) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mV_LeftControl, (flag & FLAG_SHOW_LEFT_CONTROL) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mV_Back, (flag & FLAG_SHOW_BACK) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mTV_Finish, (flag & FLAG_SHOW_FINISH) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mTV_Title, (flag & FLAG_SHOW_TITLE) == 0 ? View.GONE : View.VISIBLE);
+        ViewUtils.setVisibility(mTV_SubTitle, (flag & FLAG_SHOW_SUBTITLE) == 0 ? View.GONE : View.VISIBLE);
     }
 
     public ActionBarControl setfitsSystemWindows() {
         if (!hasActionBar()) return this;
-        StatusBarUtil.fitLayoutAtFullScreen(mV_ActionBar, true);
+        StatusBarUtils.fitLayoutAtFullScreen(mV_ActionBar, true);
         return this;
     }
 

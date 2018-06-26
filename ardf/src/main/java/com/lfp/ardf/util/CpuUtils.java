@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * CUP工具
  * Created by Administrator on 2016/1/13.
  */
-public final class CpuUtile {
+public final class CpuUtils {
 
     //Private Class to display only CPU devices in the directory listing
     private static final class CpuFilter implements FileFilter {

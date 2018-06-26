@@ -30,10 +30,10 @@ import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.model.NotProguard;
 import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.util.ApkUtil;
-import com.lfp.ardf.util.ScreenUtil;
-import com.lfp.ardf.util.ToastUtil;
-import com.lfp.ardf.util.ViewUtil;
+import com.lfp.ardf.util.ApkUtils;
+import com.lfp.ardf.util.ScreenUtils;
+import com.lfp.ardf.util.ToastUtils;
+import com.lfp.ardf.util.ViewUtils;
 
 /**
  * 关于<br>
@@ -65,7 +65,7 @@ public class AboutUsFragment extends BaseFragment {
         /*数据*/
         mAdapter.addData(
                 new WebMenu(getAppFk(), "给个赞", "http://3888.group/ardf/issues")
-                        .setTopLineHeight(ScreenUtil.dip2px(15))
+                        .setTopLineHeight(ScreenUtils.dip2px(15))
                         .setIco(R.mipmap.about_zan)
         );
         mAdapter.addData(
@@ -78,7 +78,7 @@ public class AboutUsFragment extends BaseFragment {
         );
         mAdapter.addData(
                 new ExamineVersion(getAppFk())
-                        .setTopLineHeight(ScreenUtil.dip2px(15))
+                        .setTopLineHeight(ScreenUtils.dip2px(15))
                         .setIco(R.mipmap.about_version)
         );
         mAdapter.notifyDataSetChanged();
@@ -117,9 +117,9 @@ public class AboutUsFragment extends BaseFragment {
             FrameLayout.LayoutParams mParams = (FrameLayout.LayoutParams) mV_Root.getLayoutParams();
             mParams.setMargins(0, data.getTopLineHeight(), 0, 0);
 
-            ViewUtil.setVisibility(mTV_Info, TextUtils.isEmpty(data.getInfo()) ? View.GONE : View.VISIBLE);
-            ViewUtil.setVisibility(mTV_Hint, TextUtils.isEmpty(data.getHint()) ? View.GONE : View.VISIBLE);
-            ViewUtil.setVisibility(mIV_Ico, data.getIco() == 0 ? View.INVISIBLE : View.VISIBLE);
+            ViewUtils.setVisibility(mTV_Info, TextUtils.isEmpty(data.getInfo()) ? View.GONE : View.VISIBLE);
+            ViewUtils.setVisibility(mTV_Hint, TextUtils.isEmpty(data.getHint()) ? View.GONE : View.VISIBLE);
+            ViewUtils.setVisibility(mIV_Ico, data.getIco() == 0 ? View.INVISIBLE : View.VISIBLE);
 
             mTV_Title.setText(data.getTitle());
             if (!TextUtils.isEmpty(data.getInfo())) mTV_Info.setText(data.getInfo());
@@ -151,7 +151,7 @@ public class AboutUsFragment extends BaseFragment {
             super();
             mAppFk = appfk;
             setTitle(title);
-            top_line_height = ScreenUtil.dip2px(1);
+            top_line_height = ScreenUtils.dip2px(1);
         }
 
         public InfoMenu setIco(int res_ico) {
@@ -248,7 +248,7 @@ public class AboutUsFragment extends BaseFragment {
 
                             if (pr.isSuccess(true)) {
                                 final Version version = pr.getData(Version.class);
-                                if (ApkUtil.getVersionCode() < version.c) {
+                                if (ApkUtils.getVersionCode() < version.c) {
                                     new AlertDialog.Builder(getAppFk().getContext())
                                             .setTitle("发现新版本")
                                             .setMessage(version.m) // 这里是版本更新信息
@@ -271,7 +271,7 @@ public class AboutUsFragment extends BaseFragment {
                                                         }
                                                     }).create().show();
                                 } else {
-                                    ToastUtil.show("当前版本已经是最新版!");
+                                    ToastUtils.show("当前版本已经是最新版!");
                                 }
                             }
                         }

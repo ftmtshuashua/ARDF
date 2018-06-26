@@ -5,6 +5,8 @@ import android.content.Context;
 import cx.sd.wea.AdManager;
 import cx.sd.wea.nm.sp.SpotManager;
 import cx.sd.wea.nm.sp.SpotRequestListener;
+import cx.sd.wea.nm.vdo.VideoAdManager;
+import cx.sd.wea.nm.vdo.VideoAdRequestListener;
 
 /**
  * 配置<br>
@@ -13,9 +15,9 @@ import cx.sd.wea.nm.sp.SpotRequestListener;
 public class Y_AdHolper {
 
     public static final void init(Context c, boolean log) {
-        AdManager.getInstance(c.getApplicationContext()).init("6e6856bb56d5563a", "210a85571da0ae21", log);
-
-        SpotManager.getInstance(c.getApplicationContext()).requestSpot(new SpotRequestListener() {
+        Context context = c.getApplicationContext();
+        AdManager.getInstance(context).init("6e6856bb56d5563a", "210a85571da0ae21", log);
+        SpotManager.getInstance(context).requestSpot(new SpotRequestListener() {
             @Override
             public void onRequestSuccess() {
             }
@@ -27,7 +29,8 @@ public class Y_AdHolper {
     }
 
     public static final void onExit(Context c) {
-        SpotManager.getInstance(c.getApplicationContext()).onAppExit();
+        Context context = c.getApplicationContext();
+        SpotManager.getInstance(context).onAppExit();
     }
 
 }

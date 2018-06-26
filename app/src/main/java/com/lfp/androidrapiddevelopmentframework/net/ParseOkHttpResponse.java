@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -43,7 +43,7 @@ public class ParseOkHttpResponse {
      */
     public boolean isSuccess(boolean isErrorToast) {
         boolean success = getCode() == REQUEST_SUCCESS;
-        if (isErrorToast && !success && !TextUtils.isEmpty(getMsg())) ToastUtil.show(getMsg());
+        if (isErrorToast && !success && !TextUtils.isEmpty(getMsg())) ToastUtils.show(getMsg());
         return success;
     }
 

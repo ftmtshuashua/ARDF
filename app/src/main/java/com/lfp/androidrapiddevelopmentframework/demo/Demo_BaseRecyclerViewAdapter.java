@@ -17,7 +17,7 @@ import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
 import com.lfp.ardf.framework.I.IAppFramework;
-import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.ToastUtils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity {
             if (getAdapter().getItemCount() >= mIndex) {
                 getAdapter().insertAndUpdata(mIndex, buildData(MessageFormat.format("Insert({0}->{1})", mIndex, mCount), mCount));
             } else {
-                ToastUtil.show(MessageFormat.format("请先插入{0}条数据", mIndex));
+                ToastUtils.show(MessageFormat.format("请先插入{0}条数据", mIndex));
             }
         }
     }
@@ -202,7 +202,7 @@ public class Demo_BaseRecyclerViewAdapter extends BaseActivity {
             if (getAdapter().getItemCount() >= limitcount) {
                 getAdapter().moveAndUpdata(mOldIndex, mNewIndex);
             } else {
-                ToastUtil.show(MessageFormat.format("请先插入{0}条数据", limitcount));
+                ToastUtils.show(MessageFormat.format("请先插入{0}条数据", limitcount));
             }
         }
     }

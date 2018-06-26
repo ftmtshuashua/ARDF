@@ -10,8 +10,8 @@ android {
         applicationId "com.lfp.androidrapiddevelopmentframework"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 4
+        versionName "0.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -33,6 +33,14 @@ android {
     sourceSets{
 //        jniLibs.srcDirs = ['src/main/libs']
     }
+    signingConfigs{
+        release{
+            storeFile file("app_ardf_secretkey.jks")
+            storePassword "xiaopi123"
+            keyAlias "ardf"
+            keyPassword "xiaopi123"
+        }
+    }
     buildTypes {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -48,6 +56,7 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro'
+            signingConfig signingConfigs.release
 
             /*包文件命名*/
             android.applicationVariants.all { variant ->
@@ -76,12 +85,6 @@ android {
             dimension "market"
             manifestPlaceholders = [
                     MTA_CHANNEL: "智者"
-            ]
-        }
-        LiQu {
-            dimension "market"
-            manifestPlaceholders = [
-                    MTA_CHANNEL: "厉趣"
             ]
         }
 

@@ -43,7 +43,7 @@ import javax.xml.transform.stream.StreamSource;
  * <p>
  * File -&gt; Setting -&gt; Android Logcat<br>
  * 使用配置 《LogScheme》
- *
+ * <p>
  * <p>LogcatLogStrategy:</p>
  * 普通日志输出模式
  */
@@ -82,6 +82,7 @@ public class LogUtil {
 
     /**
      * 设置tag
+     *
      * @param tag String
      */
     public void setTag(String tag) {
@@ -90,6 +91,7 @@ public class LogUtil {
 
     /**
      * 开关debug模式
+     *
      * @param is 为true时才会显示日志
      */
     public static void setDebug(boolean is) {

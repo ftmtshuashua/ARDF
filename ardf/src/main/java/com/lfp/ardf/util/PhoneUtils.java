@@ -17,12 +17,12 @@ import java.util.List;
  * 手机设备信息<br>
  * Created by LiFuPing on 2018/6/1.
  */
-public class PhoneUtil {
+public class PhoneUtils {
 
 
     static Context mContext;
 
-    private PhoneUtil() {
+    private PhoneUtils() {
     }
 
     public static final void init(Context c) {
@@ -118,7 +118,7 @@ public class PhoneUtil {
         data.add(Build.TAGS);
         data.add(Build.TYPE);
         data.add(Build.USER);
-        return Md5Util.toMd5(ArrayUtil.join(data, "-"));
+        return Md5Util.toMd5(ArrayUtils.join(data, "-"));
     }
 
     /**
@@ -127,6 +127,6 @@ public class PhoneUtil {
      * @return String
      */
     public static String getPhoneInfo() {
-        return MessageFormat.format("设备厂商:{0}\n设备名称:{1}\nAPI:{2} {3}", getPhoneBrand(), getPhoneModel(), SdkUtile.getSdkVersion(),SdkUtile.getSdkVersionName());
+        return MessageFormat.format("设备厂商:{0}\n设备名称:{1}\nAPI:{2} {3}", getPhoneBrand(), getPhoneModel(), SdkUtiles.getSdkVersion(), SdkUtiles.getSdkVersionName());
     }
 }

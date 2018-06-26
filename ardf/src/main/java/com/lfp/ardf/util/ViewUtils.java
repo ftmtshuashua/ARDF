@@ -11,7 +11,7 @@ import android.widget.TextView;
  * View 工具集合
  * Created by LiFuPing on 2018/5/18.
  */
-public class ViewUtil {
+public class ViewUtils {
 
 
     /**

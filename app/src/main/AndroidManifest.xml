@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".activity.LoadingActivity"
+            android:name=".activity.TestMainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStateBar">

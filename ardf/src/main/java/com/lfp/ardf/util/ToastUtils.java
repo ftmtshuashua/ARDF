@@ -7,21 +7,21 @@ import android.widget.Toast;
 /**
  * 提示消息
  */
-public class ToastUtil {
-    private static ToastUtil mInstance;
+public class ToastUtils {
+    private static ToastUtils mInstance;
     private Toast toast;
 
-    public static ToastUtil init(Context c) {
+    public static ToastUtils init(Context c) {
         if (mInstance == null) {
-            synchronized (ToastUtil.class) {
-                if (mInstance == null) mInstance = new ToastUtil(c.getApplicationContext());
+            synchronized (ToastUtils.class) {
+                if (mInstance == null) mInstance = new ToastUtils(c.getApplicationContext());
             }
         }
         return mInstance;
     }
 
 
-    private ToastUtil(Context c) {
+    private ToastUtils(Context c) {
         toast = Toast.makeText(c, "", Toast.LENGTH_LONG);
     }
 

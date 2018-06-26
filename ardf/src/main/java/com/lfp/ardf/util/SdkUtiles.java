@@ -5,7 +5,7 @@ import android.os.Build;
 /**
  * SDK版本查询工具
  */
-public class SdkUtile {
+public class SdkUtiles {
 
     /**
      * 这个方法判断当前SDK版本 是否大于等于传入的版本等级 <br>

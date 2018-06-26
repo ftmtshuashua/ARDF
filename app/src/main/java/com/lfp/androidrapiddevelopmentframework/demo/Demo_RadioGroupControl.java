@@ -13,7 +13,7 @@ import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.control.RadioGroupControl;
 import com.lfp.ardf.framework.I.IAppFramework;
-import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.ToastUtils;
 
 import java.text.MessageFormat;
 
@@ -69,7 +69,7 @@ public class Demo_RadioGroupControl extends BaseActivity {
         @Override
         public boolean onInterceptCheck(boolean check) {
             if (check && isCheck()) {
-                ToastUtil.show("不要摸我,已经选中了~");
+                ToastUtils.show("不要摸我,已经选中了~");
             }
             return super.onInterceptCheck(check);
         }

@@ -30,7 +30,13 @@ public class Y_AdShow {
 
     }
 
-    /*开屏*/
+
+    /**
+     * 开屏ad
+     *
+     * @param splashViewContainer 放置ad的容器
+     * @param targetClass         ad显示完成之后跳转的页面
+     */
     public final void show(ViewGroup splashViewContainer, Class targetClass) {
         SplashViewSettings splashViewSettings = new SplashViewSettings();
         splashViewSettings.setTargetClass(targetClass);

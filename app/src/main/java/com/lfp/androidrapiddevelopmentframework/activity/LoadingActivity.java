@@ -28,16 +28,11 @@ public class LoadingActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setFlag(FLAG_INTERCEPT_KEYCODE_BACK);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_loading);
 
 //        if(true)return  ;
-        try {
-            StatConfig.setDebugEnable(false);
-            StatService.startStatService(getApplicationContext(), null, com.tencent.stat.common.StatConstants.VERSION);
-        } catch (Exception e) {
-            LogUtil.e(e);
-        }
 
         new PermissonManager(getContext()) {
             @Override
@@ -51,19 +46,6 @@ public class LoadingActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     void next() {
         HomeActivity.start(getActivity());

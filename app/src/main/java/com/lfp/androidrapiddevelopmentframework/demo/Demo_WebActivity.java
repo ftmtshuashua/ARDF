@@ -16,7 +16,7 @@ import com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.module.net.util.UrlFormat;
 import com.lfp.ardf.util.Utils;
-import com.lfp.ardf.util.ViewUtil;
+import com.lfp.ardf.util.ViewUtils;
 import com.lfp.ardf.widget.WebViewFk;
 
 import java.io.Serializable;
@@ -68,7 +68,7 @@ public class Demo_WebActivity extends BaseActivity {
 
         @Override
         public void onWebStart(WebView view, String url, Bitmap favicon) {
-            ViewUtil.setVisibility(mWebProgressBar, View.VISIBLE);
+            ViewUtils.setVisibility(mWebProgressBar, View.VISIBLE);
         }
 
         @Override
@@ -78,7 +78,7 @@ public class Demo_WebActivity extends BaseActivity {
 
         @Override
         public void onWebFinish(WebView view, String url) {
-            ViewUtil.setVisibility(mWebProgressBar, View.GONE);
+            ViewUtils.setVisibility(mWebProgressBar, View.GONE);
             if (view.canGoBack()) mActionBarControl.showFinish();
         }
     };

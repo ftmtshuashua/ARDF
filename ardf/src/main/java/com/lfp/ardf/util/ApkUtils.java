@@ -12,24 +12,24 @@ import com.lfp.ardf.debug.LogUtil;
 import java.io.File;
 
 /**
- * 获得Apk信息<br>
+ * APK工具包
+ * 1.获得Apk信息<br>
+ * 2.安装app
  * Created by LiFuPing on 2016/1/18.
  */
-public class ApkUtil {
-
+public class ApkUtils {
     private static Context mContext;
     private static PackageInfo mPackInfo;
 
-
-    private ApkUtil() {
+    private ApkUtils() {
     }
 
     public static final void init(Context c) {
         mContext = c.getApplicationContext();
     }
 
-    public static final boolean isInit(){
-        return mContext!=null;
+    public static final boolean isInit() {
+        return mContext != null;
     }
 
     static PackageInfo getPackageInfo() {
@@ -43,6 +43,7 @@ public class ApkUtil {
 
     /**
      * 获得App名称
+     *
      * @return String
      */
     public static String getAppName() {
@@ -99,11 +100,12 @@ public class ApkUtil {
      * @return data目录地址
      */
     public static String getPackageDataPath() {
-        return "/data/data/" + ApkUtil.getAppPackageInfo().packageName;
+        return "/data/data/" + ApkUtils.getAppPackageInfo().packageName;
     }
 
     /**
      * 安装apk
+     *
      * @param filePath Apk路径
      */
     public static void installApk(String filePath) {

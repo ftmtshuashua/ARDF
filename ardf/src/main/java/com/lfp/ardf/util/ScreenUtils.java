@@ -11,10 +11,10 @@ import java.text.MessageFormat;
  * Created by LiFuPing on 2017/9/29.
  */
 
-public class ScreenUtil {
+public class ScreenUtils {
     private static Context mContext;
 
-    private ScreenUtil() {
+    private ScreenUtils() {
 
     }
 

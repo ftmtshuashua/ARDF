@@ -5,13 +5,15 @@ import android.content.Context;
 
 import com.lfp.androidrapiddevelopmentframework.Constants;
 import com.lfp.ardf.AppFrameworkHolper;
-import com.lfp.ardf.config.FileCacheConfig;
 import com.lfp.ardf.debug.LogUtil;
-import com.lfp.ardf.util.CpuUtile;
-import com.lfp.ardf.util.PhoneUtil;
-import com.lfp.ardf.util.ScreenUtil;
+import com.lfp.ardf.util.CpuUtils;
+import com.lfp.ardf.util.CacheConfig;
+import com.lfp.ardf.util.PhoneUtils;
+import com.lfp.ardf.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
 import java.text.MessageFormat;
 
@@ -30,24 +32,44 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AppFrameworkHolper.init(getApplicationContext());
-        FileCacheConfig.init(getApplicationContext(), "ARDF");
-        LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtil.getPhoneInfo(), ScreenUtil.getScreenInfo(), CpuUtile.getCupInfo()));
-
+        CacheConfig.init(getApplicationContext(), "ARDF");
+        LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtils.getPhoneInfo(), ScreenUtils.getScreenInfo(), CpuUtils.getCupInfo()));
         LogUtil.e(MessageFormat.format("动态注册数据获取:{0}", Constants.JniLoadding("获取NDK数据 ")));
 
-        xgPush(this);
-        Y_AdHolper.init(this, true);
+        ThirdParty.init(this);
     }
 
 
-    /*推送*/
-    void xgPush(Context c) {
-        Context context = c.getApplicationContext();
-        XGPushConfig.enableDebug(context, LogUtil.isDebug());
-        XGPushConfig.setReportNotificationStatusEnable(context, LogUtil.isDebug());
-        XGPushConfig.setHuaweiDebug(true);
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ThirdParty.onTerminate(this);
+    }
 
-        XGPushManager.registerPush(context);
+
+    /*三方功能*/
+    static class ThirdParty {
+        static void init(Context c) {
+            LogUtil.e("app started,init third party procedure...");
+            xgPush(c);
+            y_m_a_d(c);
+            statistics(c);
+        }
+
+        static void onTerminate(Context c) {
+            LogUtil.e("app exit, close third party procedure...");
+            Y_AdHolper.onExit(c);
+        }
+
+        /*推送*/
+        static void xgPush(Context c) {
+            LogUtil.e("open push...");
+            Context context = c.getApplicationContext();
+            XGPushConfig.enableDebug(context, LogUtil.isDebug());
+            XGPushConfig.setReportNotificationStatusEnable(context, LogUtil.isDebug());
+            XGPushConfig.setHuaweiDebug(true);
+
+            XGPushManager.registerPush(context);
 //, new XGIOperateCallback() {
 //            @Override
 //            public void onSuccess(Object data, int flag) {//token在设备卸载重装的时候有可能会变
@@ -62,11 +84,23 @@ public class App extends Application {
 
 //        XGPushManager.bindAccount(context, "XINGE"); //设置账号
 //        XGPushManager.setTag(context,"XINGE");//设置标签
+        }
+
+        static void y_m_a_d(Context c) {
+            LogUtil.e("open y_m_a_d...");
+            Y_AdHolper.init(c, LogUtil.isDebug());
+        }
+
+        /*统计*/
+        static void statistics(Context c) {
+            LogUtil.e("open statistics...");
+            try {
+                StatConfig.setDebugEnable(false);
+                StatService.startStatService(c, null, com.tencent.stat.common.StatConstants.VERSION);
+            } catch (Exception e) {
+                LogUtil.e(e);
+            }
+        }
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        Y_AdHolper.onExit(this);
-    }
 }

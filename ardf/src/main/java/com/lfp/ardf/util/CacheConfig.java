@@ -1,9 +1,6 @@
-package com.lfp.ardf.config;
+package com.lfp.ardf.util;
 
 import android.content.Context;
-import android.os.Environment;
-
-import com.lfp.ardf.util.ApkUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +12,7 @@ import java.io.IOException;
  * 自定义目录除外<br>
  * Created by LiFuPing on 2018/6/4.
  */
-public class FileCacheConfig {
+public class CacheConfig {
     /**
      * 缓存目录文件名
      */
@@ -41,27 +38,33 @@ public class FileCacheConfig {
     /**
      * App统一配置
      */
-    static FileCacheConfig mConfig;
+    static CacheConfig mConfig;
 
-    public FileCacheConfig(File dir_root) {
+    public CacheConfig(File dir_root) {
         PATH_SD_ROOT = dir_root;
     }
 
-    public static final void init(Context c, String dir_name) {
+    /**
+     * 初始化缓存目录配置
+     *
+     * @param c             传入Applicaion
+     * @param main_dir_name 主目录名字
+     */
+    public static final void init(Context c, String main_dir_name) {
         File PATH_SD_ROOT;
-        if (!isSDCardExist()) {
-            ApkUtil.init(c);
-            PATH_SD_ROOT = new File(ApkUtil.getPackageDataPath());
-        } else PATH_SD_ROOT = Environment.getExternalStorageDirectory();
+        if (!SDCardUtils.isExist()) {
+            ApkUtils.init(c);
+            PATH_SD_ROOT = new File(ApkUtils.getPackageDataPath());
+        } else PATH_SD_ROOT = SDCardUtils.getRootPath();
 
-        mConfig = new FileCacheConfig(new File(PATH_SD_ROOT, dir_name));
+        mConfig = new CacheConfig(new File(PATH_SD_ROOT, main_dir_name));
     }
 
     public static final void init(File dir_root) {
-        mConfig = new FileCacheConfig(dir_root);
+        mConfig = new CacheConfig(dir_root);
     }
 
-    public static final FileCacheConfig getDefualt() {
+    public static final CacheConfig getDefualt() {
         return mConfig;
     }
 
@@ -95,11 +98,6 @@ public class FileCacheConfig {
         return dir;
     }
 
-    /*检查SD卡是否可用*/
-    public static boolean isSDCardExist() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
 
     /**
      * 创建文件或文件夹<br>
@@ -110,7 +108,7 @@ public class FileCacheConfig {
      * @throws IOException 创建文件失败
      */
     public static boolean createNewFile(File... files) throws IOException {
-        if (!isSDCardExist()) return false;
+        if (!SDCardUtils.isExist()) return false;
         for (File file : files) {
             if (!file.exists()) file.mkdirs();
 

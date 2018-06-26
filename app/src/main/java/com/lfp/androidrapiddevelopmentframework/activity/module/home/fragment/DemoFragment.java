@@ -22,9 +22,9 @@ import com.lfp.androidrapiddevelopmentframework.demo.Demo_WebActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
-import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.ToastUtils;
 import com.lfp.ardf.util.Utils;
-import com.lfp.ardf.util.ViewUtil;
+import com.lfp.ardf.util.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public class DemoFragment extends BaseFragment {
             mTV_Title.setText(data.getTitle());
             boolean hasInfo = !Utils.isEmpty(data.getInfo());
             if (hasInfo) mTV_Info.setText(data.getInfo());
-            ViewUtil.setVisibility(mTV_Info, hasInfo ? View.VISIBLE : View.GONE);
+            ViewUtils.setVisibility(mTV_Info, hasInfo ? View.VISIBLE : View.GONE);
         }
 
         @Override
@@ -124,7 +124,7 @@ public class DemoFragment extends BaseFragment {
 
         @Override
         public void call() {
-            ViewUtil.setVisibilitySwitch(mView);
+            ViewUtils.setVisibilitySwitch(mView);
         }
     }
 
@@ -141,7 +141,7 @@ public class DemoFragment extends BaseFragment {
 
         @Override
         public void call() {
-            if (!Utils.isEmpty(getInfo())) ToastUtil.show(getInfo());
+            if (!Utils.isEmpty(getInfo())) ToastUtils.show(getInfo());
         }
     }
 

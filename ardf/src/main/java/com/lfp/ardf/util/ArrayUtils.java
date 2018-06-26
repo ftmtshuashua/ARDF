@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by LiFuPing on 2018/5/17.
  */
-public class ArrayUtil {
+public class ArrayUtils {
     public static String join(Object[] tokens, CharSequence delimiter) {
         return TextUtils.join(delimiter, tokens);
     }

@@ -21,3 +21,4 @@ ardf/local.properties
 ardf/project.properties
 app/src/main/java/com/lfp/androidrapiddevelopmentframework/activity/TestActivity2.java
 app/src/main/java/com/lfp/androidrapiddevelopmentframework/activity/TestMainActivity.java
+app/app_ardf_secretkey.jks

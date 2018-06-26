@@ -2,7 +2,7 @@ package com.lfp.ardf.module.net.util;
 
 import com.lfp.ardf.exception.MsgException;
 import com.lfp.ardf.exception.NetStateException;
-import com.lfp.ardf.util.ToastUtil;
+import com.lfp.ardf.util.ToastUtils;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -69,7 +69,7 @@ public class ExceptionTotalUtil {
         try {
             e.printStackTrace();
             String excptin_info = getThrowableToastInfo(e);
-            if (isShowThrowableToast(e)) ToastUtil.show(excptin_info);
+            if (isShowThrowableToast(e)) ToastUtils.show(excptin_info);
         } catch (Exception e2) {
             e2.printStackTrace();
         }

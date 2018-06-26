@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
  * 状态栏控制工具
  * Created by LiFuPing on 2017/9/6.
  */
-public class StatusBarUtil {
+public class StatusBarUtils {
 
     /**
      * 设置状态栏背景颜色

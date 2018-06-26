@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
  * <p>
  * Created by LiFuPing on 2018/6/20.
  */
-public class BitmapUtil {
+public class BitmapUtils {
 
     private void zip(int imgId, Bitmap bitmap, int heightNode) {
 //        Matrix matrix = new Matrix();

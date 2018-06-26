@@ -12,7 +12,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.lfp.ardf.util.ScreenUtil;
+import com.lfp.ardf.util.ScreenUtils;
 
 /**
  * 感谢 https://github.com/dinuscxj/LoadingDrawable
@@ -63,8 +63,8 @@ public class CoolWaitLoadingRenderer {
 
 
     private void init() {
-        mStrokeWidth = ScreenUtil.dip2px(DEFAULT_STROKE_WIDTH);
-        mWaitCircleRadius = ScreenUtil.dip2px(WAIT_CIRCLE_RADIUS);
+        mStrokeWidth = ScreenUtils.dip2px(DEFAULT_STROKE_WIDTH);
+        mWaitCircleRadius = ScreenUtils.dip2px(WAIT_CIRCLE_RADIUS);
 
         mTopColor = Color.WHITE;
         mMiddleColor = Color.parseColor("#FFF3C742");

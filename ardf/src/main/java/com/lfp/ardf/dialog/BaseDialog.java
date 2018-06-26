@@ -12,7 +12,7 @@ import com.lfp.ardf.R;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
-import com.lfp.ardf.util.ScreenUtil;
+import com.lfp.ardf.util.ScreenUtils;
 
 /**
  * <br>
@@ -80,8 +80,8 @@ public class BaseDialog extends Dialog {
      * @param margin    当内容宽度太大的时候，使用这个值来作为布局与屏幕边框的距离
      */
     public void setSmartContentView(View view, int min_width, int margin) {
-        min_width = ScreenUtil.dip2px(min_width);
-        margin = ScreenUtil.dip2px(margin);
+        min_width = ScreenUtils.dip2px(min_width);
+        margin = ScreenUtils.dip2px(margin);
         view.setMinimumWidth(min_width);
         setContentView(view);
         ViewGroup.MarginLayoutParams mParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();

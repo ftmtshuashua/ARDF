@@ -3,7 +3,7 @@ package com.lfp.ardf.module.net.util;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 
-import com.lfp.ardf.util.ArrayUtil;
+import com.lfp.ardf.util.ArrayUtils;
 
 import java.net.URLEncoder;
 import java.text.MessageFormat;
@@ -124,7 +124,7 @@ public class UrlFormat {
      * @return String
      */
     public String getQuery() {
-        return query.isEmpty() ? "" : ArrayUtil.join(getQueryMap(), "&", "=");
+        return query.isEmpty() ? "" : ArrayUtils.join(getQueryMap(), "&", "=");
     }
 
     /**
@@ -141,7 +141,7 @@ public class UrlFormat {
             String value = query_array.get(key);
             end_query.put(key, URLEncoder.encode(value));
         }
-        return ArrayUtil.join(end_query, "&", "=");
+        return ArrayUtils.join(end_query, "&", "=");
     }
 
 

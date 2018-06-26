@@ -9,7 +9,7 @@ import java.io.InputStream;
  * Assets信息获取工具<br>
  * Created by LiFuPing on 2018/6/4.
  */
-public class AssetsUtil {
+public class AssetsUtils {
     static Context mContext;
 
     public static final void init(Context c) {

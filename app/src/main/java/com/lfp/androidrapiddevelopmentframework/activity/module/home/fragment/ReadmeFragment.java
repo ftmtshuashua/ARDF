@@ -18,13 +18,13 @@ import com.lfp.ardf.util.ViewUtils;
 import com.lfp.ardf.widget.WebViewFk;
 
 /**
- * 发现<br>
+ * 集成<br>
  * Created by LiFuPing on 2018/6/4.
  */
-public class DiscoverFragment extends BaseFragment {
+public class ReadmeFragment extends BaseFragment {
 
     public static Fragment newInstance() {
-        DiscoverFragment fragment = new DiscoverFragment();
+        ReadmeFragment fragment = new ReadmeFragment();
         return fragment;
     }
 
@@ -33,7 +33,7 @@ public class DiscoverFragment extends BaseFragment {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_discover, null);
     }
 
-    final String URL = "https://www.3888.group";
+    final String URL = "https://3888.group/ardf/readme";
 
     WebProgressBar mWebProgressBar;
     WebViewFk mWebViewFx;
@@ -43,14 +43,13 @@ public class DiscoverFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mActionBarControl = new ActionBarControl(view).setfitsSystemWindows().setTitle("发现");
+        mActionBarControl = new ActionBarControl(view).setfitsSystemWindows().setTitle("集成");
         mActionBarControl.setBackOnClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mWebViewFx.canGoBack()) mWebViewFx.goBack();
             }
         });
-
         mWebProgressBar = view.findViewById(R.id.view_WebProgressBar);
         mWebProgressBar.setMaxProgress(100);
 

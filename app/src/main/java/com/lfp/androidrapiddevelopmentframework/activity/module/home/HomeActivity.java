@@ -11,6 +11,7 @@ import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.Ab
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DiscoverFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.IntegrationFragment;
+import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.ReadmeFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
 import com.lfp.ardf.control.FragmentControl;
@@ -38,7 +39,7 @@ public class HomeActivity extends BaseActivity {
                 case R.id.tab_2:
                     return DemoFragment.newInstance();
                 case R.id.tab_3:
-                    return IntegrationFragment.newInstance();
+                    return ReadmeFragment.newInstance();
                 case R.id.tab_4:
                     return AboutUsFragment.newInstance();
             }

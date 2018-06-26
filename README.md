@@ -1,6 +1,8 @@
 # ARDF
 
-ARDF是一个帮助开发者快速构建项目的基础框架,提供了丰富的可拓展的基础功能.
+贯穿整个开发周期,帮助开发者快速构建项目的基础框架,提供了丰富的可拓展的基础功能.
+致力于精简易读的风格
+
 项目初建,还不稳定.不建议应用到企业项目中.
 
 [Demo下载地址](https://fir.im/l7b4)
@@ -23,7 +25,7 @@ NotProguard - 不混淆配置.为一些不想被混淆的类添加实现,在混�
 
 链式请求 - 请求排队,随时修改,饲适用与多种场景
 
-BaseProgressBarView - 动画解决方案,专注动画实现
+BaseProgressBarView - 进度动画解决方案
 
 WebViewFk - 基于WebView的浏览器实现
 
@@ -32,6 +34,12 @@ WebViewFk - 基于WebView的浏览器实现
 设置依赖项
 ```
 implementation 'com.lfp:ardf:0.0.3'
+```
+项目使用的异步框架:
+```
+implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+implementation 'io.reactivex.rxjava2:rxjava:2.1.14-RC1'
+implementation 'com.artemzin.rxjava:proguard-rules:1.1.1.0'
 ```
 如果想使用默认okhttp发起请求:
 ```

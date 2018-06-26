@@ -1,6 +1,8 @@
-package com.lfp.ardf.util;
+package com.lfp.ardf.util.cache;
 
 import android.content.Context;
+
+import com.lfp.ardf.util.ApkUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +14,7 @@ import java.io.IOException;
  * 自定义目录除外<br>
  * Created by LiFuPing on 2018/6/4.
  */
-public class CacheConfig {
+public class FileCacheConfig {
     /**
      * 缓存目录文件名
      */
@@ -38,9 +40,9 @@ public class CacheConfig {
     /**
      * App统一配置
      */
-    static CacheConfig mConfig;
+    static FileCacheConfig mConfig;
 
-    public CacheConfig(File dir_root) {
+    public FileCacheConfig(File dir_root) {
         PATH_SD_ROOT = dir_root;
     }
 
@@ -57,14 +59,14 @@ public class CacheConfig {
             PATH_SD_ROOT = new File(ApkUtils.getPackageDataPath());
         } else PATH_SD_ROOT = SDCardUtils.getRootPath();
 
-        mConfig = new CacheConfig(new File(PATH_SD_ROOT, main_dir_name));
+        mConfig = new FileCacheConfig(new File(PATH_SD_ROOT, main_dir_name));
     }
 
     public static final void init(File dir_root) {
-        mConfig = new CacheConfig(dir_root);
+        mConfig = new FileCacheConfig(dir_root);
     }
 
-    public static final CacheConfig getDefualt() {
+    public static final FileCacheConfig getDefualt() {
         return mConfig;
     }
 

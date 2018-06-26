@@ -5,7 +5,7 @@ import android.content.Context;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.ApkUtils;
 import com.lfp.ardf.util.AssetsUtils;
-import com.lfp.ardf.util.FileUtils;
+import com.lfp.ardf.util.cache.FileUtils;
 import com.lfp.ardf.util.PhoneUtils;
 import com.lfp.ardf.util.ScreenUtils;
 import com.lfp.ardf.util.ToastUtils;

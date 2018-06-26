@@ -30,11 +30,6 @@ public class BaseActivity extends ImpActivity {
         StatService.onPause(this);
     }
 
-    /*获得API配置*/
-    protected Apiserver getApiserver() {
-        return Apiserver.getInstace();
-    }
-
 //    public void set
 
     public void setFlag(int flag) {

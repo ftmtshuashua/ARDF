@@ -22,7 +22,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.lfp.ardf.util.CacheConfig;
+import com.lfp.ardf.util.cache.FileCacheConfig;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
@@ -127,7 +127,7 @@ public class WebViewFk extends WebView {
         settings.setGeolocationDatabasePath(ApkUtils.getPackageDataPath() + File.separator + "databases/");
 
         //配置缓存目录(但是为了适配低版本) - 不推荐使用
-        String cacheDirPath = CacheConfig.getDefualt().getCacheDir() + File.separator + "webcache";
+        String cacheDirPath = FileCacheConfig.getDefualt().getCacheDir() + File.separator + "webcache";
         settings.setDatabasePath(cacheDirPath);
         settings.setAppCachePath(cacheDirPath); //设置  Application Caches 缓存目录
         settings.setAppCacheEnabled(true); //开启 Application Caches 功能

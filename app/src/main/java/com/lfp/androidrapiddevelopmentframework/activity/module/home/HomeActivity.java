@@ -10,10 +10,9 @@ import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.AboutUsFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DemoFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.DiscoverFragment;
-import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.IntegrationFragment;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.fragment.ReadmeFragment;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
-import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
+import com.lfp.androidrapiddevelopmentframework.util.PermissionManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
 import com.yanzhenjie.permission.Permission;
@@ -67,7 +66,7 @@ public class HomeActivity extends BaseActivity {
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_4)));
         mRadioGroupControl.check(R.id.tab_1);
 
-        new PermissonManager(getContext()) {
+        new PermissionManager(getContext()) {
         }.request(Permission.ACCESS_COARSE_LOCATION);
     }
 

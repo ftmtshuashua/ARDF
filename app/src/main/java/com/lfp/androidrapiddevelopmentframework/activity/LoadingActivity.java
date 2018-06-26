@@ -2,17 +2,13 @@ package com.lfp.androidrapiddevelopmentframework.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.HomeActivity;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
-import com.lfp.androidrapiddevelopmentframework.util.PermissonManager;
-import com.lfp.ardf.debug.LogUtil;
-import com.tencent.stat.StatConfig;
-import com.tencent.stat.StatService;
+import com.lfp.androidrapiddevelopmentframework.util.PermissionManager;
 import com.yanzhenjie.permission.Permission;
 
 import java.util.List;
@@ -34,7 +30,7 @@ public class LoadingActivity extends BaseActivity {
 
 //        if(true)return  ;
 
-        new PermissonManager(getContext()) {
+        new PermissionManager(getContext()) {
             @Override
             public void onFinish(List<String> data) {
                 super.onFinish(data);

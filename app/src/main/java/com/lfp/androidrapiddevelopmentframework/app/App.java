@@ -7,7 +7,7 @@ import com.lfp.androidrapiddevelopmentframework.Constants;
 import com.lfp.ardf.AppFrameworkHolper;
 import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.CpuUtils;
-import com.lfp.ardf.util.CacheConfig;
+import com.lfp.ardf.util.cache.FileCacheConfig;
 import com.lfp.ardf.util.PhoneUtils;
 import com.lfp.ardf.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
@@ -32,7 +32,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         AppFrameworkHolper.init(getApplicationContext());
-        CacheConfig.init(getApplicationContext(), "ARDF");
+        FileCacheConfig.init(getApplicationContext(), "ARDF");
         LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtils.getPhoneInfo(), ScreenUtils.getScreenInfo(), CpuUtils.getCupInfo()));
         LogUtil.e(MessageFormat.format("动态注册数据获取:{0}", Constants.JniLoadding("获取NDK数据 ")));
 

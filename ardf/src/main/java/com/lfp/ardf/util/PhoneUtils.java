@@ -127,6 +127,6 @@ public class PhoneUtils {
      * @return String
      */
     public static String getPhoneInfo() {
-        return MessageFormat.format("设备厂商:{0}\n设备名称:{1}\nAPI:{2} {3}", getPhoneBrand(), getPhoneModel(), SdkUtiles.getSdkVersion(), SdkUtiles.getSdkVersionName());
+        return MessageFormat.format("设备厂商:{0}\n设备名称:{1}\nAPI:{2} {3}", getPhoneBrand(), getPhoneModel(), SDKUtiles.getSdkVersion(), SDKUtiles.getSdkVersionName());
     }
 }

@@ -14,16 +14,16 @@ import java.util.List;
  * 权限管理<br>
  * Created by LiFuPing on 2018/6/5.
  */
-public abstract class PermissonManager {
+public abstract class PermissionManager {
     Runtime mRuntime;
 
-    public PermissonManager(Fragment fragment){
+    public PermissionManager(Fragment fragment){
         mRuntime = AndPermission.with(fragment).runtime();
     }
-    public PermissonManager(android.app.Fragment fragment){
+    public PermissionManager(android.app.Fragment fragment){
         mRuntime = AndPermission.with(fragment).runtime();
     }
-    public PermissonManager(Context context){
+    public PermissionManager(Context context){
         mRuntime = AndPermission.with(context).runtime();
     }
 
@@ -33,7 +33,7 @@ public abstract class PermissonManager {
                     @Override
                     public void onAction(List<String> data) {
                         LogUtil.e("onGranted: %s", data);
-                        PermissonManager.this.onGranted(data);
+                        PermissionManager.this.onGranted(data);
                         onFinish(data);
                     }
                 })
@@ -41,7 +41,7 @@ public abstract class PermissonManager {
                     @Override
                     public void onAction(List<String> data) {
                         LogUtil.e("onDenied: %s", data);
-                        PermissonManager.this.onDenied(data);
+                        PermissionManager.this.onDenied(data);
                         onFinish(data);
                     }
                 })
@@ -53,7 +53,7 @@ public abstract class PermissonManager {
                     @Override
                     public void onAction(List<String> data) {
                         LogUtil.e_Pretty("onGranted: %s", data);
-                        PermissonManager.this.onGranted(data);
+                        PermissionManager.this.onGranted(data);
                         onFinish(data);
                     }
                 })
@@ -61,7 +61,7 @@ public abstract class PermissonManager {
                     @Override
                     public void onAction(List<String> data) {
                         LogUtil.e_Pretty("onDenied: %s", data);
-                        PermissonManager.this.onDenied(data);
+                        PermissionManager.this.onDenied(data);
                         onFinish(data);
                     }
                 })

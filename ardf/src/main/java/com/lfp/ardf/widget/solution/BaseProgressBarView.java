@@ -1,4 +1,4 @@
-package com.lfp.ardf.widget;
+package com.lfp.ardf.widget.solution;
 
 import android.content.Context;
 import android.graphics.Canvas;

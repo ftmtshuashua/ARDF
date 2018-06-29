@@ -14,10 +14,15 @@ import android.widget.TextView;
 public class ViewUtils {
 
 
+
+
+
+
+
     /**
      * 获得View的宽度和高度
      *
-     * @param v View
+     * @param v     View
      * @param acion Action2&lt;Integer, Integer&gt;
      */
     public static void getViewWideHigh(final View v, final Action2<Integer, Integer> acion) {
@@ -86,7 +91,8 @@ public class ViewUtils {
 
     /**
      * 设置View显示状态
-     * @param view View
+     *
+     * @param view       View
      * @param visibility View.GONE | View.VISIBLE
      */
     public static final void setVisibility(View view, int visibility) {
@@ -96,7 +102,8 @@ public class ViewUtils {
 
     /**
      * 设置ImageView的显示图片
-     * @param view ImageView
+     *
+     * @param view  ImageView
      * @param resid resouceId
      */
     public static final void setImageResource(ImageView view, int resid) {
@@ -110,7 +117,8 @@ public class ViewUtils {
 
     /**
      * 设置ImageView的显示图片
-     * @param view View
+     *
+     * @param view  View
      * @param resid resouceId
      */
     public static final void setBackgroundResource(View view, int resid) {
@@ -125,7 +133,7 @@ public class ViewUtils {
     /**
      * 设置文本字体颜色
      *
-     * @param view TextView
+     * @param view  TextView
      * @param color textColor
      */
     public static final void setTextColor(TextView view, int color) {

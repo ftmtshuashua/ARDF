@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseFragment;
-import com.lfp.ardf.util.AssetsUtils;
-import com.lfp.ardf.util.StatusBarUtils;
+import com.lfp.ardf.util.AppUtils;
+import com.lfp.ardf.util.BarUtils;
+import com.lfp.ardf.util.ConvertUtils;
 
 /**
  * 集成<br>
@@ -36,9 +37,12 @@ public class IntegrationFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StatusBarUtils.fitLayoutAtFullScreen(view.findViewById(R.id.layout_ActionBar), true);
+        BarUtils.fitLayoutAtFullScreen(view.findViewById(R.id.layout_ActionBar), true);
         mTV_Info = view.findViewById(R.id.view_Info);
 
-        mTV_Info.setText(AssetsUtils.getString("README.txt"));
+        try{
+            String text = ConvertUtils.inputStream2String(AppUtils.getApp().getAssets().open("README.txt") , "UTF-8");
+            mTV_Info .setText(text);
+        }catch (Exception e){}
     }
 }

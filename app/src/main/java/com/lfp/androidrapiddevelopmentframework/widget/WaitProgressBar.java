@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.lfp.androidrapiddevelopmentframework.widget.style.CoolWaitLoadingRenderer;
-import com.lfp.ardf.widget.BaseProgressBarView;
+import com.lfp.ardf.widget.solution.BaseProgressBarView;
 
 /**
  * 等待动画<br>

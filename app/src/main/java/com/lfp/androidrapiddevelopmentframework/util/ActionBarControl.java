@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.ardf.util.StatusBarUtils;
+import com.lfp.ardf.util.BarUtils;
 import com.lfp.ardf.util.ViewUtils;
 
 /**
@@ -81,7 +81,7 @@ public class ActionBarControl {
 
     public ActionBarControl setfitsSystemWindows() {
         if (!hasActionBar()) return this;
-        StatusBarUtils.fitLayoutAtFullScreen(mV_ActionBar, true);
+        BarUtils.fitLayoutAtFullScreen(mV_ActionBar, true);
         return this;
     }
 

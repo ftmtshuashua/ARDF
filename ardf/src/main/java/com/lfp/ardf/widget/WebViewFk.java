@@ -27,7 +27,7 @@ import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.framework.I.ILifeCycleObserve;
 import com.lfp.ardf.framework.util.SimpleLifeCycleObserve;
-import com.lfp.ardf.util.ApkUtils;
+import com.lfp.ardf.util.AppUtils;
 
 import java.io.File;
 import java.text.MessageFormat;
@@ -124,7 +124,7 @@ public class WebViewFk extends WebView {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setSaveFormData(true);
         settings.setGeolocationEnabled(true); //定位
-        settings.setGeolocationDatabasePath(ApkUtils.getPackageDataPath() + File.separator + "databases/");
+        settings.setGeolocationDatabasePath(AppUtils.getPackageDataPath() + File.separator + "databases/");
 
         //配置缓存目录(但是为了适配低版本) - 不推荐使用
         String cacheDirPath = FileCacheConfig.getDefualt().getCacheDir() + File.separator + "webcache";

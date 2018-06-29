@@ -6,10 +6,11 @@ import android.content.Context;
 import com.lfp.androidrapiddevelopmentframework.Constants;
 import com.lfp.ardf.AppFrameworkHolper;
 import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.util.AppUtils;
 import com.lfp.ardf.util.CpuUtils;
-import com.lfp.ardf.util.cache.FileCacheConfig;
 import com.lfp.ardf.util.PhoneUtils;
 import com.lfp.ardf.util.ScreenUtils;
+import com.lfp.ardf.util.cache.FileCacheConfig;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.stat.StatConfig;
@@ -33,10 +34,11 @@ public class App extends Application {
         super.onCreate();
         AppFrameworkHolper.init(getApplicationContext());
         FileCacheConfig.init(getApplicationContext(), "ARDF");
-        LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}", PhoneUtils.getPhoneInfo(), ScreenUtils.getScreenInfo(), CpuUtils.getCupInfo()));
+        LogUtil.i_Pretty(MessageFormat.format("{0}\n\n{1}\n\n{2}\n\n{3}", PhoneUtils.getPhoneInfo(), ScreenUtils.getScreenInfo(), AppUtils.getAppInfo() , CpuUtils.getCupInfo()));
         LogUtil.e(MessageFormat.format("动态注册数据获取:{0}", Constants.JniLoadding("获取NDK数据 ")));
 
         ThirdParty.init(this);
+
     }
 
 
@@ -102,5 +104,6 @@ public class App extends Application {
             }
         }
     }
+
 
 }

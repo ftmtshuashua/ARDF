@@ -30,7 +30,7 @@ import com.lfp.ardf.adapter.BaseRecyclerViewAdapter;
 import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.model.NotProguard;
 import com.lfp.ardf.module.net.OkHttpRequest;
-import com.lfp.ardf.util.ApkUtils;
+import com.lfp.ardf.util.AppUtils;
 import com.lfp.ardf.util.ScreenUtils;
 import com.lfp.ardf.util.ToastUtils;
 import com.lfp.ardf.util.ViewUtils;
@@ -248,7 +248,7 @@ public class AboutUsFragment extends BaseFragment {
 
                             if (pr.isSuccess(true)) {
                                 final Version version = pr.getData(Version.class);
-                                if (ApkUtils.getVersionCode() < version.c) {
+                                if (AppUtils.getAppVersionCode() < version.c) {
                                     new AlertDialog.Builder(getAppFk().getContext())
                                             .setTitle("发现新版本")
                                             .setMessage(version.m) // 这里是版本更新信息

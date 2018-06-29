@@ -2,7 +2,7 @@ package com.lfp.ardf.util.cache;
 
 import android.content.Context;
 
-import com.lfp.ardf.util.ApkUtils;
+import com.lfp.ardf.util.AppUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,8 +55,7 @@ public class FileCacheConfig {
     public static final void init(Context c, String main_dir_name) {
         File PATH_SD_ROOT;
         if (!SDCardUtils.isExist()) {
-            ApkUtils.init(c);
-            PATH_SD_ROOT = new File(ApkUtils.getPackageDataPath());
+            PATH_SD_ROOT = new File(AppUtils.getPackageDataPath());
         } else PATH_SD_ROOT = SDCardUtils.getRootPath();
 
         mConfig = new FileCacheConfig(new File(PATH_SD_ROOT, main_dir_name));

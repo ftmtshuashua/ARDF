@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.ardf.widget.BaseProgressBarView;
+import com.lfp.ardf.widget.solution.BaseProgressBarView;
 
 
 /**

@@ -55,7 +55,7 @@ public class FileCacheConfig {
     public static final void init(Context c, String main_dir_name) {
         File PATH_SD_ROOT;
         if (!SDCardUtils.isExist()) {
-            PATH_SD_ROOT = new File(AppUtils.getPackageDataPath());
+            PATH_SD_ROOT = new File(AppUtils.getAppPackageDataPath());
         } else PATH_SD_ROOT = SDCardUtils.getRootPath();
 
         mConfig = new FileCacheConfig(new File(PATH_SD_ROOT, main_dir_name));

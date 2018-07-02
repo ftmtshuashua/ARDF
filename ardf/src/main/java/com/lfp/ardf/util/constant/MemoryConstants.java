@@ -14,6 +14,7 @@ import java.lang.annotation.RetentionPolicy;
  *      KB      :1 kb = 1024 byte
  *      MB      :1 kb = 1048576 byte
  *      GB      :1 kb = 1073741824 byte
+ *
  * Created by LiFuPing on 2018/6/27.
  * </pre>
  */

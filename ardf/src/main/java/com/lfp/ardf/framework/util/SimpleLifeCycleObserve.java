@@ -7,8 +7,13 @@ import com.lfp.ardf.framework.I.ILifeCycleObserve;
 
 
 /**
- * 将注意力集中到需要使用的方法中<br>
+ * <pre>
+ * desc:
+ *      ILifeCycleObserve简单实现,通常只需要创建本类并重载需要的函数即可
+ * function:
+ *
  * Created by LiFuPing on 2017/9/4.
+ * </pre>
  */
 public abstract class SimpleLifeCycleObserve implements ILifeCycleObserve {
 

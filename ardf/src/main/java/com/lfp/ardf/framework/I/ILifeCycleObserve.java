@@ -1,20 +1,27 @@
 package com.lfp.ardf.framework.I;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 /**
- * 生命周期订阅 - 利用观测者模式使业务与Activity或者Fragment接耦合
- * <p>
+ * <pre>
+ * desc:
+ *      生命周期订阅 - 利用观测者模式使业务与Activity和Fragment解耦
+ *      使用{@link com.lfp.ardf.framework.util.SimpleLifeCycleObserve}
+ * function:
+ *
  * Created by LiFuPing on 2017/9/4.
+ * </pre>
  */
 public interface ILifeCycleObserve {
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onCreate(Bundle savedInstanceState)}
+     * {@link  Activity#onCreate}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onViewCreated(View view, Bundle savedInstanceState)}
+     * {@link Fragment#onViewCreated}
      *
      * @param savedInstanceState savedInstanceState Bundle
      */
@@ -22,9 +29,9 @@ public interface ILifeCycleObserve {
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onDestroy()}
+     * {@link Activity#onDestroy}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onDestroy()}
+     * {@link Fragment#onDestroy}
      * <br>
      * 回调在 super.onDestroy() 之前
      */
@@ -32,9 +39,9 @@ public interface ILifeCycleObserve {
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onSaveInstanceState(Bundle outState)}
+     * {@link Activity#onSaveInstanceState(Bundle outState)}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onSaveInstanceState(Bundle outState)}
+     * {@link Fragment#onSaveInstanceState(Bundle outState)}
      *
      * @param outState Bundle
      */
@@ -42,9 +49,9 @@ public interface ILifeCycleObserve {
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onRestoreInstanceState(Bundle savedInstanceState)}
+     * {@link Activity#onRestoreInstanceState}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onRestoreInstanceState(Bundle savedInstanceState)}
+     * {@link Fragment#onActivityCreated}
      *
      * @param savedInstanceState Bundle
      */
@@ -52,45 +59,45 @@ public interface ILifeCycleObserve {
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  onStart()}
+     * {@link Activity#onStart}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment onStart()}
+     * {@link Fragment#onStart}
      */
     void onStart();
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onResume()}
+     * {@link Activity#onResume}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onResume()}
+     * {@link Fragment#onResume}
      */
     void onResume();
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onPause()}
+     * {@link Activity#onPause}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onPause()}
+     * {@link Fragment#onPause}
      */
     void onPause();
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onStop()}
+     * {@link Activity#onStop}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onStop()}
+     * {@link Fragment#onStop}
      */
     void onStop();
 
     /**
      * 回调方法
-     * {@link com.lfp.ardf.framework.imp.activity.Imp2LifeCycleObservedActivity  Activity.onActivityResult(int requestCode, int resultCode, Intent data)}
+     * {@link Activity#onActivityResult}
      * 与
-     * {@link com.lfp.ardf.framework.imp.fragment.Imp2LifeCycleObservedFragment Fragment.onActivityResult(int requestCode, int resultCode, Intent data)}
+     * {@link Fragment#onActivityResult}
      *
      * @param requestCode int
-     * @param resultCode int
-     * @param data Intent
+     * @param resultCode  int
+     * @param data        Intent
      */
     void onActivityResult(int requestCode, int resultCode, Intent data);
 }

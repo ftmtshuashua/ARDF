@@ -6,14 +6,36 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by LiFuPing on 2018/5/17.
+ * <pre>
+ * desc:
+ *      数组集合类相关工具
+ * function:
+ *      join()      :数据拼接
+ *
+ * Created by LiFuPing on 2017/9/6.
+ * </pre>
  */
 public class ArrayUtils {
+
+    /**
+     * 数据拼接
+     *
+     * @param tokens    原数组
+     * @param delimiter 分界符
+     * @return 拼接之后的字符串
+     */
     public static String join(Object[] tokens, CharSequence delimiter) {
         return TextUtils.join(delimiter, tokens);
     }
 
-    public static String join(Iterable  tokens, CharSequence delimiter) {
+    /**
+     * 数据拼接
+     *
+     * @param tokens    原数据
+     * @param delimiter 分界符
+     * @return 拼接之后的字符串
+     */
+    public static String join(Iterable tokens, CharSequence delimiter) {
         return TextUtils.join(delimiter, tokens);
     }
 
@@ -23,8 +45,8 @@ public class ArrayUtils {
      * @param tokens          数据源
      * @param delimiter_key   两个key数据之间的分隔符
      * @param delimiter_value key与value之间的分隔符
-     * @param <K> extends Object
-     * @param <V> extends Object
+     * @param <K>             extends Object
+     * @param <V>             extends Object
      * @return 拼接之后的字符串
      */
     public static <K extends Object, V extends Object> String join(Map<K, V> tokens, CharSequence delimiter_key, CharSequence delimiter_value) {

@@ -1,9 +1,13 @@
 package com.lfp.ardf.framework.I;
 
-
 /**
- * 网络请求URL
+ * <pre>
+ * desc:
+ *      网络框架请求
+ * function:
+ *
  * Created by LiFuPing on 2018/5/17.
+ * </pre>
  */
 public interface INetRequest extends ILifeCycleObserved {
 

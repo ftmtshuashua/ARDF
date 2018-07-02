@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.lfp.ardf.debug.LogUtil;
+import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.util.more.ProcessUtils;
 
 import java.io.File;
@@ -40,9 +41,8 @@ import java.util.Map;
  *      getApp()                                :获得Application
  *      getResources()                          :获得Resources
  *      getPackageInfo()                        :获得包信息
- *      getPackageDataPath()                    :获得包存放数据的位置
- *      registerAppStatusChangedListener()      :注册Activity生命周期监听
- *      unregisterAppStatusChangedListener()    :移除Activity生命周期监听
+ *      registerAppStatusChangedListener()      :注册App前后台状态变化监听
+ *      unregisterAppStatusChangedListener()    :移除App前后台状态变化监听
  *      installApp()                            :安装App
  *      installAppSilent()                      :静默安装App
  *      uninstallApp()                          :卸载App
@@ -56,6 +56,7 @@ import java.util.Map;
  *      relaunchApp()                           :重新启动App
  *      launchAppDetailsSettings()              :跳转App详细设置
  *      exitApp()                               :退出App
+ *      getAppPackageDataPath()                 :获得包存放数据的位置
  *      getAppIcon()                            :获得App图标
  *      getAppPackageName()                     :获得App包名
  *      getAppName()                            :获得App名称
@@ -65,15 +66,13 @@ import java.util.Map;
  *      getAppSignature()                       :获得App签名
  *      getAppSignatureSHA1()                   :获得App签名SHA1码
  *      getAppInfo()                            :获得App信息
- *      getAppsInfo()                           :获得设备安装App信息
+ *      getAppsInfo()                           :获得设备安装App列表
  *
  * Created by LiFuPing on 2016/1/18.
  * </pre>
  */
 public class AppUtils {
-
     static Application app;
-    static final ActivityLifecycleImpl ACTIVITY_LIFECYCLE = new ActivityLifecycleImpl();
 
     private AppUtils() {
     }
@@ -91,6 +90,8 @@ public class AppUtils {
                 Object at = activityThread.getMethod("currentActivityThread").invoke(null);
                 Object app = activityThread.getMethod("getApplication").invoke(at);
                 AppUtils.app = (Application) app;
+                AppUtils.app.registerActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE);
+
             } catch (Exception e) {
                 LogUtil.e(e);
             }
@@ -120,35 +121,6 @@ public class AppUtils {
         return getApp().getResources();
     }
 
-    /**
-     * 获得App对于的data目录
-     *
-     * @return data目录地址
-     */
-    public static String getPackageDataPath() {
-        return "/data/data/" + getPackageName();
-    }
-
-
-    /**
-     * Register the status of application changed listener.
-     *
-     * @param obj      The object.
-     * @param listener The status of application changed listener
-     */
-    public static void registerAppStatusChangedListener(@NonNull final Object obj,
-                                                        @NonNull final OnAppStatusChangedListener listener) {
-        getActivityLifecycle().addListener(obj, listener);
-    }
-
-    /**
-     * Unregister the status of application changed listener.
-     *
-     * @param obj The object.
-     */
-    public static void unregisterAppStatusChangedListener(@NonNull final Object obj) {
-        getActivityLifecycle().removeListener(obj);
-    }
 
     /**
      * Install the app.
@@ -178,43 +150,12 @@ public class AppUtils {
      * <p>Target APIs greater than 25 must hold
      * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
      *
-     * @param filePath  The path of file.
-     * @param authority Target APIs greater than 23 must hold the authority of a FileProvider
-     *                  defined in a {@code <provider>} element in your app's manifest.
-     */
-    @Deprecated
-    public static void installApp(final String filePath, final String authority) {
-        installApp(getFileByPath(filePath), authority);
-    }
-
-    /**
-     * Install the app.
-     * <p>Target APIs greater than 25 must hold
-     * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
-     *
-     * @param file      The file.
-     * @param authority Target APIs greater than 23 must hold the authority of a FileProvider
-     *                  defined in a {@code <provider>} element in your app's manifest.
-     */
-    @Deprecated
-    public static void installApp(final File file, final String authority) {
-        if (!isFileExists(file)) return;
-        getApp().startActivity(IntentUtils.getInstallAppIntent(file, authority, true));
-    }
-
-    /**
-     * Install the app.
-     * <p>Target APIs greater than 25 must hold
-     * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
-     *
      * @param activity    The activity.
      * @param filePath    The path of file.
      * @param requestCode If &gt;= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
      */
-    public static void installApp(final Activity activity,
-                                  final String filePath,
-                                  final int requestCode) {
+    public static void installApp(final IAppFramework activity, final String filePath, final int requestCode) {
         installApp(activity, getFileByPath(filePath), requestCode);
     }
 
@@ -228,54 +169,11 @@ public class AppUtils {
      * @param requestCode If &gt;= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
      */
-    public static void installApp(final Activity activity,
-                                  final File file,
-                                  final int requestCode) {
+    public static void installApp(final IAppFramework activity, final File file, final int requestCode) {
         if (!isFileExists(file)) return;
         activity.startActivityForResult(IntentUtils.getInstallAppIntent(file), requestCode);
     }
 
-    /**
-     * Install the app.
-     * <p>Target APIs greater than 25 must hold
-     * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
-     *
-     * @param activity    The activity.
-     * @param filePath    The path of file.
-     * @param authority   Target APIs greater than 23 must hold the authority of a FileProvider
-     *                    defined in a {@code <provider>} element in your app's manifest.
-     * @param requestCode If &gt;= 0, this code will be returned in
-     *                    onActivityResult() when the activity exits.
-     */
-    @Deprecated
-    public static void installApp(final Activity activity,
-                                  final String filePath,
-                                  final String authority,
-                                  final int requestCode) {
-        installApp(activity, getFileByPath(filePath), authority, requestCode);
-    }
-
-    /**
-     * Install the app.
-     * <p>Target APIs greater than 25 must hold
-     * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
-     *
-     * @param activity    The activity.
-     * @param file        The file.
-     * @param authority   Target APIs greater than 23 must hold the authority of a FileProvider
-     *                    defined in a {@code <provider>} element in your app's manifest.
-     * @param requestCode If &gt;= 0, this code will be returned in
-     *                    onActivityResult() when the activity exits.
-     */
-    @Deprecated
-    public static void installApp(final Activity activity,
-                                  final File file,
-                                  final String authority,
-                                  final int requestCode) {
-        if (!isFileExists(file)) return;
-        activity.startActivityForResult(IntentUtils.getInstallAppIntent(file, authority),
-                requestCode);
-    }
 
     /**
      * Install the app silently.
@@ -300,7 +198,6 @@ public class AppUtils {
     public static boolean installAppSilent(final File file) {
         return installAppSilent(file, null);
     }
-
 
     /**
      * Install the app silently.
@@ -338,9 +235,7 @@ public class AppUtils {
      * @param isRooted True to use root, false otherwise.
      * @return {@code true}: success<br>{@code false}: fail
      */
-    public static boolean installAppSilent(final File file,
-                                           final String params,
-                                           final boolean isRooted) {
+    public static boolean installAppSilent(final File file, final String params, final boolean isRooted) {
         if (!isFileExists(file)) return false;
         String filePath = '"' + file.getAbsolutePath() + '"';
         String command = "LD_LIBRARY_PATH=/vendor/lib*:/system/lib* pm install " +
@@ -351,8 +246,7 @@ public class AppUtils {
                 && commandResult.successMsg.toLowerCase().contains("success")) {
             return true;
         } else {
-            Log.e("AppUtils", "installAppSilent successMsg: " + commandResult.successMsg +
-                    ", errorMsg: " + commandResult.errorMsg);
+            LogUtil.e("installAppSilent successMsg: " + commandResult.successMsg + ", errorMsg: " + commandResult.errorMsg);
             return false;
         }
     }
@@ -375,14 +269,9 @@ public class AppUtils {
      * @param requestCode If &gt;= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
      */
-    public static void uninstallApp(final Activity activity,
-                                    final String packageName,
-                                    final int requestCode) {
+    public static void uninstallApp(final IAppFramework activity, final String packageName, final int requestCode) {
         if (Utils.isSpace(packageName)) return;
-        activity.startActivityForResult(
-                IntentUtils.getUninstallAppIntent(packageName),
-                requestCode
-        );
+        activity.startActivityForResult(IntentUtils.getUninstallAppIntent(packageName), requestCode);
     }
 
     /**
@@ -420,9 +309,7 @@ public class AppUtils {
      * @param isRooted    True to use root, false otherwise.
      * @return {@code true}: success<br>{@code false}: fail
      */
-    public static boolean uninstallAppSilent(final String packageName,
-                                             final boolean isKeepData,
-                                             final boolean isRooted) {
+    public static boolean uninstallAppSilent(final String packageName, final boolean isKeepData, final boolean isRooted) {
         if (Utils.isSpace(packageName)) return false;
         String command = "LD_LIBRARY_PATH=/vendor/lib*:/system/lib* pm uninstall "
                 + (isKeepData ? "-k " : "")
@@ -445,8 +332,7 @@ public class AppUtils {
      * @param category The desired category.
      * @return {@code true}: yes<br>{@code false}: no
      */
-    public static boolean isAppInstalled(@NonNull final String action,
-                                         @NonNull final String category) {
+    public static boolean isAppInstalled(@NonNull final String action, @NonNull final String category) {
         Intent intent = new Intent(action);
         intent.addCategory(category);
         PackageManager pm = getApp().getPackageManager();
@@ -580,9 +466,7 @@ public class AppUtils {
      * @param requestCode If &gt;= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
      */
-    public static void launchApp(final Activity activity,
-                                 final String packageName,
-                                 final int requestCode) {
+    public static void launchApp(final IAppFramework activity, final String packageName, final int requestCode) {
         if (Utils.isSpace(packageName)) return;
         activity.startActivityForResult(IntentUtils.getLaunchAppIntent(packageName), requestCode);
     }
@@ -624,9 +508,8 @@ public class AppUtils {
      */
     public static void exitApp() {
         List<Activity> activityList = getActivityList();
-        for (int i = activityList.size() - 1; i >= 0; --i) {// remove from top
+        for (int i = activityList.size() - 1; i >= 0; --i) {
             Activity activity = activityList.get(i);
-            // sActivityList remove the index activity at onActivityDestroyed
             activity.finish();
         }
         System.exit(0);
@@ -720,6 +603,15 @@ public class AppUtils {
             e.printStackTrace();
             return "";
         }
+    }
+
+    /**
+     * 获得App对于的data目录
+     *
+     * @return data目录地址
+     */
+    public static String getAppPackageDataPath() {
+        return "/data/data/" + getPackageName();
     }
 
     /**
@@ -1007,6 +899,26 @@ public class AppUtils {
 
 
     /*------- Activity管理 -------*/
+    static final ActivityLifecycleImpl ACTIVITY_LIFECYCLE = new ActivityLifecycleImpl();
+
+    /**
+     * Register the status of application changed listener.
+     *
+     * @param key      The object.
+     * @param listener The status of application changed listener
+     */
+    public static void registerAppStatusChangedListener(@NonNull final Object key, @NonNull final OnAppStatusChangedListener listener) {
+        getActivityLifecycle().addListener(key, listener);
+    }
+
+    /**
+     * Unregister the status of application changed listener.
+     *
+     * @param key The object.
+     */
+    public static void unregisterAppStatusChangedListener(@NonNull final Object key) {
+        getActivityLifecycle().removeListener(key);
+    }
 
     static ActivityLifecycleImpl getActivityLifecycle() {
         return ACTIVITY_LIFECYCLE;
@@ -1025,7 +937,6 @@ public class AppUtils {
         }
     }
 
-
     static class ActivityLifecycleImpl implements Application.ActivityLifecycleCallbacks {
 
         final LinkedList<Activity> mActivityList = new LinkedList<>();
@@ -1034,12 +945,12 @@ public class AppUtils {
         private int mForegroundCount = 0;
         private int mConfigCount = 0;
 
-        void addListener(final Object object, final OnAppStatusChangedListener listener) {
-            mStatusListenerMap.put(object, listener);
+        void addListener(final Object key, final OnAppStatusChangedListener listener) {
+            mStatusListenerMap.put(key, listener);
         }
 
-        void removeListener(final Object object) {
-            mStatusListenerMap.remove(object);
+        void removeListener(final Object key) {
+            mStatusListenerMap.remove(key);
         }
 
         @Override

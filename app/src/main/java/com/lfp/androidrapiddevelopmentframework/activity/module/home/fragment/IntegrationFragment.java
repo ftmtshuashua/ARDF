@@ -37,7 +37,7 @@ public class IntegrationFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BarUtils.fitLayoutAtFullScreen(view.findViewById(R.id.layout_ActionBar), true);
+        BarUtils.setStatusBarImmersiveView(view.findViewById(R.id.layout_ActionBar) );
         mTV_Info = view.findViewById(R.id.view_Info);
 
         try{

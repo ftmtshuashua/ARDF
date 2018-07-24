@@ -43,6 +43,10 @@ public class ActionBarControl {
         mTV_SubTitle = v.findViewById(R.id.view_SubTitle);
     }
 
+    public View getRootView(){
+        return mV_ActionBar;
+    }
+
     public boolean hasActionBar() {
         return mV_ActionBar != null;
     }
@@ -81,7 +85,7 @@ public class ActionBarControl {
 
     public ActionBarControl setfitsSystemWindows() {
         if (!hasActionBar()) return this;
-        BarUtils.fitLayoutAtFullScreen(mV_ActionBar, true);
+        BarUtils.setStatusBarImmersiveView(mV_ActionBar);
         return this;
     }
 

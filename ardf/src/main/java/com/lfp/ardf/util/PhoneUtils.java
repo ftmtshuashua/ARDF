@@ -367,9 +367,8 @@ public class PhoneUtils {
 
     /*---- 系统检测 ---*/
 
-
     /*Rom检测 - 待测试*/
-    private static final class RomDetection {
+    public static final class RomDetection {
         public static final String ROM_MIUI = "MIUI";
         public static final String ROM_EMUI = "EMUI";
         public static final String ROM_FLYME = "FLYME";

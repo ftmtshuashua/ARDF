@@ -10,7 +10,7 @@ import java.util.Map;
  * desc:
  *      数组集合类相关工具
  * function:
- *      join()      :数据拼接
+ *      join()      :将一个集合数据拼接成字符串
  *
  * Created by LiFuPing on 2017/9/6.
  * </pre>

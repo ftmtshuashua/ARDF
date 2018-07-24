@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
 
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"   android:protectionLevel="signature"/>
+
+
     <application
         android:name=".app.App"
         android:allowBackup="false"
@@ -29,7 +33,7 @@
         <activity
             android:name=".activity.TestMainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustResize" >
 
 
         </activity>
@@ -47,8 +51,7 @@
         </activity>
         <activity
             android:name=".activity.module.home.HomeActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/TransparentStateBar" />
+            android:launchMode="singleTask" />
 
 
         <!-- 声明SDK所需要的组件 -->
@@ -67,6 +70,8 @@
         <activity android:name=".demo.Demo_RadioGroupControl" />
         <activity android:name=".demo.Demo_WebActivity" />
         <activity android:name=".demo.Demo_Shadow" />
+        <activity android:name=".demo.utils.Demo_BarUtils" />
+        <activity android:name=".demo.utils.DemoList_Utils" />
     </application>
 
 </manifest>

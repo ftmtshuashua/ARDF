@@ -19,6 +19,12 @@ android {
             }
         }
 
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['libs']
+            }
+        }
+
         manifestPlaceholders = [
                 MTA_CHANNEL  : "智者",
                 MTA_APPKEY   : "AUFW43Z4G4VN",

@@ -1,7 +1,11 @@
 package com.lfp.ardf.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Build;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.util.LongSparseArray;
@@ -10,6 +14,7 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
+import android.view.View;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -234,6 +239,34 @@ public class Utils {
      */
     public static boolean isMainThread() {
         return Looper.getMainLooper() == Looper.myLooper();
+    }
+
+    /**
+     * 通过获得View所绑定的Activity
+     *
+     * @param view The view
+     * @return The activity
+     */
+    public static Activity getActivityByView(@NonNull View view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        throw new IllegalStateException("The view's context is not an Activity.");
+    }
+
+    /**
+     * 获得不为空的数据
+     *
+     * @param obj The data
+     * @return NotNull data
+     */
+    public static CharSequence getNotNull(CharSequence obj) {
+        if (obj == null) return "";
+        return obj;
     }
 
 }

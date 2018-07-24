@@ -31,7 +31,7 @@ public class LoadingActivity extends BaseActivity {
         BarUtils.setStatusBarVisibility(this , false);
         setContentView(R.layout.activity_loading);
 
-        if (TestMainActivity.start(getActivity())) {
+        if (TestMainActivity.start(getAppFk())) {
             finish();
             return;
         }

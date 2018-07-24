@@ -8,10 +8,16 @@ android {
         targetSdkVersion 27
         versionName "0.0.3"
 
-        sourceSets {
-            main {
-                jniLibs.srcDirs = ['libs']
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
             }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
 

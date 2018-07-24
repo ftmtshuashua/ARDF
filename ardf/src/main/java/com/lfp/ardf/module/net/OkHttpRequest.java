@@ -7,8 +7,12 @@ import com.lfp.ardf.module.net.imp.RequestCall;
 import com.lfp.ardf.module.net.util.UrlFormat;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -43,6 +47,7 @@ public class OkHttpRequest extends RequestCall {
         return body;
     }
 
+
     /**
      * 当请求完成,回调此接口
      *
@@ -52,15 +57,44 @@ public class OkHttpRequest extends RequestCall {
     protected void onResponse(Response response) throws Exception {
     }
 
+    protected Request getRequest() {
+        Request.Builder build = new Request.Builder();
+        build.url(new UrlFormat(api).toEncodeUrl());
+
+        //head
+
+        Iterator<Entry> keys = heads.iterator();
+        while (keys.hasNext()) {
+            Entry key = keys.next();
+            build.addHeader(key.key, key.vale);
+        }
+
+        if (!post_body.isEmpty()) {
+            FormBody.Builder bodybuilder = new FormBody.Builder();
+            Iterator<Entry> body_keys = post_body.iterator();
+            while (body_keys.hasNext()) {
+                Entry key = body_keys.next();
+                bodybuilder.add(key.key, key.vale);
+            }
+            build.post(bodybuilder.build());
+        }
+
+        Request request = build.build();
+
+        return request;
+    }
+
     @Override
     protected synchronized void call() throws Exception {
-        Request request = new Request.Builder().url(new UrlFormat(api).toEncodeUrl()).build();
+        Request request = getRequest();
         LogUtil.w_Pretty(
                 MessageFormat.format("ID:{0},Method:{1},Api:{2},忽略回复;{3}"
                         , getId(), request.method(), getApi(), isIgnoreComplete())
         );
         mCall = OkHttpRequestClient.getInstance().mHttpClient.newCall(request);
+//        LogUtil.e("-------->>>  发起请求");
         Response response = mCall.execute();
+//        LogUtil.e("-------->>>  请求完成");
         body = response.body().string();
         onResponse(response);
 
@@ -83,7 +117,7 @@ public class OkHttpRequest extends RequestCall {
      * 设置忽略请求回复
      *
      * @param ignore 为true的时候将不会回调onComplete方法
-     * @return  OkHttpRequest
+     * @return OkHttpRequest
      */
     public OkHttpRequest setIgnoreComplete(boolean ignore) {
         if (ignore) flag |= FLAG_IGNORE_RESPONSE;
@@ -118,4 +152,63 @@ public class OkHttpRequest extends RequestCall {
         if (isIgnoreComplete() && request == this) return;
         super.notifyComplete(request);
     }
+
+
+    List<Entry> heads = new ArrayList<>();
+
+    /**
+     * 不覆盖添加 Heads
+     *
+     * @param key   String
+     * @param value Object
+     * @return UrlFormat
+     */
+    public OkHttpRequest addHeads(String key, Object value) {
+//        if (!TextUtils.isEmpty(heads.get(key))) return this;
+        String tag;
+        if (value == null) {
+            tag = "";
+        } else if (value instanceof Number) {
+            tag = MessageFormat.format("{0,number,0.#############}", value);
+        } else if (value instanceof String) {
+            tag = (String) value;
+        } else {
+            tag = value.toString();
+        }
+        heads.add(new Entry(key, tag));
+//        heads.put(key, tag);
+        return this;
+    }
+
+    List<Entry> post_body = new ArrayList<>();
+
+    public OkHttpRequest addPost(String key, Object value) {
+//        if (!TextUtils.isEmpty(post_body.get(key))) return this;
+        String tag;
+        if (value == null) {
+            tag = "";
+        } else if (value instanceof Number) {
+            tag = MessageFormat.format("{0,number,0.#############}", value);
+        } else if (value instanceof String) {
+            tag = (String) value;
+        } else {
+            tag = value.toString();
+        }
+        post_body.add(new Entry(key, tag));
+//        post_body.put(key, tag);
+        return this;
+    }
+
+
+    private static final class Entry {
+        String key;
+        String vale;
+
+        public Entry(String key, String vale) {
+            this.key = key;
+            this.vale = vale;
+        }
+    }
+
+
 }

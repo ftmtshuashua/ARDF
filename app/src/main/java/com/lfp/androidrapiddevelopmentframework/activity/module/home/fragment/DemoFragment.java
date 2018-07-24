@@ -19,6 +19,7 @@ import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_RadioGroupControl;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_Shadow;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_WebActivity;
+import com.lfp.androidrapiddevelopmentframework.demo.utils.DemoList_Utils;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
@@ -79,6 +80,7 @@ public class DemoFragment extends BaseFragment {
         arrays.add(new VisibilityControlEvent(view.findViewById(R.id.view_WaitProgressBar), "BaseProgressBarView", "ProgressBar解决方案"));
         arrays.add(new Demo_WebActivity.Demo(getAppFk()));
         arrays.add(new Demo_Shadow.Demo(getAppFk()));
+        arrays.add(new DemoList_Utils.Demo(getAppFk()));
 
         mAdapter.setAndUpdata(arrays);
     }
@@ -112,12 +114,12 @@ public class DemoFragment extends BaseFragment {
         View mView;
 
         public VisibilityControlEvent(View view, String title) {
-            super(null, title ,null);
+            super(null, title, null);
             mView = view;
         }
 
         public VisibilityControlEvent(View view, String title, String info) {
-            super(null, title ,null);
+            super(null, title, null);
             mView = view;
             setInfo(info);
         }
@@ -132,11 +134,11 @@ public class DemoFragment extends BaseFragment {
     private static final class ToastControlEvent extends DemoEvent {
 
         public ToastControlEvent(String title) {
-            super(null, title ,null);
+            super(null, title, null);
         }
 
         public ToastControlEvent(String title, String info) {
-            super(null, title ,info);
+            super(null, title, info);
         }
 
         @Override

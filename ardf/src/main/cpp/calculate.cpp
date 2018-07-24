@@ -21,7 +21,10 @@ extern "C"
 {
 
 JNIEXPORT jint JNICALL test(JNIEnv *env, jobject jobj, jint jin) {
-    return jin+1;
+//    cout << "传入值:" << jin;
+    jin += 1;
+//    cout << "计算值:"<< jin;
+    return jin;
 }
 
 
@@ -29,7 +32,7 @@ JNIEXPORT jint JNICALL test(JNIEnv *env, jobject jobj, jint jin) {
 
 //------------------------------- 注册方法
 static const JNINativeMethod Mth_HomeActivity[] = {
-        {"testAdd1", "(Ljava/lang/Integer;)Ljava/lang/Integer;", (void *) test}
+        {"testAdd1", "(I)I", (void *) test}
 };
 
 static int regstNtv(JNIEnv *engv, const char *jclass_path, const JNINativeMethod *methods,

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_ActionBar"
+        layout="@layout/layout_actionbar" />
+
+    <com.lfp.widget.springview.SpringView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:enable_springback="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_ActionBar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.lfp.widget.springview.SpringView>
+
+    <EditText
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="测试输入框"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>

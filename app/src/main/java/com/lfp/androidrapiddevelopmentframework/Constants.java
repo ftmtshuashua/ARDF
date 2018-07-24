@@ -1,6 +1,7 @@
 package com.lfp.androidrapiddevelopmentframework;
 
 public class Constants {
+    /*腾讯广告相关*/
     public static final String APPID = "1106944174";
     public static final String SplashPosID = "7040836425496682";
 

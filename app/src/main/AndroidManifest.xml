@@ -69,9 +69,12 @@
         <activity android:name=".demo.Demo_NetRequest" />
         <activity android:name=".demo.Demo_RadioGroupControl" />
         <activity android:name=".demo.Demo_WebActivity" />
-        <activity android:name=".demo.Demo_Shadow" />
+        <activity android:name=".demo.visualeffect.Demo_Shadow" />
         <activity android:name=".demo.utils.Demo_BarUtils" />
         <activity android:name=".demo.utils.DemoList_Utils" />
+        <activity android:name=".demo.visualeffect.DemoList_VisualEffect" />
+        <activity android:name=".demo.visualeffect.Demo_ProgressBar" />
+        <activity android:name=".demo.visualeffect.Demo_Game" />
     </application>
 
 </manifest>

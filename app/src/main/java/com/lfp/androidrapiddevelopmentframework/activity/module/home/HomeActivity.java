@@ -65,7 +65,7 @@ public class HomeActivity extends BaseActivity {
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_2)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_3)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_4)));
-        mRadioGroupControl.check(R.id.tab_1);
+        mRadioGroupControl.check(R.id.tab_2);
 
         new PermissionManager(getContext()) {
         }.request(Permission.ACCESS_COARSE_LOCATION);

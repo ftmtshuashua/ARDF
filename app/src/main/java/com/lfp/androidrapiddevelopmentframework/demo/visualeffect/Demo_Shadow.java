@@ -1,4 +1,4 @@
-package com.lfp.androidrapiddevelopmentframework.demo;
+package com.lfp.androidrapiddevelopmentframework.demo.visualeffect;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -17,12 +17,14 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseFragment;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_BaseRecyclerViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_NetRequest;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_RadioGroupControl;
-import com.lfp.androidrapiddevelopmentframework.demo.Demo_Shadow;
 import com.lfp.androidrapiddevelopmentframework.demo.Demo_WebActivity;
 import com.lfp.androidrapiddevelopmentframework.demo.utils.DemoList_Utils;
+import com.lfp.androidrapiddevelopmentframework.demo.visualeffect.DemoList_VisualEffect;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
+import com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar;
 import com.lfp.ardf.adapter.SimpleRecyclerViewAdapter;
+import com.lfp.ardf.framework.I.IAppFramework;
 import com.lfp.ardf.util.ToastUtils;
 import com.lfp.ardf.util.Utils;
 import com.lfp.ardf.util.ViewUtils;
@@ -77,10 +79,10 @@ public class DemoFragment extends BaseFragment {
 //        arrays.add(new PlaceholderEntrance("混淆配置(NotProguard)"));
 //        arrays.add(new PlaceholderEntrance("工具类说明"));
         arrays.add(new Demo_NetRequest.Demo(getAppFk()));
-        arrays.add(new VisibilityControlEvent(view.findViewById(R.id.view_WaitProgressBar), "BaseProgressBarView", "ProgressBar解决方案"));
         arrays.add(new Demo_WebActivity.Demo(getAppFk()));
-        arrays.add(new Demo_Shadow.Demo(getAppFk()));
+        arrays.add(new DemoList_VisualEffect.Demo(getAppFk()));
         arrays.add(new DemoList_Utils.Demo(getAppFk()));
+        arrays.add(new TestEvent(getAppFk(), view));
 
         mAdapter.setAndUpdata(arrays);
     }
@@ -109,27 +111,6 @@ public class DemoFragment extends BaseFragment {
         }
     }
 
-    /*控件显示控制*/
-    private static final class VisibilityControlEvent extends DemoEvent {
-        View mView;
-
-        public VisibilityControlEvent(View view, String title) {
-            super(null, title, null);
-            mView = view;
-        }
-
-        public VisibilityControlEvent(View view, String title, String info) {
-            super(null, title, null);
-            mView = view;
-            setInfo(info);
-        }
-
-        @Override
-        public void call() {
-            ViewUtils.setVisibilitySwitch(mView);
-        }
-    }
-
     /*Toast消息*/
     private static final class ToastControlEvent extends DemoEvent {
 
@@ -146,5 +127,26 @@ public class DemoFragment extends BaseFragment {
             if (!Utils.isEmpty(getInfo())) ToastUtils.show(getInfo());
         }
     }
+
+
+    private static final class TestEvent extends DemoEvent {
+
+        WebProgressBar ProgressBar;
+
+        public TestEvent(IAppFramework appfk, View rootview) {
+            super(appfk, "测试事件", "点击进行测试");
+            ProgressBar = rootview.findViewById(R.id.view_WebProgressBar);
+        }
+
+        @Override
+        public void call() {
+            ViewUtils.setVisibility(ProgressBar, View.VISIBLE);
+
+            int pro = ProgressBar.getProgress() + 20;
+            if (pro >= 100) pro = 20;
+            ProgressBar.setProgress(pro);
+        }
+    }
+
 
 }

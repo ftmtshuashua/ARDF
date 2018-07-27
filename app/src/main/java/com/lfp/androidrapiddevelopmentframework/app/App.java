@@ -45,7 +45,7 @@ public class App extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        ThirdParty.onTerminate(this);
+//        ThirdParty.onTerminate(this);
     }
 
 
@@ -54,7 +54,7 @@ public class App extends Application {
         static void init(Context c) {
             LogUtil.e("app started,init third party procedure...");
             xgPush(c);
-            y_m_a_d(c);
+//            y_m_a_d(c);
             statistics(c);
         }
 

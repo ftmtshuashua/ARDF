@@ -15,6 +15,7 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissionManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
+import com.lfp.ardf.util.BadgeUtils;
 import com.yanzhenjie.permission.Permission;
 
 /**
@@ -69,7 +70,13 @@ public class HomeActivity extends BaseActivity {
 
         new PermissionManager(getContext()) {
         }.request(Permission.ACCESS_COARSE_LOCATION);
+
+
+        BadgeUtils.removeBadge();
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

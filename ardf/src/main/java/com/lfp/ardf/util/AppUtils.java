@@ -784,12 +784,12 @@ public class AppUtils {
         ApplicationInfo ai = pi.applicationInfo;
         String packageName = pi.packageName;
         String name = ai.loadLabel(pm).toString();
-//        Drawable icon = ai.loadIcon(pm);
+        Drawable icon = ai.loadIcon(pm);
         String packagePath = ai.sourceDir;
         String versionName = pi.versionName;
         int versionCode = pi.versionCode;
         boolean isSystem = (ApplicationInfo.FLAG_SYSTEM & ai.flags) != 0;
-        return new AppInfo(packageName, name, null, packagePath, versionName, versionCode, isSystem);
+        return new AppInfo(packageName, name, icon, packagePath, versionName, versionCode, isSystem);
     }
 
     private static boolean isFileExists(final File file) {

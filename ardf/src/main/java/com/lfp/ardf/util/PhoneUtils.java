@@ -367,116 +367,93 @@ public class PhoneUtils {
 
     /*---- 系统检测 ---*/
 
-    /*Rom检测 - 待测试*/
-    public static final class RomDetection {
-        public static final String ROM_MIUI = "MIUI";
-        public static final String ROM_EMUI = "EMUI";
-        public static final String ROM_FLYME = "FLYME";
-        public static final String ROM_OPPO = "OPPO";
-        public static final String ROM_SMARTISAN = "SMARTISAN";
-        public static final String ROM_VIVO = "VIVO";
-        public static final String[] ROM_QIKU = {"QIKU", "360"};
-        public static final String ROM_SAMSUNG = "SAMSUNG";
 
-        private static final String KEY_VERSION_MIUI = "ro.miui.ui.version.name";
-        private static final String KEY_VERSION_EMUI = "ro.build.version.emui";
-        private static final String KEY_VERSION_OPPO = "ro.build.version.opporom";
-        private static final String KEY_VERSION_SMARTISAN = "ro.smartisan.version";
-        private static final String KEY_VERSION_VIVO = "ro.vivo.os.version";
+    /**
+     * 系统ROM
+     */
+    public enum ROM {
+        /**
+         * 小米
+         */
+        MIUI
+        /** 索尼 */
+        , SONY
+        /** 三星 */
+        , SAMSUNG
+        /** LG */
+        , LG
+        /** HTC */
+        , HTC
+        /** 华为 NOVA */
+        , NOVA
+        /** OPPO */
+        , OPPO
+        /** 乐视 */
+        , LEMOBILE
+        /** VIVO */
+        , VIVO
+        /** 华为 */
+        , HUAWEI
+        /** 魅族 */
+        , Flyme
 
-        static String manufacturer; /*厂家*/
-        static String version;/*版本*/
+    }
 
-        /*华为*/
-        public static boolean isEmui() {
-            return ROM_EMUI.equals(getName());
+    /**
+     * 获得Rom
+     *
+     * @return
+     */
+    public static ROM getRom() {
+        if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
+            return ROM.MIUI; /*小米*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("sony")) {
+            return ROM.SONY;  /*索尼*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
+            return ROM.SAMSUNG;  /*三星*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("lg")) {
+            return ROM.LG;  /*LG*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("htc")) {
+            return ROM.HTC;  /*HTC*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("nova")) {
+            return ROM.NOVA; /*NOVA*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("OPPO")) {
+            return ROM.OPPO; /*Oppo*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("LeMobile")) {
+            return ROM.LEMOBILE; /*乐视*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("vivo")) {
+            return ROM.VIVO; /*Vivo*/
+        } else if (Build.MANUFACTURER.equalsIgnoreCase("HUAWEI") || Build.BRAND.equals("Huawe")) {
+            return ROM.HUAWEI; /*华为*/
+        } else if (Build.BRAND.equalsIgnoreCase("meizu")) {
+            return ROM.Flyme; /*Vivo*/
         }
+        return null;
+    }
 
-        /*小米*/
-        public static boolean isMiui() {
-            return ROM_MIUI.equals(getName());
-        }
 
-        /*Vivo*/
-        public static boolean isVivo() {
-            return ROM_VIVO.equals(getName());
-        }
-
-        /*Oppo*/
-        public static boolean isOppo() {
-            return ROM_OPPO.equals(getName());
-        }
-
-        /*魅族*/
-        public static boolean isFlyme() {
-            return ROM_FLYME.equals(getName());
-        }
-
-        /*360*/
-        public static boolean is360() {
-            return ROM_QIKU[0].equals(getName()) || ROM_QIKU[1].equals(getName());
-        }
-
-        /*锤子*/
-        public static boolean isSmartisan() {
-            return ROM_SMARTISAN.equals(getName());
-        }
-
-        /*三星*/
-        public static boolean isSamsung() {
-            return ROM_SAMSUNG.equals(getName());
-        }
-
-        /*获得Rom名称*/
-        public static String getName() {
-            if (manufacturer == null) init();
-            return manufacturer;
-        }
-
-        /*获得Rom版本*/
-        public static String getVersion() {
-            return version;
-        }
-
-        private static void init() {
-            if (!Utils.isEmpty(version = testRomVersion(KEY_VERSION_MIUI))) {
-                manufacturer = ROM_MIUI;
-            } else if (!Utils.isEmpty(version = testRomVersion(KEY_VERSION_EMUI))) {
-                manufacturer = ROM_EMUI;
-            } else if (!Utils.isEmpty(version = testRomVersion(KEY_VERSION_OPPO))) {
-                manufacturer = ROM_OPPO;
-            } else if (!Utils.isEmpty(version = testRomVersion(KEY_VERSION_VIVO))) {
-                manufacturer = ROM_VIVO;
-            } else if (!Utils.isEmpty(version = testRomVersion(KEY_VERSION_SMARTISAN))) {
-                manufacturer = ROM_SMARTISAN;
-            } else {
-                manufacturer = Build.MANUFACTURER.toUpperCase();
-                version = Build.BOARD;
-            }
-            if (manufacturer == null) manufacturer = "";
-        }
-
-        private static String testRomVersion(String name) {
-            String line;
-            BufferedReader input = null;
-            try {
-                Process p = Runtime.getRuntime().exec("getprop " + name);
-                input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
-                line = input.readLine();
-            } catch (IOException ex) {
-                LogUtil.e(ex);
-                return null;
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    /*获得Rom版本*/
+    private static String getRomVersion(String name) {
+        String line;
+        BufferedReader input = null;
+        try {
+            Process p = Runtime.getRuntime().exec("getprop " + name);
+            input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+            line = input.readLine();
+        } catch (IOException ex) {
+            LogUtil.e(ex);
+            return null;
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-            return line;
         }
+        return line;
     }
+
 
 }

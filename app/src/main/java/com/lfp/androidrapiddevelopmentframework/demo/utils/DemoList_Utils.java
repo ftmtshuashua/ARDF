@@ -7,6 +7,8 @@ import com.lfp.androidrapiddevelopmentframework.adapter.ListViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.base.BaseListActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.ardf.framework.I.IAppFramework;
+import com.lfp.ardf.util.BadgeUtils;
+import com.lfp.ardf.util.ToastUtils;
 
 /**
  * <pre>
@@ -25,8 +27,27 @@ public class DemoList_Utils extends BaseListActivity {
 
         ListViewAdapter mAdapter = new ListViewAdapter();
         mAdapter.addData(new Demo_BarUtils.Demo(getAppFk()));
+        mAdapter.addData(new BadgeUtilsEvent(getAppFk()));
 
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+
+    private static final class BadgeUtilsEvent extends DemoEvent {
+
+        public BadgeUtilsEvent(IAppFramework appfk) {
+            super(appfk, "设置角标", "在应用图标上显示小红点");
+        }
+
+        @Override
+        public void call() {
+            boolean is = BadgeUtils.setBadge(9);
+            if (is) {
+                ToastUtils.show("创建角标成功,请回到桌面查看效果.");
+            } else {
+                ToastUtils.show("创建角标失败,可能为手机不支持角标功能.");
+            }
+        }
     }
 
 

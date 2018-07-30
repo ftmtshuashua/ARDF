@@ -131,20 +131,20 @@ public class DemoFragment extends BaseFragment {
 
     private static final class TestEvent extends DemoEvent {
 
-        WebProgressBar ProgressBar;
+//        WebProgressBar ProgressBar;
 
         public TestEvent(IAppFramework appfk, View rootview) {
-            super(appfk, "测试事件", "点击进行测试");
-            ProgressBar = rootview.findViewById(R.id.view_WebProgressBar);
+            super(appfk, "测试事件", "-");
+//            ProgressBar = rootview.findViewById(R.id.view_WebProgressBar);
         }
 
         @Override
         public void call() {
-            ViewUtils.setVisibility(ProgressBar, View.VISIBLE);
-
-            int pro = ProgressBar.getProgress() + 20;
-            if (pro >= 100) pro = 20;
-            ProgressBar.setProgress(pro);
+//            ViewUtils.setVisibility(ProgressBar, View.VISIBLE);
+//
+//            int pro = ProgressBar.getProgress() + 20;
+//            if (pro >= 100) pro = 20;
+//            ProgressBar.setProgress(pro);
         }
     }
 

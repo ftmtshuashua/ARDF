@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyCharacterMap;
@@ -24,7 +23,6 @@ import com.lfp.ardf.debug.LogUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 
 import static android.Manifest.permission.EXPAND_STATUS_BAR;
 
@@ -145,7 +143,7 @@ public class BarUtils {
                     }
                     decorView.setSystemUiVisibility(vis);
                 }
-            } else if (PhoneUtils.RomDetection.isMiui()) {
+            } else if (PhoneUtils.getRom() == PhoneUtils.ROM.MIUI) {
                 Class clazz = window.getClass();
                 int darkModeFlag = 0;
                 Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
@@ -157,7 +155,7 @@ public class BarUtils {
                 } else {
                     extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
                 }
-            } else if (PhoneUtils.RomDetection.isFlyme()) {
+            } else if (PhoneUtils.getRom() == PhoneUtils.ROM.Flyme) {
                 WindowManager.LayoutParams lp = window.getAttributes();
                 Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
                 Field meizuFlags = WindowManager.LayoutParams.class.getDeclaredField("meizuFlags");

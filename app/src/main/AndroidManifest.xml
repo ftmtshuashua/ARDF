@@ -31,14 +31,6 @@
         tools:replace="android:allowBackup">
 
         <activity
-            android:name=".activity.TestMainActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="adjustResize" >
-
-
-        </activity>
-
-        <activity
             android:name=".activity.LoadingActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"

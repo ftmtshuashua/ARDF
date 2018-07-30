@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'cn.jiguang.sdk:jpush:3.1.5'
+    implementation 'cn.jiguang.sdk:jcore:1.2.3'
+
+    compileOnly project(':ardf')
+}

@@ -1,17 +1,14 @@
 package com.lfp.androidrapiddevelopmentframework.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.activity.module.home.HomeActivity;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissionManager;
 import com.lfp.ardf.util.BarUtils;
-import com.lfp.ardf.util.IntentUtils;
 import com.yanzhenjie.permission.Permission;
 
 import java.util.List;
@@ -28,13 +25,9 @@ public class LoadingActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFlag(FLAG_INTERCEPT_KEYCODE_BACK);
-        BarUtils.setStatusBarVisibility(this , false);
+        BarUtils.setStatusBarVisibility(this, false);
         setContentView(R.layout.activity_loading);
 
-        if (TestMainActivity.start(getAppFk())) {
-            finish();
-            return;
-        }
 
         new PermissionManager(getContext()) {
             @Override

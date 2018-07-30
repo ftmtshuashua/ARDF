@@ -1,1 +1,1 @@
-include ':app', ':ardf', ':gg_y'
+include ':app', ':ardf', ':gg_y', ':JPush'

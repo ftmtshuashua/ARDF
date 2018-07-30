@@ -30,6 +30,10 @@ android {
                 MTA_APPKEY   : "AUFW43Z4G4VN",
                 XG_ACCESS_ID : "2100296792",
                 XG_ACCESS_KEY: "A2DQNYG4137N"
+,
+                JPUSH_APPKEY  : "0ba76f57f881c14640b62c40",
+                JPUSH_CHANNEL :"JPUSH_CHANNEL",
+                JPUSH_PKGNAME :"com.lfp.androidrapiddevelopmentframework"
         ]
 
         ndk {
@@ -53,7 +57,7 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../ardf/proguard-rules.pro', '../JPush/proguard-rules.pro'
         }
 
         release {
@@ -125,6 +129,7 @@ android {
 dependencies {
     implementation project(':ardf')
     implementation project(':gg_y')
+    implementation project(':JPush')
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'

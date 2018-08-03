@@ -1,33 +1,29 @@
-# ARDF
+# [ARDF](https://github.com/ftmtshuashua/ARDF) 简介
 
-贯穿整个开发周期,帮助开发者快速构建项目的基础框架,提供了丰富的可拓展的基础功能.
-致力于精简易读的风格
+[![Download](https://img.shields.io/badge/Download-Demo-blue.svg?longCache=true)](https://fir.im/l7b4)
+[![GitHub release](https://img.shields.io/badge/Download-Demo-blue.svg?longCache=true)](https://github.com/ftmtshuashua/ARDF/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/ftmtshuashua/ARDF/pulls)
+[![License Apache2.0](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-项目初建,还不稳定.不建议应用到企业项目中.
 
-[Demo下载地址](https://fir.im/l7b4)
+`ARDF`是一款Android基础框架,它对Android进行扩充.贯穿整个开发周期,帮助开发者快速构建项目,提供了丰富的可拓展的基础功能.
 
-**简介**
+>项目初建,还不稳定,不建议应用到企业项目中
+>ARDF交流平台：QQ群：759081198（群1，未满）
+
+## 目录
+- [V1.0.0](#V1.0.0)
+- [感谢](#感谢)
+- [问题反馈](#问题反馈)
+- [LICENSE](#LICENSE)
+
 --------
-LifecycleObserved - Activity/Fragment观察者,实现业务逻辑和Activity的解耦
+## V1.0.0
 
-FragmentControl - 控制Fragment的加载/显示/切换。优化性能预防内存泄漏
-
-RadioGroupControl - 让任何布局带有RadioGroup的功能
-
-BaseDelayDialog - 延迟Dialog，尽量减少Dialog的显示
-
-NotProguard - 不混淆配置.为一些不想被混淆的类添加实现,在混淆的时候它将不会被混淆
-
-请求融合 - 将多个请求融合在一起,逻辑清晰,容易维护
-
-并发请求 - 请求并行,急速网络请求方案
-
-链式请求 - 请求排队,随时修改,饲适用与多种场景
-
-BaseProgressBarView - 进度动画解决方案
-
-WebViewFk - 基于WebView的浏览器实现
+- 网络增强模块
+- 特效
+- 工具
+- 功能
 
 **入门指南**
 --------
@@ -60,20 +56,18 @@ AppFrameworkHolper.init(getApplicationContext()); - 初始化配置
 FileCacheConfig.init(getApplicationContext(), "ARDF"); - 文件缓存配置
 ```
 
-**感谢**
+## 感谢
 --------
 [okhttp](https://github.com/square/okhttp)
 [RxJava](https://github.com/ReactiveX/RxJava)
 
-**问题反馈**
+## 问题反馈
 --------
-交流和讨论(QQ群)：759081198
+如果你在使用ARDF中遇到任何问题可以提[Issues](https://github.com/ftmtshuashua/ARDF/issues)出来。另外欢迎大家为ARDF贡献智慧，欢迎大家[Fork and Pull requests](https://github.com/ftmtshuashua/ARDF)。
 
-如果遇到问题或者好的建议，请反馈到我的邮箱：ftmtshuashua@gmail.com 或者在我的博客留言
+如果觉得对你有用的话，点一下右上的星星赞一下吧。
 
-如果觉得对你有用的话，点一下右上的星星赞一下吧
-
-**LICENSE**
+## LICENSE
 --------
 ```
 Copyright (c) 2018-present, ARDF Contributors.

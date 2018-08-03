@@ -121,7 +121,6 @@ public class AppUtils {
         return getApp().getResources();
     }
 
-
     /**
      * Install the app.
      * <p>Target APIs greater than 25 must hold
@@ -173,7 +172,6 @@ public class AppUtils {
         if (!isFileExists(file)) return;
         activity.startActivityForResult(IntentUtils.getInstallAppIntent(file), requestCode);
     }
-
 
     /**
      * Install the app silently.
@@ -810,6 +808,17 @@ public class AppUtils {
             }
         }
         return false;
+    }
+
+
+    public static Context createContext(String packagename) {
+        try {
+            Context c = getApp().createPackageContext(packagename, Context.CONTEXT_INCLUDE_CODE | Context.CONTEXT_IGNORE_SECURITY);
+            return c;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

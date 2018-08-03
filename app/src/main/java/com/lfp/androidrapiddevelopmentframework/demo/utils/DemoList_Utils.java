@@ -6,9 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import com.lfp.androidrapiddevelopmentframework.adapter.ListViewAdapter;
 import com.lfp.androidrapiddevelopmentframework.base.BaseListActivity;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
+import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.framework.I.IAppFramework;
+import com.lfp.ardf.util.AppUtils;
 import com.lfp.ardf.util.BadgeUtils;
 import com.lfp.ardf.util.ToastUtils;
+
+import java.text.MessageFormat;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  * <pre>
@@ -41,12 +47,15 @@ public class DemoList_Utils extends BaseListActivity {
 
         @Override
         public void call() {
-            boolean is = BadgeUtils.setBadge(9);
-            if (is) {
-                ToastUtils.show("创建角标成功,请回到桌面查看效果.");
-            } else {
-                ToastUtils.show("创建角标失败,可能为手机不支持角标功能.");
-            }
+          boolean is2=   ShortcutBadger.applyCount(AppUtils.createContext("com.ttc.lottery"), 7);
+            LogUtil.e(MessageFormat.format("设置另外一个程序的角标:{0}",is2));
+
+//            boolean is = BadgeUtils.setBadge(9);
+//            if (is) {
+//                ToastUtils.show("创建角标成功,请回到桌面查看效果.");
+//            } else {
+//                ToastUtils.show("创建角标失败,可能为手机不支持角标功能.");
+//            }
         }
     }
 

@@ -1,7 +1,7 @@
 # [ARDF](https://github.com/ftmtshuashua/ARDF) 简介
 
-[![Download](https://img.shields.io/badge/Download-Demo-blue.svg?longCache=true)](https://fir.im/l7b4)
-[![GitHub release](https://img.shields.io/badge/Download-Demo-blue.svg?longCache=true)](https://github.com/ftmtshuashua/ARDF/releases)
+[![Download](https://img.shields.io/badge/Download-Demo-blue.svg)](https://fir.im/l7b4)
+[![GitHub release](https://img.shields.io/badge/release-1.0-blue.svg)](https://github.com/ftmtshuashua/ARDF/releases)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/ftmtshuashua/ARDF/pulls)
 [![License Apache2.0](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
@@ -9,6 +9,7 @@
 `ARDF`是一款Android基础框架,它对Android进行扩充.贯穿整个开发周期,帮助开发者快速构建项目,提供了丰富的可拓展的基础功能.
 
 >项目初建,还不稳定,不建议应用到企业项目中
+
 >ARDF交流平台：QQ群：759081198（群1，未满）
 
 ## 目录
@@ -25,8 +26,8 @@
 - 工具
 - 功能
 
-**入门指南**
---------
+## 入门指南
+
 设置依赖项
 ```
 implementation 'com.lfp:ardf:0.0.3'
@@ -57,18 +58,18 @@ FileCacheConfig.init(getApplicationContext(), "ARDF"); - 文件缓存配置
 ```
 
 ## 感谢
---------
+
 [okhttp](https://github.com/square/okhttp)
 [RxJava](https://github.com/ReactiveX/RxJava)
 
 ## 问题反馈
---------
+
 如果你在使用ARDF中遇到任何问题可以提[Issues](https://github.com/ftmtshuashua/ARDF/issues)出来。另外欢迎大家为ARDF贡献智慧，欢迎大家[Fork and Pull requests](https://github.com/ftmtshuashua/ARDF)。
 
 如果觉得对你有用的话，点一下右上的星星赞一下吧。
 
 ## LICENSE
---------
+
 ```
 Copyright (c) 2018-present, ARDF Contributors.
 

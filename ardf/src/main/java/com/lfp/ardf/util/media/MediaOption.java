@@ -72,7 +72,7 @@ public class MediaOption {
 
         public MediaOption build() {
             MediaOption option = new MediaOption();
-            option.provide = provide;
+//            option.provide = provide;
             option.min_size = min_size;
             option.media_type = media_type;
             return option;

@@ -1,5 +1,7 @@
 package learn.DesignPattern;
 
+import java.util.HashMap;
+
 /**
  * <pre>
  * desc:

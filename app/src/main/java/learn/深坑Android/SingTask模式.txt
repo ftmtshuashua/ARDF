@@ -1,0 +1,6 @@
+
+在Android5.0以下将Activity的启动模式设置为SingTask
+会导致startActivityForResult方法跳转的时候直接回调onActivityResult(Activity.RESULT_CANCELED)
+
+*Android5.0及以上版本不存在这个问题
+

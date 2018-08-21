@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.reflect.Method;
@@ -43,6 +45,7 @@ import static android.Manifest.permission.MODIFY_PHONE_STATE;
  *      getNetworkType()        :返回类型的网络
  *      getIPAddress()          :获得IP地址
  *      getDomainAddress()      :返回地址域
+ *      isWifiProxy()           :判断设备 是否使用代理上网
  *
  * Created by LiFuPing on 2018/6/27.
  * </pre>
@@ -410,5 +413,26 @@ public class NetworkUtils {
             e.printStackTrace();
             return "";
         }
+    }
+
+    /**
+     * 判断设备 是否使用代理上网
+     *
+     * @return {@code true} 已设置代理 , {@code false} 未设置代理
+     */
+    public static boolean isWifiProxy() {
+        final Context context = AppUtils.getApp();
+        final boolean IS_ICS_OR_LATER = Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+        String proxyAddress;
+        int proxyPort;
+        if (IS_ICS_OR_LATER) {
+            proxyAddress = System.getProperty("http.proxyHost");
+            String portStr = System.getProperty("http.proxyPort");
+            proxyPort = Integer.parseInt((portStr != null ? portStr : "-1"));
+        } else {
+            proxyAddress = android.net.Proxy.getHost(context);
+            proxyPort = android.net.Proxy.getPort(context);
+        }
+        return (!TextUtils.isEmpty(proxyAddress)) && (proxyPort != -1);
     }
 }

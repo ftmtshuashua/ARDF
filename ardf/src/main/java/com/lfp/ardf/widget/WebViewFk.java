@@ -121,7 +121,7 @@ public class WebViewFk extends WebView {
         settings.setDefaultTextEncodingName("UTF-8");
         settings.setDatabaseEnabled(true);//开启 database storage API 功能 - 需要时配合web开启
         settings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+//        settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setSaveFormData(true);
         settings.setGeolocationEnabled(true); //定位
         settings.setGeolocationDatabasePath(AppUtils.getAppPackageDataPath() + File.separator + "databases/");
@@ -143,6 +143,11 @@ public class WebViewFk extends WebView {
 
 //        settings.set
 //        settings.setTextZoom(85);
+
+        /*启用javascriptinterface显示移除漏洞接口*/
+        removeJavascriptInterface("searchBoxJavaBridge_");
+        removeJavascriptInterface("accessibility");
+        removeJavascriptInterface("accessibilityTraversal");
 
         requestFocus();
     }

@@ -48,9 +48,9 @@ public class AssetsDirUtils {
     /**
      * 根据路径获取Bitmap图片
      *
-     * @param context
-     * @param path
-     * @return
+     * @param context Context
+     * @param path String
+     * @return Bitmap
      */
     public static Bitmap getAssetsBitmap(Context context, String path) {
         AssetManager am = context.getAssets();

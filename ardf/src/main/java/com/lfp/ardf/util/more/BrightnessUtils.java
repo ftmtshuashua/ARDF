@@ -99,6 +99,7 @@ public final class BrightnessUtils {
      * 并得到授权
      *
      * @param brightness 亮度值
+     * @return 成功与否
      */
     public static boolean setBrightness(@IntRange(from = 0, to = 255) final int brightness) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

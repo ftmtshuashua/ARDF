@@ -30,7 +30,7 @@
 
 设置依赖项
 ```
-implementation 'com.lfp:ardf:0.0.3'
+implementation 'com.lfp:ardf:0.1.0'
 ```
 项目使用的异步框架:
 ```

@@ -33,11 +33,8 @@ public class MediaUtils {
         getPhoto();
     }
 
-    /**
+    /*
      * 查询媒体数据
-     *
-     * @param option
-     * @return
      */
     public static final List<? extends MediaModel> query(@NonNull MediaProvide provide, @NonNull MediaOption option) {
         return provide.query(getContentResolver(), option);

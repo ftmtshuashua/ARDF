@@ -68,6 +68,7 @@ public class TimelineView2 extends View implements ITimeline {
     /**
      * 获得附着物列表
      *
+     * @param <T> extends TimelineAttachment
      * @return 附着物列表
      */
     public <T extends TimelineAttachment> LinkedList<T> getAttachmentList() {
@@ -114,7 +115,7 @@ public class TimelineView2 extends View implements ITimeline {
         @Override
         public void recycle(ReuseAttachment obj) {
             super.recycle(obj);
-            obj.isRecycle=true;
+            obj.isRecycle = true;
         }
     };
 

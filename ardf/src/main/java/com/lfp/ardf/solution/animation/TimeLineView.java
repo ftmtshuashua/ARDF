@@ -118,9 +118,11 @@ public abstract class TimeLineView extends View {
         }
 
         /**
-         * @param value
-         * @param view
-         * @param canvas
+         * 时间流逝
+         *
+         * @param value the value
+         * @param view the view
+         * @param canvas the canvas
          */
         public abstract void onElapse(float value, View view, Canvas canvas);
     }

@@ -1,5 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: "config.gradle"
+apply from: "secretkey.gradle"
 
 buildscript {
     ext.kotlin_version = '1.2.40'
@@ -24,13 +25,19 @@ allprojects {
         jcenter()
     }
 
-
     tasks.withType(Javadoc) {
-        options{
+        //禁用 Doc 检测
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+
+        // Doc 编码方式配置
+        options {
             encoding "UTF-8"
             charSet 'UTF-8'
-            links "http://docs.oracle.com/javase/7/docs/api"
         }
+    }
+
+    tasks.withType(Javadoc) {
     }
 }
 

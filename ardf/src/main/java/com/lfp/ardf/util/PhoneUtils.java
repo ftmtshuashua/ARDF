@@ -402,7 +402,7 @@ public class PhoneUtils {
     /**
      * 获得Rom
      *
-     * @return
+     * @return the Rom
      */
     public static ROM getRom() {
         if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {

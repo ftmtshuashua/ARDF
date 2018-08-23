@@ -76,7 +76,7 @@ public class BarUtils {
      * 设置状态栏可见度
      *
      * @param activity  The activity.
-     * @param isVisible {@true}显示状态栏 {@false}隐藏状态栏
+     * @param isVisible {@code true}显示状态栏 {@code false}隐藏状态栏
      */
     public static void setStatusBarVisibility(@NonNull final Activity activity, final boolean isVisible) {
         setStatusBarVisibility(activity.getWindow(), isVisible);

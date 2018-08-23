@@ -52,9 +52,6 @@ public abstract class BaseProgressBarView extends View {
         }
     };
 
-    /**
-     * @param animation
-     */
     public void put(ProgressAnimation animation) {
         if (animation == null) return;
         animation.setOnAnimationEnd(mOnAnimationEnd);

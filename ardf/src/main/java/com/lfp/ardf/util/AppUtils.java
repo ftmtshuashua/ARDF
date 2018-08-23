@@ -102,7 +102,7 @@ public class AppUtils {
     /**
      * 获得包名
      *
-     * @return
+     * @return  包名
      */
     public static String getPackageName() {
         return getApp().getPackageName();

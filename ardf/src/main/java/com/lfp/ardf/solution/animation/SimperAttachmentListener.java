@@ -1,4 +1,4 @@
-package com.lfp.ardf.widget.solution.animation;
+package com.lfp.ardf.solution.animation;
 
 /**
  * <pre>
@@ -10,6 +10,7 @@ package com.lfp.ardf.widget.solution.animation;
  * Created by LiFuPing on 2018/7/25.
  * </pre>
  */
+@Deprecated
 public class SimperAttachmentListener implements TimelineAttachment.AttachmentListener {
     float mValue;
 

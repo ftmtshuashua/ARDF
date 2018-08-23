@@ -1,4 +1,4 @@
-package com.lfp.ardf.widget.solution.animation;
+package com.lfp.ardf.solution.animation;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,7 +23,8 @@ import java.util.LinkedList;
  * Created by LiFuPing on 2018/7/24.
  * </pre>
  */
-public class TimelineView extends View implements ITimeline {
+@Deprecated
+public class TimelineView2 extends View implements ITimeline {
 
     /*标示程序运行中*/
     static final int FLAG_RUNING = 0x1;
@@ -36,15 +37,15 @@ public class TimelineView extends View implements ITimeline {
 
     int mFlag;
 
-    public TimelineView(Context context) {
+    public TimelineView2(Context context) {
         super(context);
     }
 
-    public TimelineView(Context context, @Nullable AttributeSet attrs) {
+    public TimelineView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TimelineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TimelineView2(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

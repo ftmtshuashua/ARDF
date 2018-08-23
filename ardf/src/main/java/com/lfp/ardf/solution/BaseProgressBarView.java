@@ -1,4 +1,4 @@
-package com.lfp.ardf.widget.solution;
+package com.lfp.ardf.solution;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -52,7 +52,6 @@ public abstract class BaseProgressBarView extends View {
         }
     };
 
-
     /**
      * @param animation
      */
@@ -102,7 +101,6 @@ public abstract class BaseProgressBarView extends View {
     public ProgressAnimation getProgressAnimation() {
         return mAnimation;
     }
-
 
     /**
      * 进度动画,在正确的事件返回正确

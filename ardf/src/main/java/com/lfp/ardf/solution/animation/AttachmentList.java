@@ -1,4 +1,4 @@
-package com.lfp.ardf.widget.solution.animation;
+package com.lfp.ardf.solution.animation;
 
 import com.lfp.ardf.debug.LogUtil;
 
@@ -14,6 +14,7 @@ import java.util.LinkedList;
  * Created by LiFuPing on 2018/7/25.
  * </pre>
  */
+@Deprecated
 public class AttachmentList<T extends TimelineAttachment> {
     /*真实的开始时间,对应物理世界时间*/
     long mRealStartTime = -1;

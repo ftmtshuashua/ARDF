@@ -15,9 +15,9 @@ import com.lfp.ardf.util.AssetsDirUtils;
 import com.lfp.ardf.util.BitmapUtils;
 import com.lfp.ardf.util.ObjectReuseUtils;
 import com.lfp.ardf.util.ScreenUtils;
-import com.lfp.ardf.widget.solution.animation.SimperAttachmentListener;
-import com.lfp.ardf.widget.solution.animation.TimelineAttachment;
-import com.lfp.ardf.widget.solution.animation.TimelineView;
+import com.lfp.ardf.solution.animation.SimperAttachmentListener;
+import com.lfp.ardf.solution.animation.TimelineAttachment;
+import com.lfp.ardf.solution.animation.TimelineView2;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.List;
  * Created by LiFuPing on 2018/7/26.
  * </pre>
  */
-public class ClickGameView extends TimelineView {
+public class ClickGameView extends TimelineView2 {
 
     public ClickGameView(Context context) {
         super(context);

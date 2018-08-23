@@ -7,9 +7,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.ardf.widget.solution.animation.SimperAttachmentListener;
-import com.lfp.ardf.widget.solution.animation.TimelineAttachment;
-import com.lfp.ardf.widget.solution.animation.TimelineView;
+import com.lfp.ardf.solution.animation.TimeLineView;
+import com.lfp.ardf.solution.animation.TimeValueEvent;
 
 
 /**
@@ -22,25 +21,22 @@ import com.lfp.ardf.widget.solution.animation.TimelineView;
  * Created by LiFuPing on 2018/6/4.
  * </pre>
  */
-public class WebProgressBar extends TimelineView {
+public class WebProgressBar extends TimeLineView {
+    //平滑的进度动画
+    TimeValueEvent mProgressAnimation = new TimeValueEvent(0.0f, 1.0f) {
+
+        @Override
+        protected void onDetach() {
+            super.onDetach();
+            save_progress_with = middle_progress;
+        }
+    };
 
     int Color_BG; /*背景色*/
     int Color_Progress; /*进度条颜色*/
     int Color_Animation; /*动画颜色*/
     Paint mPaint;
 
-    int mProgress;
-    int mMaxProgress = 100;
-
-    /*进度条停留位置*/
-    float Width_ProgressBar_Animation = 0;
-    /*上一次设置时进度条宽度*/
-    float Width_ProgressBar_Last = 0;
-    /*实时进度条宽度*/
-    float Width_ProgressBar_New = 0;
-
-    /*进度平滑国度动画数据*/
-    TimelineAttachment ProgressTransition;
 
     public WebProgressBar(Context context) {
         super(context);
@@ -61,88 +57,48 @@ public class WebProgressBar extends TimelineView {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Color_BG = 0x88eeeeee;
         Color_Progress = getResources().getColor(R.color.colorPrimaryDark);
+
         Color_Animation = 0xffF5F5F5;
-
-
-        TimelineAttachment attachment = obtain();
-        attachment.setDuration(1000);
-        attachment.setRepeatCount(TimelineAttachment.REPEAT_COUNT_INFINITE);
-        attachment.setAttachmentListener(mProgressListener);
-        attach(attachment);
-
-        ProgressTransition = new TimelineAttachment(0.0f, 1.0f);
-        ProgressTransition.setDuration(300);
-        ProgressTransition.setAttachmentListener(mProgressTransitionListener);
     }
-
 
     public void setMaxProgress(int progress) {
         mMaxProgress = progress;
     }
 
     public void setProgress(int progress) {
-        if (progress < 10) progress = 10;
-        if (progress > mMaxProgress) progress = mMaxProgress;
+        mProgressAnimation.detach();
+        mProgressAnimation.clear();
         mProgress = progress;
-
-        if (ProgressTransition.isAttach()) { /*上一个过度动画还未完成,需要停止它再重新开始*/
-            detach(ProgressTransition);
-        }
-        Width_ProgressBar_New = getWidth() * mProgress / (float) mMaxProgress;
-
-        attach(ProgressTransition);
+        mProgressAnimation.setDuration(300);
+        addTimeEvent(mProgressAnimation);
     }
 
     public int getProgress() {
         return mProgress;
     }
 
+
+    /*进度相关数据*/
+
+    int mProgress;
+    int mMaxProgress = 100;
+    float save_progress_with; /*上一次保存的进度的宽度*/
+    float middle_progress;
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        final int saveCount = canvas.save();
         canvas.drawColor(Color_BG);
 
-        float scale = mProgressTransitionListener.getValue();
-        /*绘制进度条动画*/
+        /*绘制进度*/
         mPaint.setColor(Color_Progress);
-        if (ProgressTransition.isAttach()) {
-            Width_ProgressBar_Animation = (Width_ProgressBar_New - Width_ProgressBar_Last) * scale + Width_ProgressBar_Last;
-        } else {
-            Width_ProgressBar_Animation = Width_ProgressBar_New;
-        }
-        canvas.drawRect(0, 0, Width_ProgressBar_Animation, getHeight(), mPaint);
+        final int width = getWidth();
+        final int height = getHeight();
+        final float animation_rate = mProgressAnimation.getValue();
+        final float progress_with = width * (mProgress / (float) mMaxProgress);
+        middle_progress = (progress_with - save_progress_with) * animation_rate + save_progress_with;
+        canvas.drawRect(0, 0, middle_progress, height, mPaint);
 
-        /*绘制动态进度效果*/
-        mPaint.setColor(Color_Animation);
-        scale = mProgressListener.getValue();
-        float animationWight = (float) (Math.sin(scale * Math.PI) * Width_ProgressBar_Animation / 2);
-        canvas.translate((Width_ProgressBar_Animation - animationWight) * scale, 0);
-        canvas.drawRect(0, 2, animationWight, getHeight() - 2, mPaint);
-
-        canvas.restoreToCount(saveCount);
-    }
-
-    /*进度监听*/
-    SimperAttachmentListener mProgressListener = new SimperAttachmentListener();
-    SimperAttachmentListener mProgressTransitionListener = new SimperAttachmentListener() {
-
-        public void onAttachmentStart(TimelineAttachment animation) {
-        }
-
-
-        @Override
-        public void onAttachmentRepeat(TimelineAttachment animation) {
-        }
-
-        @Override
-        public void onAttachmentEnd(TimelineAttachment animation) {
-            Width_ProgressBar_Last = Width_ProgressBar_Animation;
-        }
-    };
-
-
-    private static final class ProgressDynamicEffect {
 
     }
 

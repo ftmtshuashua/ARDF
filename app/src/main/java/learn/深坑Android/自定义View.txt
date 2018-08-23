@@ -1,0 +1,5 @@
+
+自定义View使用某些API,如果硬件加速功能是开启的,会导致绘制失败
+
+如果遇到问题通过以下方法修复
+if (Build.VERSION.SDK_INT <= 19) setLayerType(View.LAYER_TYPE_SOFTWARE, null);

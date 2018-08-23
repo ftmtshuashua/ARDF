@@ -1,9 +1,4 @@
-package com.lfp.ardf.widget.solution.animation;
-
-import com.lfp.ardf.debug.LogUtil;
-
-import java.text.MessageFormat;
-import java.util.LinkedList;
+package com.lfp.ardf.solution.animation;
 
 /**
  * <pre>
@@ -15,6 +10,7 @@ import java.util.LinkedList;
  * Created by LiFuPing on 2018/7/25.
  * </pre>
  */
+@Deprecated
 public interface ITimeline {
 
     /**

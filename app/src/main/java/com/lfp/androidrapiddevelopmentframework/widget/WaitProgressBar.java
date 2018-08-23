@@ -10,21 +10,20 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.lfp.androidrapiddevelopmentframework.widget.style.CoolWaitLoadingRenderer;
-import com.lfp.ardf.widget.solution.animation.SimperAttachmentListener;
-import com.lfp.ardf.widget.solution.animation.TimelineAttachment;
-import com.lfp.ardf.widget.solution.animation.TimelineView;
+import com.lfp.ardf.solution.animation.TimeLineView;
+import com.lfp.ardf.solution.animation.TimeValueEvent;
 
 /**
  * <pre>
  * desc:
- *      自定义ProgressBar
+ *      菊花动画
  *
  * function:
  *
- * Created by LiFuPing on 2018/5/30.
+ * Created by LiFuPing on 2018/8/22.
  * </pre>
  */
-public class WaitProgressBar extends TimelineView {
+public class WaitProgressBar extends TimeLineView {
     /*圆角矩形背景颜色*/
     int color_border = 0x88000000;
     Paint mPaint;
@@ -49,6 +48,8 @@ public class WaitProgressBar extends TimelineView {
         init();
     }
 
+    TimeValueEvent animation;
+
     void init() {
         mCoolWaitLoadingRenderer = new CoolWaitLoadingRenderer();
         if (Build.VERSION.SDK_INT <= 19) setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -56,13 +57,11 @@ public class WaitProgressBar extends TimelineView {
         mPaint = new Paint();
         mPaint.setColor(color_border);
 
-
-        TimelineAttachment attachment = obtain();
-        attachment.setDuration(2000);
-        attachment.setRepeatCount(TimelineAttachment.REPEAT_COUNT_INFINITE);
-        attachment.setRepeatMode(TimelineAttachment.REPEAT_MODE_RESTART);
-        attachment.setAttachmentListener(mProgressListener);
-        attach(attachment);
+        animation = new TimeValueEvent();
+        animation.setDuration(2000);
+        animation.setRepeatCount(AnimationDrawEvent.INFINITE);
+        animation.setRepeatMode(AnimationDrawEvent.RESTART);
+        addTimeEvent(animation);
     }
 
 
@@ -83,12 +82,11 @@ public class WaitProgressBar extends TimelineView {
         int saveCount = canvas.save();
         canvas.drawRoundRect(border_rectf, radius_border, radius_border, mPaint);
 
-        mCoolWaitLoadingRenderer.computeRender(mProgressListener.getValue());
+        mCoolWaitLoadingRenderer.computeRender(animation.getValue());
         mCoolWaitLoadingRenderer.draw(canvas, border_rectf);
 
         canvas.restoreToCount(saveCount);
     }
 
 
-    SimperAttachmentListener mProgressListener = new SimperAttachmentListener();
 }

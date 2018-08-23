@@ -1,9 +1,7 @@
-package com.lfp.ardf.widget.solution.animation;
+package com.lfp.ardf.solution.animation;
 
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-
-import com.lfp.ardf.debug.LogUtil;
 
 /**
  * <pre>
@@ -15,6 +13,7 @@ import com.lfp.ardf.debug.LogUtil;
  * Created by LiFuPing on 2018/7/24.
  * </pre>
  */
+@Deprecated
 public class TimelineAttachment {
 
     /**

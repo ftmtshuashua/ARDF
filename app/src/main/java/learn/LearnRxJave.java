@@ -1,4 +1,4 @@
-package com.lfp.ardf.learn;
+package learn;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

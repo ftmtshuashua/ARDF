@@ -1,4 +1,4 @@
-package com.lfp.ardf.learn;
+package learn;
 
 /**
  * 英语学习之路<br/>

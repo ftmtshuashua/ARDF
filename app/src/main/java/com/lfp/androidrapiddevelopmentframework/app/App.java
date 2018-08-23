@@ -40,6 +40,7 @@ public class App extends Application {
 
         ThirdParty.init(this);
 
+        CrashHandlers.getInstance().init(this);
     }
 
 

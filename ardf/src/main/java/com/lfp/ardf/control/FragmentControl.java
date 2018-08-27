@@ -41,9 +41,6 @@ public abstract class FragmentControl<T> {
      */
     OnFragmentChange mOnFragmentChange;
 
-    public FragmentControl(@LayoutRes int containerViewId) {
-        mCcontainerViewId = containerViewId;
-    }
 
     public FragmentControl(@NonNull IAppFramework appFk, @LayoutRes int containerViewId) {
         mCcontainerViewId = containerViewId;
@@ -64,7 +61,7 @@ public abstract class FragmentControl<T> {
      * 初始化
      * @param appFk IAppFramework
      */
-    public void init(@NonNull IAppFramework appFk) {
+    private void init(@NonNull IAppFramework appFk) {
         mFragmentManager = appFk.getSmartFragmentManager();
         recover();
     }
@@ -73,7 +70,7 @@ public abstract class FragmentControl<T> {
      * 初始化
      * @param activity FragmentActivity
      */
-    public void init(@NonNull FragmentActivity activity) {
+    private void init(@NonNull FragmentActivity activity) {
         mFragmentManager = activity.getSupportFragmentManager();
         recover();
     }
@@ -82,7 +79,7 @@ public abstract class FragmentControl<T> {
      * 初始化
      * @param fragment Fragment
      */
-    public void init(@NonNull Fragment fragment) {
+    private void init(@NonNull Fragment fragment) {
         mFragmentManager = fragment.getChildFragmentManager();
         recover();
     }

@@ -30,43 +30,41 @@ public class HomeActivity extends BaseActivity {
     }
 
     /*Fragment init*/
-    FragmentControl<Integer> mFragmentControl = new FragmentControl<Integer>(R.id.view_Content) {
-        @Override
-        public Fragment onInit(Integer tag) {
-            switch (tag) {
-                case R.id.tab_1:
-                    return DiscoverFragment.newInstance();
-                case R.id.tab_2:
-                    return DemoFragment.newInstance();
-                case R.id.tab_3:
-                    return ReadmeFragment.newInstance();
-                case R.id.tab_4:
-                    return AboutUsFragment.newInstance();
-            }
-            return null;
-        }
-    };
-
+    FragmentControl<Integer> mFragmentControl;
     /*Radio */
-    RadioGroupControl mRadioGroupControl = new RadioGroupControl() {
-        @Override
-        public void onRadioChange(RadioItem radio) {
-            mFragmentControl.change(radio.getView().getId());
-        }
-    };
+    RadioGroupControl mRadioGroupControl;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        mFragmentControl.init(getAppFk());
-
+        mFragmentControl = new FragmentControl<Integer>(getAppFk(), R.id.view_Content) {
+            @Override
+            public Fragment onInit(Integer tag) {
+                switch (tag) {
+                    case R.id.tab_1:
+                        return DiscoverFragment.newInstance();
+                    case R.id.tab_2:
+                        return DemoFragment.newInstance();
+                    case R.id.tab_3:
+                        return ReadmeFragment.newInstance();
+                    case R.id.tab_4:
+                        return AboutUsFragment.newInstance();
+                }
+                return null;
+            }
+        };
+        mRadioGroupControl = new RadioGroupControl() {
+            @Override
+            public void onRadioChange(RadioItem radio) {
+                mFragmentControl.change(radio.getView().getId());
+            }
+        };
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_1)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_2)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_3)));
         mRadioGroupControl.addRadio(new RadioGroupControl.SimpleRadioItem(findViewById(R.id.tab_4)));
-        mRadioGroupControl.check(R.id.tab_2);
 
         new PermissionManager(getContext()) {
         }.request(Permission.ACCESS_COARSE_LOCATION);
@@ -75,8 +73,10 @@ public class HomeActivity extends BaseActivity {
         BadgeUtils.removeBadge();
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        mRadioGroupControl.check(R.id.tab_2);
     }
 }

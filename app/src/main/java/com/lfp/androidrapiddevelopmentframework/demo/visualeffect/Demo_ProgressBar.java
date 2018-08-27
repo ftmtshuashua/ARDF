@@ -42,6 +42,8 @@ public class Demo_ProgressBar extends BaseActivity implements View.OnClickListen
         findViewById(R.id.view_Set).setOnClickListener(this);
         findViewById(R.id.view_Add).setOnClickListener(this);
         findViewById(R.id.view_Subtract).setOnClickListener(this);
+
+        mWebProgressBar.setProgress(30);
     }
 
     @Override

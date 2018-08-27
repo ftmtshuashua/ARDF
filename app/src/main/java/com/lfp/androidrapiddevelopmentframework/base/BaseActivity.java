@@ -30,7 +30,6 @@ public class BaseActivity extends ImpActivity {
         StatService.onPause(this);
     }
 
-//    public void set
 
     public void setFlag(int flag) {
         this.flag = flag;

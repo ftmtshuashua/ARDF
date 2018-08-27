@@ -23,7 +23,11 @@ import android.view.View;
  * </pre>
  */
 public abstract class TimeLineView extends View {
-    /*时间线*/
+
+
+    /*时间线 - 绘制之前分发*/
+    TimeLine mTimeLine = new TimeLine();
+    /*动画时间线 - onDraw 方法执行之后才分发*/
     AnimationTimeLine mAnimationTimeLine = new AnimationTimeLine();
 
     public TimeLineView(Context context) {
@@ -39,19 +43,23 @@ public abstract class TimeLineView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    public void draw(Canvas canvas) {
         //如果View不可见或者时间线上没有观察者的时候停止之后的动作
-        if (getVisibility() != View.VISIBLE || mAnimationTimeLine.getTimeObserverCount() == 0)
-            return;
-        mAnimationTimeLine.setContext(this, canvas);
-        mAnimationTimeLine.elapse(getDrawingTime());
-        ViewCompat.postInvalidateOnAnimation(this);
+        if (getVisibility() == View.VISIBLE && mTimeLine.getTimeObserverCount() > 0) {
+            mTimeLine.elapse(getDrawingTime());
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+        super.draw(canvas);
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
+        if (getVisibility() == View.VISIBLE && mAnimationTimeLine.getTimeObserverCount() > 0) {
+            mAnimationTimeLine.setContext(this, canvas);
+            mAnimationTimeLine.elapse(getDrawingTime());
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
     }
 
     /**
@@ -60,7 +68,8 @@ public abstract class TimeLineView extends View {
      * @param event 事件
      */
     public void addTimeEvent(TimeLineObserver event) {
-        mAnimationTimeLine.addTimeObserver(event);
+        if (event instanceof AnimationDrawEvent) mAnimationTimeLine.addTimeObserver(event);
+        else mTimeLine.addTimeObserver(event);
         invalidate();
     }
 
@@ -70,6 +79,7 @@ public abstract class TimeLineView extends View {
      * @param event 事件
      */
     public void deleteTimeEvent(TimeLineObserver event) {
+        mTimeLine.deleteTimeObserver(event);
         mAnimationTimeLine.deleteTimeObserver(event);
     }
 
@@ -77,8 +87,10 @@ public abstract class TimeLineView extends View {
      * 删除所有事件
      */
     public void deleteTimeEvents() {
+        mTimeLine.deleteTimeObservers();
         mAnimationTimeLine.deleteTimeObservers();
     }
+
 
     /*  自定义动画时间线,提供Canvas回调 */
     private static final class AnimationTimeLine extends TimeLine {
@@ -120,8 +132,8 @@ public abstract class TimeLineView extends View {
         /**
          * 时间流逝
          *
-         * @param value the value
-         * @param view the view
+         * @param value  the value
+         * @param view   the view
          * @param canvas the canvas
          */
         public abstract void onElapse(float value, View view, Canvas canvas);

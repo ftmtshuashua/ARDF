@@ -7,6 +7,8 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.lfp.ardf.debug.LogUtil;
+
 /**
  * <pre>
  * desc:
@@ -14,9 +16,10 @@ import android.view.View;
  *
  *
  * function:
- *      addTimeEvent()      :添加事件
- *      deleteTimeEvent()   :删除事件
- *      deleteTimeEvents()  :删除所有事件
+ *      addTimeEventInDrawBefore()  :添加事件 在绘制之前
+ *      addTimeEventInDrawAfter()   :添加事件 在绘制之后
+ *      deleteTimeEvent()           :删除事件
+ *      deleteTimeEvents()          :删除所有事件
  *
  *
  * Created by LiFuPing on 2018/8/22.
@@ -47,30 +50,52 @@ public abstract class TimeLineView extends View {
         //如果View不可见或者时间线上没有观察者的时候停止之后的动作
         if (getVisibility() == View.VISIBLE && mTimeLine.getTimeObserverCount() > 0) {
             mTimeLine.elapse(getDrawingTime());
-            ViewCompat.postInvalidateOnAnimation(this);
         }
         super.draw(canvas);
     }
 
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
+
         if (getVisibility() == View.VISIBLE && mAnimationTimeLine.getTimeObserverCount() > 0) {
             mAnimationTimeLine.setContext(this, canvas);
             mAnimationTimeLine.elapse(getDrawingTime());
+        }
+
+
+        //如果时间线上没有附着物的时候 检查是否需要持续接收信号
+        if (getVisibility() == View.VISIBLE && (mTimeLine.getTimeObserverCount() > 0 || mAnimationTimeLine.getTimeObserverCount() > 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
 
+    @Override
+    public void onDrawForeground(Canvas canvas) {
+        super.onDrawForeground(canvas);
+        LogUtil.e("过渡动画  --->   onDrawForeground");
+
+    }
+
     /**
-     * 添加事件
+     * 添加事件 - 在绘制之前
      *
      * @param event 事件
      */
-    public void addTimeEvent(TimeLineObserver event) {
-        if (event instanceof AnimationDrawEvent) mAnimationTimeLine.addTimeObserver(event);
-        else mTimeLine.addTimeObserver(event);
-        invalidate();
+    public void addTimeEventInDrawBefore(TimeLineObserver event) {
+        mTimeLine.addTimeObserver(event);
+        ViewCompat.postInvalidateOnAnimation(this);
+    }
+
+    /**
+     * 添加事件 - 在绘制之后
+     *
+     * @param event 事件
+     */
+    public void addTimeEventInDrawAfter(TimeLineObserver event) {
+        mAnimationTimeLine.addTimeObserver(event);
+        ViewCompat.postInvalidateOnAnimation(this);
     }
 
     /**

@@ -193,7 +193,7 @@ public class AircraftGameView extends TimeLineView {
             backgroup.setValue(0f, 1f);
             backgroup.setInterpolator(new LinearInterpolator());
             backgroup.setRepeatCount(TimeValueEvent.INFINITE);
-            getContext().addTimeEvent(backgroup);
+            getContext().addTimeEventInDrawBefore(backgroup);
         }
 
         @Override

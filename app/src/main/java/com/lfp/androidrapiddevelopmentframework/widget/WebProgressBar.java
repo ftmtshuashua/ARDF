@@ -29,6 +29,12 @@ public class WebProgressBar extends TimeLineView {
     int Color_Animation; /*动画颜色*/
     Paint mPaint;
 
+    /*进度相关数据*/
+    int mProgress;
+    int mMaxProgress = 100;
+    float save_progress_with; /*上一次保存的进度的宽度*/
+    float middle_progress;
+
     public WebProgressBar(Context context) {
         super(context);
         init();
@@ -51,41 +57,48 @@ public class WebProgressBar extends TimeLineView {
 
         Color_Animation = 0xffF5F5F5;
 
-
         mAnimation.setDuration(1000);
         mAnimation.setRepeatCount(TimeEvent.INFINITE);
-//        addTimeEvent(mAnimation);
+        addTimeEventInDrawAfter(mAnimation);
     }
 
-    public void setMaxProgress(int progress) {
-        mMaxProgress = progress;
+    /**
+     * 设置最大进度
+     *
+     * @param max 最大值
+     */
+    public void setMaxProgress(int max) {
+        mMaxProgress = max;
     }
 
-    public void setProgress(int progress) {
-        LogUtil.e("过渡动画  --->  开始");
+    /**
+     * 设置进度
+     *
+     * @param progress 进度值
+     */
+    public void setProgress(final int progress) {
         mProgressAnimation.detach();
         mProgressAnimation.clear();
         mProgress = progress;
         mProgressAnimation.setDuration(300);
-        addTimeEvent(mProgressAnimation);
+        addTimeEventInDrawBefore(mProgressAnimation);
     }
 
+    /**
+     * 获得当前进度值
+     *
+     * @return 进度值
+     */
     public int getProgress() {
         return mProgress;
     }
 
-    /*进度相关数据*/
-    int mProgress;
-    int mMaxProgress = 100;
-    float save_progress_with; /*上一次保存的进度的宽度*/
-    float middle_progress;
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(Color_BG);
 
-        LogUtil.e("过渡动画  --->   绘制");
         /*绘制进度*/
         mPaint.setColor(Color_Progress);
         final int width = getWidth();
@@ -95,6 +108,7 @@ public class WebProgressBar extends TimeLineView {
         middle_progress = (progress_with - save_progress_with) * animation_rate + save_progress_with;
         canvas.drawRect(0, 0, middle_progress, height, mPaint);
     }
+
 
     //平滑的进度动画
     TimeValueEvent mProgressAnimation = new TimeValueEvent(0.0f, 1.0f) {

@@ -61,7 +61,7 @@ public class WaitProgressBar extends TimeLineView {
         animation.setDuration(2000);
         animation.setRepeatCount(AnimationDrawEvent.INFINITE);
         animation.setRepeatMode(AnimationDrawEvent.RESTART);
-        addTimeEvent(animation);
+        addTimeEventInDrawBefore(animation);
     }
 
 

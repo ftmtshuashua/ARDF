@@ -84,6 +84,32 @@ public abstract class TimeEvent extends TimeLineObserver {
      */
     private Interpolator mInterpolator;
 
+    /**
+     * 检查事件状态,当一次事件结束时检查事件接下来事件的走向
+     */
+    public final void checkEvent() {
+        if (expired) { /*当一次事件过期的时候*/
+            if (mRepeatCount == mCurrentRepeatedCount) { /*达到了事件的最大重复次数*/
+                detach();
+            } else {
+                if (mRepeatCount > 0) mCurrentRepeatedCount++;
+                if (mRepeatMode == REVERSE) mCycleFlip = !mCycleFlip;
+                mStartTime = -1;
+                onRestart();
+            }
+        }
+    }
+
+    /**
+     * 标示一次事件是否过期
+     */
+    boolean expired;
+
+    /**
+     * 接收时间流逝信号,并且将这个事件中的时间点分发出去
+     *
+     * @param time 当前时间线的时间
+     */
     @Override
     public final void onElapse(long time) {
         if (mStartTime == -1) mStartTime = time;
@@ -100,7 +126,7 @@ public abstract class TimeEvent extends TimeLineObserver {
             periodrate = 1.0f;
         }
 
-        final boolean expired = periodrate >= 1.0f; //一次事件过期
+        expired = periodrate >= 1.0f; //一次事件过期
         periodrate = Math.max(Math.min(periodrate, 1.0f), 0.0f); //保证取值范围在 0.0f ~ 1.0f
         runtime = (long) (duration * periodrate);//保证运行时间与运行比例的一致性
 
@@ -108,17 +134,7 @@ public abstract class TimeEvent extends TimeLineObserver {
 
         onElapse(time, runtime, duration, periodrate);
 
-
-        if (expired) { /*当一次事件过期的时候*/
-            if (mRepeatCount == mCurrentRepeatedCount) { /*达到了事件的最大重复次数*/
-                detach();
-            } else {
-                if (mRepeatCount > 0) mCurrentRepeatedCount++;
-                if (mRepeatMode == REVERSE) mCycleFlip = !mCycleFlip;
-                mStartTime = -1;
-                onRestart();
-            }
-        }
+        checkEvent();
     }
 
     /**
@@ -250,6 +266,7 @@ public abstract class TimeEvent extends TimeLineObserver {
         mRepeatCount = 0;
         mCurrentRepeatedCount = 0;
         mInterpolator = null;
+        expired = false;
     }
 
     /*默认插值器*/

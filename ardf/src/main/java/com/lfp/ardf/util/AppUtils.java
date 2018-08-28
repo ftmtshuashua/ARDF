@@ -102,7 +102,7 @@ public class AppUtils {
     /**
      * 获得包名
      *
-     * @return  包名
+     * @return 包名
      */
     public static String getPackageName() {
         return getApp().getPackageName();
@@ -934,11 +934,21 @@ public class AppUtils {
         return ACTIVITY_LIFECYCLE;
     }
 
-    static LinkedList<Activity> getActivityList() {
+    /**
+     * 获得栈中Activity列表
+     *
+     * @return 栈中Activity列表
+     */
+    public static LinkedList<Activity> getActivityList() {
         return ACTIVITY_LIFECYCLE.mActivityList;
     }
 
-    static Context getTopActivityOrApp() {
+    /**
+     * 获得栈顶Activity或者App
+     *
+     * @return 栈顶Activity或者App
+     */
+    public static Context getTopActivityOrApp() {
         if (isAppForeground()) {
             Activity topActivity = ACTIVITY_LIFECYCLE.getTopActivity();
             return topActivity == null ? getApp() : topActivity;

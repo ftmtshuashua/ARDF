@@ -15,8 +15,15 @@ import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
 import com.lfp.androidrapiddevelopmentframework.util.PermissionManager;
 import com.lfp.ardf.control.FragmentControl;
 import com.lfp.ardf.control.RadioGroupControl;
+import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.util.BadgeUtils;
 import com.yanzhenjie.permission.Permission;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * Demo列表
@@ -71,12 +78,19 @@ public class HomeActivity extends BaseActivity {
 
 
         BadgeUtils.removeBadge();
-    }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         mRadioGroupControl.check(R.id.tab_2);
+//        Observable
+//                .just(R.id.tab_2)
+//                .delay(300, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<Integer>() {
+//                    @Override
+//                    public void accept(Integer integer) throws Exception {
+//                        mRadioGroupControl.check(integer);
+//                    }
+//                });
     }
+
+
 }

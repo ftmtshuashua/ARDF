@@ -7,8 +7,6 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.lfp.ardf.debug.LogUtil;
-
 /**
  * <pre>
  * desc:
@@ -29,7 +27,7 @@ public abstract class TimeLineView extends View {
 
 
     /*时间线 - 绘制之前分发*/
-    TimeLine mTimeLine = new TimeLine();
+    AnimationTimeLine mTimeLine = new AnimationTimeLine();
     /*动画时间线 - onDraw 方法执行之后才分发*/
     AnimationTimeLine mAnimationTimeLine = new AnimationTimeLine();
 
@@ -49,6 +47,7 @@ public abstract class TimeLineView extends View {
     public void draw(Canvas canvas) {
         //如果View不可见或者时间线上没有观察者的时候停止之后的动作
         if (getVisibility() == View.VISIBLE && mTimeLine.getTimeObserverCount() > 0) {
+            mTimeLine.setContext(this, canvas);
             mTimeLine.elapse(getDrawingTime());
         }
         super.draw(canvas);
@@ -71,12 +70,6 @@ public abstract class TimeLineView extends View {
         }
     }
 
-    @Override
-    public void onDrawForeground(Canvas canvas) {
-        super.onDrawForeground(canvas);
-        LogUtil.e("过渡动画  --->   onDrawForeground");
-
-    }
 
     /**
      * 添加事件 - 在绘制之前

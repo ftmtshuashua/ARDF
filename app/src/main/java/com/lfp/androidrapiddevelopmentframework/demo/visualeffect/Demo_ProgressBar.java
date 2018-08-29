@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.lfp.androidrapiddevelopmentframework.R;
 import com.lfp.androidrapiddevelopmentframework.base.BaseActivity;
-import com.lfp.androidrapiddevelopmentframework.demo.visualeffect.DemoList_VisualEffect;
 import com.lfp.androidrapiddevelopmentframework.event.DemoEvent;
 import com.lfp.androidrapiddevelopmentframework.util.ActionBarControl;
 import com.lfp.androidrapiddevelopmentframework.widget.WebProgressBar;

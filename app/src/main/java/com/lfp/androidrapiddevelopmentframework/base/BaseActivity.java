@@ -1,8 +1,11 @@
 package com.lfp.androidrapiddevelopmentframework.base;
 
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 
-import com.lfp.androidrapiddevelopmentframework.api.Apiserver;
 import com.lfp.ardf.framework.imp.activity.ImpActivity;
 import com.tencent.stat.StatService;
 
@@ -17,6 +20,11 @@ public class BaseActivity extends ImpActivity {
     protected static final int FLAG_INTERCEPT_KEYCODE_HOME = 0x1 << 1;
 
     int flag;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void onResume() {

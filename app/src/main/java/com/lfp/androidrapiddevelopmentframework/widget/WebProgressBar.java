@@ -26,7 +26,6 @@ import com.lfp.ardf.solution.animation.TimeValueEvent;
 public class WebProgressBar extends TimeLineView {
     int Color_BG; /*背景色*/
     int Color_Progress; /*进度条颜色*/
-    int Color_Animation; /*动画颜色*/
     Paint mPaint;
 
     /*进度相关数据*/
@@ -55,7 +54,6 @@ public class WebProgressBar extends TimeLineView {
         Color_BG = 0x88eeeeee;
         Color_Progress = getResources().getColor(R.color.colorPrimaryDark);
 
-        Color_Animation = 0xffF5F5F5;
 
         mAnimation.setDuration(1000);
         mAnimation.setRepeatCount(TimeEvent.INFINITE);
@@ -123,6 +121,7 @@ public class WebProgressBar extends TimeLineView {
 
     //滚动动画
     TimeEvent mAnimation = new AnimationDrawEvent() {
+        int Color_Animation = 0xffF5F5F5; /*动画颜色*/
 
         @Override
         public void onElapse(float value, View view, Canvas canvas) {

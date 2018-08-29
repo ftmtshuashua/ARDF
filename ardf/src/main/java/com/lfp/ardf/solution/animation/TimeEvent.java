@@ -50,6 +50,8 @@ public abstract class TimeEvent extends TimeLineObserver {
      * 记录事件开始开始的时间点
      */
     long mStartTime = -1;
+    /*记录当前时间*/
+    long mCurrentTime = 0;
 
     /**
      * 记录时间偏移量 , 当事件重新开始的时候,使用偏移量来矫正时间
@@ -94,7 +96,8 @@ public abstract class TimeEvent extends TimeLineObserver {
             } else {
                 if (mRepeatCount > 0) mCurrentRepeatedCount++;
                 if (mRepeatMode == REVERSE) mCycleFlip = !mCycleFlip;
-                mStartTime = -1;
+                mStartTimeOffset += getDuration();
+                periodrate = 0;
                 onRestart();
             }
         }
@@ -106,19 +109,31 @@ public abstract class TimeEvent extends TimeLineObserver {
     boolean expired;
 
     /**
+     * 事件在一个周期内已经消耗的时间比例
+     */
+    float periodrate;
+
+    /**
      * 接收时间流逝信号,并且将这个事件中的时间点分发出去
      *
      * @param time 当前时间线的时间
      */
     @Override
     public final void onElapse(long time) {
+        //每当时间执行完一次周期性任务,检查事件状态
+        if (periodrate >= 1.0f) {
+            checkEvent();
+            return;
+        }
+
+
         if (mStartTime == -1) mStartTime = time;
+        mCurrentTime = time;
+
         final long duration = getDuration();
         final long startOffset = mStartTimeOffset;
 
         long runtime;
-        float periodrate;
-
         if (duration > 0) {
             runtime = time - mStartTime - startOffset; //事件在一个周期内的运行时间
             periodrate = runtime / (float) duration; //事件在一个周期内 已经运行时间的比例 0.0f ~ 1.0f
@@ -134,7 +149,6 @@ public abstract class TimeEvent extends TimeLineObserver {
 
         onElapse(time, runtime, duration, periodrate);
 
-        checkEvent();
     }
 
     /**
@@ -146,6 +160,12 @@ public abstract class TimeEvent extends TimeLineObserver {
      * @param progress   事件进度(0.0f ~ 1.0f)
      */
     public abstract void onElapse(long actualtime, long runtime, long duration, float progress);
+
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        periodrate = 0f;
+    }
 
     /**
      * 当事件从新开始的时候回调方法
@@ -182,6 +202,15 @@ public abstract class TimeEvent extends TimeLineObserver {
      */
     public long getStartTime() {
         return mStartTime;
+    }
+
+    /**
+     * 获得当前时间
+     *
+     * @return 当前时间
+     */
+    public long getCurrentTime() {
+        return mCurrentTime;
     }
 
     /**
@@ -267,6 +296,7 @@ public abstract class TimeEvent extends TimeLineObserver {
         mCurrentRepeatedCount = 0;
         mInterpolator = null;
         expired = false;
+        periodrate = 0;
     }
 
     /*默认插值器*/

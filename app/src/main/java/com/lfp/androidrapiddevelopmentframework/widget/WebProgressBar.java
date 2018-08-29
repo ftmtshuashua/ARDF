@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.lfp.androidrapiddevelopmentframework.R;
-import com.lfp.ardf.debug.LogUtil;
 import com.lfp.ardf.solution.animation.TimeEvent;
 import com.lfp.ardf.solution.animation.TimeLineView;
 import com.lfp.ardf.solution.animation.TimeValueEvent;
@@ -26,13 +25,14 @@ import com.lfp.ardf.solution.animation.TimeValueEvent;
 public class WebProgressBar extends TimeLineView {
     int Color_BG; /*背景色*/
     int Color_Progress; /*进度条颜色*/
+    int Color_Animation; /*滚动动画颜色*/
     Paint mPaint;
 
     /*进度相关数据*/
     int mProgress;
     int mMaxProgress = 100;
-    float save_progress_with; /*上一次保存的进度的宽度*/
-    float middle_progress;
+    float save_progress_width; //上一次保存的进度的宽度
+    float middle_progress_width; //动画实时进度,当前一次动画执行未结束的时候,新发起一个动画事件,让两次动画事件能平顺过度
 
     public WebProgressBar(Context context) {
         super(context);
@@ -52,8 +52,8 @@ public class WebProgressBar extends TimeLineView {
     void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Color_BG = 0x88eeeeee;
+        Color_Animation = 0xffF5F5F5;
         Color_Progress = getResources().getColor(R.color.colorPrimaryDark);
-
 
         mAnimation.setDuration(1000);
         mAnimation.setRepeatCount(TimeEvent.INFINITE);
@@ -103,8 +103,8 @@ public class WebProgressBar extends TimeLineView {
         final int height = getHeight();
         final float animation_rate = mProgressAnimation.getValue();
         final float progress_with = width * (mProgress / (float) mMaxProgress);
-        middle_progress = (progress_with - save_progress_with) * animation_rate + save_progress_with;
-        canvas.drawRect(0, 0, middle_progress, height, mPaint);
+        middle_progress_width = (progress_with - save_progress_width) * animation_rate + save_progress_width;
+        canvas.drawRect(0, 0, middle_progress_width, height, mPaint);
     }
 
 
@@ -114,21 +114,19 @@ public class WebProgressBar extends TimeLineView {
         @Override
         protected void onDetach() {
             super.onDetach();
-            save_progress_with = middle_progress;
-            LogUtil.e("过渡动画  --->  移除 :" + save_progress_with);
+            save_progress_width = middle_progress_width;
         }
     };
 
     //滚动动画
     TimeEvent mAnimation = new AnimationDrawEvent() {
-        int Color_Animation = 0xffF5F5F5; /*动画颜色*/
 
         @Override
         public void onElapse(float value, View view, Canvas canvas) {
             final int saveCount = canvas.save();
             mPaint.setColor(Color_Animation);
-            float animationWight = (float) (Math.sin(value * Math.PI) * middle_progress / 2);
-            canvas.translate((middle_progress - animationWight) * value, 0);
+            float animationWight = (float) (Math.sin(value * Math.PI) * middle_progress_width / 2);
+            canvas.translate((middle_progress_width - animationWight) * value, 0);
             canvas.drawRect(0, 2, animationWight, view.getHeight() - 2, mPaint);
             canvas.restoreToCount(saveCount);
         }

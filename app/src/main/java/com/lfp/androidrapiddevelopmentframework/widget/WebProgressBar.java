@@ -74,7 +74,10 @@ public class WebProgressBar extends TimeLineView {
      *
      * @param progress 进度值
      */
-    public void setProgress(final int progress) {
+    public void setProgress(int progress) {
+        if (progress < 0) progress = 0;
+        if (progress > mMaxProgress) progress = mMaxProgress;
+
         mProgressAnimation.detach();
         mProgressAnimation.clear();
         mProgress = progress;

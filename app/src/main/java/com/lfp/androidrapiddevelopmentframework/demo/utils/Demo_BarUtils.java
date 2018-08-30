@@ -69,35 +69,6 @@ public class Demo_BarUtils extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /*点击测试*/
-    private final class Test extends InfoEvent {
-
-        public Test() {
-            super("测试功能");
-        }
-
-        @Override
-        public void call() {
-
-//            int decorViewHeight = getWindow().getDecorView().getHeight();
-//            LogUtil.e(MessageFormat.format("DecorView高度:{0,number,0}" , decorViewHeight));
-//
-//            BarUtils.hasNavigationBar();
-
-//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-
-            int option = 0
-////                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE //固定布局位置
-////                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION // 让布局顶到状态栏和导航栏上
-////                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN // 让布局顶到状态栏上
-//
-//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // 隐藏导航栏  - 全屏上滑弹出导航栏
-//                        | View.SYSTEM_UI_FLAG_FULLSCREEN // 隐藏状态栏 - 顶部下滑弹出状态栏
-//                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY //弹出状态栏和导航栏,过一段时间自动收回 - (隐藏导航栏/隐藏状态栏 需要配置这个标记使用)
-                    ;
-            getWindow().getDecorView().setSystemUiVisibility(option);
-        }
-    }
 
     /*-------------------------- 功能 -------------------------*/
     /*获得状态栏高度*/

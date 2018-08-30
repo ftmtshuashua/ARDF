@@ -1,4 +1,4 @@
-package lib.gg.y;
+package encrypt.test.jutiltest;
 
 import org.junit.Test;
 

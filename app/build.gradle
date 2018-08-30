@@ -156,6 +156,8 @@ dependencies {
 
     implementation 'com.yanzhenjie:permission:2.0.0-rc8'
 
+    //JUnit4 测试环境
+    testImplementation 'junit:junit:4.12'
 }
 
 //获取当前时间
